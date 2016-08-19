@@ -1,0 +1,23 @@
+[25-Jul-2016 19:51:04 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/insert-php/insert_php.php(48) : eval()'d code on line 4
+[01-Aug-2016 18:08:31 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/insert-php/insert_php.php(48) : eval()'d code on line 3
+[01-Aug-2016 18:08:37 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/insert-php/insert_php.php(48) : eval()'d code on line 3
+[01-Aug-2016 18:21:20 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/insert-php/insert_php.php(48) : eval()'d code on line 3
+[01-Aug-2016 18:23:30 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/insert-php/insert_php.php(48) : eval()'d code on line 3
+[01-Aug-2016 18:24:26 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/insert-php/insert_php.php(48) : eval()'d code on line 3
+[01-Aug-2016 18:24:56 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/insert-php/insert_php.php(48) : eval()'d code on line 3
+[01-Aug-2016 19:36:11 UTC] PHP Parse error:  syntax error, unexpected '&' in /home/papermec/public_html/wp-content/plugins/insert-php/insert_php.php(48) : eval()'d code on line 2
+[01-Aug-2016 19:36:11 UTC] PHP Parse error:  syntax error, unexpected '=', expecting ')' in /home/papermec/public_html/wp-content/plugins/insert-php/insert_php.php(48) : eval()'d code on line 4
+[01-Aug-2016 19:39:53 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/themes/tortuga/home.php on line 43
+[02-Aug-2016 18:31:22 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/insert-php/insert_php.php(48) : eval()'d code on line 2
+[02-Aug-2016 19:05:38 UTC] PHP Parse error:  syntax error, unexpected end of file in /home/papermec/public_html/wp-content/plugins/insert-php/insert_php.php(48) : eval()'d code on line 1
+[02-Aug-2016 19:05:38 UTC] PHP Parse error:  syntax error, unexpected 'endif' (T_ENDIF) in /home/papermec/public_html/wp-content/plugins/insert-php/insert_php.php(48) : eval()'d code on line 1
+[02-Aug-2016 19:20:32 UTC] PHP Parse error:  syntax error, unexpected 'http' (T_STRING), expecting ',' or ';' in /home/papermec/public_html/wp-content/plugins/insert-php/insert_php.php(48) : eval()'d code on line 3
+[02-Aug-2016 19:21:06 UTC] PHP Parse error:  syntax error, unexpected 'http' (T_STRING), expecting ',' or ';' in /home/papermec/public_html/wp-content/plugins/insert-php/insert_php.php(48) : eval()'d code on line 3
+[02-Aug-2016 19:21:39 UTC] PHP Parse error:  syntax error, unexpected 'http' (T_STRING), expecting ',' or ';' in /home/papermec/public_html/wp-content/plugins/insert-php/insert_php.php(48) : eval()'d code on line 3
+[02-Aug-2016 19:21:59 UTC] PHP Parse error:  syntax error, unexpected 'endif' (T_ENDIF), expecting ',' or ';' in /home/papermec/public_html/wp-content/plugins/insert-php/insert_php.php(48) : eval()'d code on line 4
+[02-Aug-2016 19:22:54 UTC] PHP Parse error:  syntax error, unexpected 'http' (T_STRING), expecting ',' or ';' in /home/papermec/public_html/wp-content/plugins/insert-php/insert_php.php(48) : eval()'d code on line 3
+[02-Aug-2016 19:33:02 UTC] PHP Parse error:  syntax error, unexpected 'endif' (T_ENDIF), expecting ',' or ';' in /home/papermec/public_html/wp-content/plugins/insert-php/insert_php.php(48) : eval()'d code on line 6
+[08-Aug-2016 18:33:08 UTC] PHP Parse error:  syntax error, unexpected end of file in /home/papermec/public_html/wp-content/plugins/insert-php/insert_php.php(48) : eval()'d code on line 1
+[08-Aug-2016 19:23:20 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/user-submitted-posts/library/core-functions.php on line 47
+[08-Aug-2016 19:26:26 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/user-submitted-posts/library/core-functions.php on line 47
+[08-Aug-2016 19:27:43 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/user-submitted-posts/library/core-functions.php on line 47

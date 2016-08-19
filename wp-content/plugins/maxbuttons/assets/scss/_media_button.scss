@@ -1,0 +1,134 @@
+/* .media_button_table .media_row
+{
+
+	.mb-container { margin: 0 !important;  } 
+	.mb-center { text-align: left !important; } // default
+	.mb-center .mb-text { text-align: center !important; } 
+
+
+
+} */
+
+/*
+#mb_media_buttons_window_overlay 
+{
+	background: #000; 
+	left: 0;
+	right: 0; 
+	bottom: 0;
+	top: 0; 
+	height: 100%;
+	position: fixed; 
+	opacity : 0.7; 
+	z-index: 100050;
+
+} 
+ 
+#mb_media_buttons_window
+{
+	position: fixed; 
+	left: 20%; 
+	right: 20%;
+	bottom: 10%;
+	top: 10%; 
+	background-color: #fff;
+
+	//border: 1px solid #000;
+	min-width: 300px;
+	min-height: 500px; 
+	z-index: 100050; // more than thou
+		
+	background: #ffffff;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.7);
+	-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
+	-moz-box-shadow: 0 0px 4px rgba(0, 0, 0, 0.7);
+	//height: 500px; 
+		
+	.header {
+		border-bottom: 1px solid #000;
+		padding: 10px 10px;
+		h3 { 
+			font-size: 14px;
+			margin: 0; 
+			padding: 0; 
+			font-weight: 400;
+		} 
+		.close { 
+			content: X; 
+			position: absolute; 
+			right: 0; 
+			top: 0;
+			cursor: pointer;
+			color: #000;
+			&:hover { 
+				cursor: pointer;
+				color: #000;		
+			}
+		}
+	
+	}
+	
+	.content { 		
+		padding: 5px 15px; 
+		overflow-y: scroll;
+		overflow-x: hidden;	
+		height: 90%;
+	} 
+}
+*/
+
+.media-buttons
+{
+	width: 750px;
+	height: calc(100% - 60px);
+	min-height: 300px; 
+		
+	#maxbuttons { 
+		margin: 0; 
+		overflow-y: auto;
+			
+			.preview-buttons { 
+			border: 0; 
+ 
+			clear: both;
+		 } 
+		.col_insert { 
+			width: 150px;
+			padding-top: 15px; 
+			.small { 
+				font-size: 10px; 
+			}	
+		}
+	} 
+	.pagination  {
+		width: 100%; 
+		margin: 10px 0;
+		min-height: 20px; 
+		span {
+			font-size: 15px; 
+			font-weight: 700;
+			float: left; 
+			cursor: pointer;
+		}
+		.next { float: right; }
+	
+	}
+
+	
+	.loading { 
+		background: rgba(0, 0, 0, 0) url("../../images/spinner.gif") no-repeat scroll 0 0 / 20px 20px;
+		display: inline-block;
+		float: right;
+		margin: 5px 5px 0 0;
+		height: 40px;
+		opacity: 0.7;
+		vertical-align: middle;
+		visibility: hidden;
+		width: 40px;	
+	
+	}	
+
+}

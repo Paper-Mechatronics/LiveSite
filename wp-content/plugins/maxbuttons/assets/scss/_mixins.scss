@@ -1,0 +1,57 @@
+@mixin linear-gradient($start:#000,$end:#000,$stop:45%,$important:null)
+{
+	background: $start $important;
+	-pie-background: linear-gradient($start $stop, $end) $important;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop($stop, $start), 
+				 								color-stop(1, $end)) $important;
+	background: -moz-linear-gradient($start $stop, $end) $important;	
+	background: -o-linear-gradient($start $stop, $end) $important;
+	background: linear-gradient( $start $stop, $end) $important; 
+
+	//filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#{$start}', endColorStr='#{$end}');
+}
+			 
+@mixin box-shadow($top, $left, $blur, $color, $inset: false) {
+	@if $inset {
+	-webkit-box-shadow:inset $top $left $blur $color;
+	-moz-box-shadow:inset $top $left $blur $color;
+	box-shadow:inset $top $left $blur $color;
+	} @else {
+	-webkit-box-shadow: $top $left $blur $color;
+	-moz-box-shadow: $top $left $blur $color;
+	box-shadow: $top $left $blur $color;
+	}
+} 
+@mixin text-shadow($x: 2px, $y: 2px, $blur: 5px, $color: rgba(0,0,0,.4)) {
+	text-shadow: $x $y $blur $color;
+}		 
+
+@mixin border-radius($topleft, $topright, $bottomleft, $bottomright)
+{
+	border-radius: $topleft $topright $bottomleft $bottomright; 
+	-webkit-border-radius: $topleft $topright $bottomleft $bottomright;
+}
+
+@mixin rotate( $degrees ) {
+  -webkit-transform: rotate(#{$degrees}deg);
+  -moz-transform: rotate(#{$degrees}deg);
+  -ms-transform: rotate(#{$degrees}deg);
+  -o-transform: rotate(#{$degrees}deg);
+  transform: rotate(#{$degrees}deg);
+
+  filter:  progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=#{cos($degrees)}, M12=-#{sin($degrees)}, M21=#{sin($degrees)}, M22=#{cos($degrees)});
+  -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=#{cos($degrees)}, M12=-#{sin($degrees)}, M21=#{sin($degrees)}, M22=#{cos($degrees)})";
+  zoom: 1;
+ }
+
+
+@mixin transition($property, $duration, $ms: false) {
+	-webkit-transition: $property $duration ease-in-out;
+	-moz-transition: $property $duration ease-in-out;
+	-o-transition: $property $duration ease-in-out;
+	@if ($ms) {
+		-ms-transition: $property $duration ease-in-out;
+	}
+	transition: $property $duration ease-in-out;
+}
+

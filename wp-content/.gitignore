@@ -1,0 +1,7 @@
+#ignore gener .DS_Store
+.DS_Store
+**/.DS_Store
+
+#ignore unpublished paper
+.docx
+**/*.docx

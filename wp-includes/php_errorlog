@@ -1,0 +1,15 @@
+[03-Aug-2016 04:10:53 CST6CDT] PHP Fatal error:  Class 'Walker' not found in /home/papermec/public_html/wp-includes/class-walker-page-dropdown.php on line 17
+[03-Aug-2016 04:10:54 CST6CDT] PHP Fatal error:  Class 'Walker' not found in /home/papermec/public_html/wp-includes/nav-menu-template.php on line 16
+[03-Aug-2016 04:11:03 CST6CDT] PHP Fatal error:  Class 'Walker' not found in /home/papermec/public_html/wp-includes/class-walker-page.php on line 17
+[03-Aug-2016 04:11:14 CST6CDT] PHP Fatal error:  Class 'Walker' not found in /home/papermec/public_html/wp-includes/class-walker-comment.php on line 17
+[03-Aug-2016 04:11:17 CST6CDT] PHP Fatal error:  Call to undefined function add_filter() in /home/papermec/public_html/wp-includes/default-filters.php on line 17
+[03-Aug-2016 04:11:18 CST6CDT] PHP Fatal error:  require_once(): Failed opening required 'ABSPATHWPINC/widgets/class-wp-widget-pages.php' (include_path='.:/usr/local/php56/pear') in /home/papermec/public_html/wp-includes/default-widgets.php on line 11
+[03-Aug-2016 04:11:47 CST6CDT] PHP Fatal error:  Call to undefined function is_admin() in /home/papermec/public_html/wp-includes/vars.php on line 23
+[03-Aug-2016 04:11:49 CST6CDT] PHP Fatal error:  require(): Failed opening required 'ABSPATHWPINC/random_compat/random.php' (include_path='.:/usr/local/php56/pear') in /home/papermec/public_html/wp-includes/compat.php on line 435
+[03-Aug-2016 04:12:13 CST6CDT] PHP Fatal error:  require(): Failed opening required 'ABSPATHWPINC/option.php' (include_path='.:/usr/local/php56/pear') in /home/papermec/public_html/wp-includes/functions.php on line 8
+[03-Aug-2016 04:12:27 CST6CDT] PHP Fatal error:  Call to undefined function add_shortcode() in /home/papermec/public_html/wp-includes/media.php on line 1430
+[03-Aug-2016 04:12:30 CST6CDT] PHP Fatal error:  require(): Failed opening required 'ABSPATHWPINC/class.wp-dependencies.php' (include_path='.:/usr/local/php56/pear') in /home/papermec/public_html/wp-includes/script-loader.php on line 20
+[03-Aug-2016 04:12:37 CST6CDT] PHP Fatal error:  Class 'Walker' not found in /home/papermec/public_html/wp-includes/class-walker-category.php on line 17
+[03-Aug-2016 04:12:41 CST6CDT] PHP Fatal error:  Call to undefined function _deprecated_file() in /home/papermec/public_html/wp-includes/rss.php on line 19
+[03-Aug-2016 04:12:43 CST6CDT] PHP Fatal error:  Call to undefined function feed_content_type() in /home/papermec/public_html/wp-includes/feed-atom.php on line 8
+[03-Aug-2016 04:12:44 CST6CDT] PHP Fatal error:  Class 'Walker' not found in /home/papermec/public_html/wp-includes/class-walker-category-dropdown.php on line 17

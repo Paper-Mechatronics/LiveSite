@@ -1,0 +1,2 @@
+[03-Aug-2016 04:09:45 CST6CDT] PHP Fatal error:  Call to undefined function plugin_basename() in /home/papermec/public_html/wp-content/plugins/contact-form-7/wp-contact-form-7.php on line 19
+[03-Aug-2016 04:09:47 CST6CDT] PHP Fatal error:  require_once(): Failed opening required 'WPCF7_PLUGIN_DIR/includes/functions.php' (include_path='.:/usr/local/php56/pear') in /home/papermec/public_html/wp-content/plugins/contact-form-7/settings.php on line 3

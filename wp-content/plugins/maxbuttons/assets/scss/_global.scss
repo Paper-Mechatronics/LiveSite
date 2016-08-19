@@ -1,0 +1,36 @@
+// WARNING : This will load -outside- the #maxbutton namespacing, potentially affecting WP in general
+
+/* Modal */
+/*
+#lean_overlay {
+
+	position: fixed;
+	z-index: 100;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	background: #000000;
+	display: none;
+	
+}
+*/
+ // colorpicker
+ .mb_colorpicker {
+ 	z-index: 200;
+ 
+ }
+ 
+ 
+.ads 
+{
+	.button-primary {
+		display: block;
+		margin: 0 auto 20px auto;
+		width: 210px;
+		text-align: center;
+		overflow: visible;
+	}
+}
+
+

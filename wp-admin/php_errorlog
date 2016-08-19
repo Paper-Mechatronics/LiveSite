@@ -1,0 +1,38 @@
+[20-Jul-2016 17:35:14 UTC] WordPress database error Table 'papermec_migrate.wp_signups' doesn't exist for query SHOW FULL COLUMNS FROM `wp_signups` made by wp_delete_user, do_action('delete_user'), call_user_func_array, wppb_delete_user_from_signups
+[21-Jul-2016 17:07:22 UTC] PHP Fatal error:  Class 'WP_Customize_Sidebar_Section' not found in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 468
+[21-Jul-2016 17:07:35 UTC] PHP Fatal error:  Class 'WP_Customize_Sidebar_Section' not found in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 468
+[21-Jul-2016 17:11:24 UTC] PHP Fatal error:  Class 'WP_Customize_Sidebar_Section' not found in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 468
+[21-Jul-2016 17:11:39 UTC] PHP Fatal error:  Class 'WP_Customize_Sidebar_Section' not found in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 468
+[21-Jul-2016 17:11:49 UTC] PHP Fatal error:  Class 'WP_Customize_Sidebar_Section' not found in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 468
+[21-Jul-2016 17:12:54 UTC] PHP Fatal error:  Class 'WP_Customize_Sidebar_Section' not found in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 468
+[21-Jul-2016 21:57:51 UTC] PHP Fatal error:  Class 'WP_Customize_Sidebar_Section' not found in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 468
+[22-Jul-2016 04:05:29 UTC] PHP Fatal error:  Class 'WP_Customize_Sidebar_Section' not found in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 468
+[22-Jul-2016 04:05:32 UTC] PHP Fatal error:  Class 'WP_Customize_Sidebar_Section' not found in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 468
+[22-Jul-2016 06:13:09 UTC] PHP Fatal error:  Class 'WP_Customize_Sidebar_Section' not found in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 468
+[22-Jul-2016 06:17:06 UTC] PHP Fatal error:  Class 'WP_Customize_Sidebar_Section' not found in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 468
+[22-Jul-2016 06:17:30 UTC] PHP Fatal error:  Class 'WP_Customize_Sidebar_Section' not found in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 468
+[22-Jul-2016 06:17:33 UTC] PHP Fatal error:  Class 'WP_Customize_Sidebar_Section' not found in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 468
+[23-Jul-2016 20:33:56 UTC] PHP Fatal error:  Class 'WP_Customize_Sidebar_Section' not found in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 468
+[23-Jul-2016 21:03:30 UTC] PHP Fatal error:  Class 'WP_Customize_Sidebar_Section' not found in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 468
+[23-Jul-2016 21:41:08 UTC] PHP Fatal error:  Class 'WP_Customize_Sidebar_Section' not found in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 468
+[25-Jul-2016 15:34:21 UTC] PHP Fatal error:  Class 'WP_Customize_Sidebar_Section' not found in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 468
+[25-Jul-2016 15:37:36 UTC] PHP Fatal error:  Class 'WP_Customize_Sidebar_Section' not found in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 468
+[25-Jul-2016 15:44:22 UTC] PHP Fatal error:  Call to undefined method WP_Customize_Manager::get_available_widgets() in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 783
+[25-Jul-2016 15:44:32 UTC] PHP Fatal error:  Call to undefined method WP_Customize_Manager::get_available_widgets() in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 783
+[25-Jul-2016 15:45:26 UTC] PHP Fatal error:  Class 'WP_Customize_Sidebar_Section' not found in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 468
+[25-Jul-2016 15:50:42 UTC] PHP Fatal error:  Class 'WP_Customize_Sidebar_Section' not found in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 468
+[25-Jul-2016 15:50:44 UTC] PHP Fatal error:  Class 'WP_Customize_Sidebar_Section' not found in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 468
+[25-Jul-2016 15:51:03 UTC] PHP Fatal error:  Class 'WP_Customize_Sidebar_Section' not found in /home/papermec/public_html/wp-includes/class-wp-customize-widgets.php on line 468
+[08-Aug-2016 19:22:48 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/user-submitted-posts/library/core-functions.php on line 47
+[08-Aug-2016 19:22:59 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/user-submitted-posts/library/core-functions.php on line 47
+[08-Aug-2016 19:23:11 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/user-submitted-posts/library/core-functions.php on line 47
+[08-Aug-2016 19:23:15 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/user-submitted-posts/library/core-functions.php on line 47
+[08-Aug-2016 19:23:32 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/user-submitted-posts/library/core-functions.php on line 47
+[08-Aug-2016 19:23:38 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/user-submitted-posts/library/core-functions.php on line 47
+[08-Aug-2016 19:24:15 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/user-submitted-posts/library/core-functions.php on line 47
+[08-Aug-2016 19:25:15 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/user-submitted-posts/library/core-functions.php on line 47
+[08-Aug-2016 19:25:38 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/user-submitted-posts/library/core-functions.php on line 47
+[08-Aug-2016 19:25:47 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/user-submitted-posts/library/core-functions.php on line 47
+[08-Aug-2016 19:25:50 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/user-submitted-posts/library/core-functions.php on line 47
+[08-Aug-2016 19:27:15 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/user-submitted-posts/library/core-functions.php on line 47
+[08-Aug-2016 19:27:38 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/papermec/public_html/wp-content/plugins/user-submitted-posts/library/core-functions.php on line 47

@@ -1,0 +1,203 @@
+
+/* Here be elements for the editors.Standardized somehow */ 
+
+select { 
+	width: 150px; 
+	&.small { width: auto; } // small as can be.
+} 
+
+.input { 
+	display: inline-block;
+	margin-right: 15px;
+	//margin-top: 3px;
+	min-height: 35px;
+
+			
+	img { vertical-align: middle; } 
+	&.color {	min-width: 50px; } 
+	&.checkbox { 	padding-top: 8px;
+			input { margin-top: 0; }
+			label {
+			 line-height: 16px; 
+			 margin-top: 0 !important;
+			 }
+	 }
+}
+
+input {
+//	margin-top: 0;	
+//	padding: 3px 4px;
+}
+
+input[type='text'] {
+	width: 450px;
+	&.tiny { 
+		width: 35px; 
+		vertical-align: middle;
+	}
+	&.small {
+		width: 50px; 
+	}
+	&.tiny-nopad {
+	width: 35px;
+	}
+}
+
+input[type='number']
+{
+	vertical-align: middle; 
+	
+	&.tiny, &.tiny-nopad { width: 55px; } 
+	&.small { width: 70px; }
+
+}
+
+textarea {
+	width: 450px;
+	height: 80px;
+	//white-space: nowrap;
+	//overflow: auto;
+}
+
+// finetuning 
+ .option-container .inside .option {
+	&.url { margin-bottom: 0; }
+	&.url_options { margin-bottom: 35px; } 
+	&.url_options .nofollow { margin-left: 35px; } 
+	&.font .checkbox { 
+		margin-right: 2px;
+	} 
+//	&.font .font_weight { margin-left: 10px; } 
+	&.font .radio { margin-right: 0; } 
+ 	&.font .input.font { margin-right: 2px; } 
+ 	&.font .input.font_size { margin-right: 40px; } 
+ 	&.font .input.font_style { margin-right: 38px; }
+	
+	&.padding_top .input { margin-right: 30px; } 
+	&.text_color label { padding-top: 10px; } 
+	&.text_color label:nth-of-type(2) { margin-left: 51px; } 
+	&.description label { padding-top: 35px; } 
+
+ 	&.radius { 
+ 		.label:first-child { width: 100px; float:left; } 
+ 		.bottom, .top { 
+ 			margin-left: 150px; 
+ 			position: relative;
+ 			.input { margin-right: 0; margin-left: 0;} 
+ 			.dashicons:nth-child(3) { margin-right: 10px; } 
+ 		} 
+ 		.top { margin-bottom: 10px; }
+ 		label { 
+ 			display:inline-block;  
+ 			font-weight: 700; 
+ 			width: 90px; 
+ 			margin-left: 5px;
+ 			cursor: default;
+ 		 } 
+ 		.dashicons { font-size: 35px; height: 35px; width: 35px;  color:#ccc; } 
+ 		.top .dashicons { margin-top: -5px; } 
+ 		.bottom .dashicons { margin-top: 5px; } 
+ 		.dashicons-lock { display: none; position: absolute; left:45%; top:25px; } 
+ 	
+ 	}
+ 	&.gradient_head .label:nth-child(even) { width: 80px; } 
+ 	&.gradient_start_color, &.gradient_start_color_hover { 
+ 		.input { width: 62px; }
+ 	}
+}
+
+.default {
+	//float: left;
+	display: inline-block;
+	padding-left: 10px;
+	padding-top: 4px;
+	font-style: italic;
+	color: #808080;
+
+	.other { 
+		padding-left: 40px;
+		padding-top: 8px;
+	
+	
+	}
+}
+
+.mb-button {
+	width: 38px; 
+	height: 38px; 
+	background-color: #eceded;
+	display: inline-block; 
+	margin-right: 6px; 
+	cursor: pointer;
+	display: none;
+	
+	span {
+		text-align:center; 
+		padding: 9px 0; 
+		width: 100%;
+		line-height: 20px;
+	}
+}
+
+.check_button
+{ 
+	display: none;
+	+ label{
+		background-position: center center; 
+		background-repeat: no-repeat; 
+		background-color: #fff;
+		display: inline-block; 
+		border: 1px solid #ddd;
+		font_weight: normal;
+		padding: 4px;
+
+	}
+	&.text + label { 
+		padding: 5px; 
+	
+	}
+
+	&.icon + label i
+	{ 
+		width: 20px; 
+		height: 20px; 
+		color: #545454;
+	}
+
+	&:checked + label { 
+ 	   	background: #ebebeb none repeat scroll 0 0;
+   		border-color: #999999;
+    	box-shadow: 0 2px 5px -3px rgba(0, 0, 0, 0.3) inset;
+	} 
+
+}
+
+.colorpicker-box {
+	display: block;
+	width: 30px;
+	height: 30px;
+	position: relative;
+	margin: 3px;
+	cursor: pointer; 
+
+}
+ .colorpicker-box span {
+	display: inline-block;
+	width: 100%; 
+	height: 100%;
+
+	box-shadow: 2px 2px 4px -1px #333333;
+	
+
+}
+
+.colorpicker, .colpick { 
+	z-index: 500;
+	background-color: #000;
+}
+ 
+ 
+	
+
+
+

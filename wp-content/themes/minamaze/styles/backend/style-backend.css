@@ -1,0 +1,100 @@
+/* Add Styling to Admin Area */
+
+/*----------------------------------------------------
+	REDUX CUSTOM STYLING
+---------------------------------------------------- */
+
+.redux-container #section-thinkup_redux_variables-thinkup_homepage_section1_link,
+.redux-container #section-thinkup_redux_variables-thinkup_homepage_section2_link,
+.redux-container #section-thinkup_redux_variables-thinkup_homepage_section3_link,
+#customize-controls li#thinkup_redux_variables-thinkup_homepage_section1_link,
+#customize-controls li#thinkup_redux_variables-thinkup_homepage_section2_link,
+#customize-controls li#thinkup_redux_variables-thinkup_homepage_section3_link {
+	border-bottom: 1px solid #E7E7E7 !important;
+}
+
+/* Override extention css to always show blog layout setting */
+#customize-controls #thinkup_redux_variables-thinkup_blog_style1layout.thinkup-hide {
+    display: block !important;
+}
+
+
+/*----------------------------------------------------
+	HIDE REDUX PROMOTIONAL MESSAGE
+---------------------------------------------------- */
+
+[id*="redux_blast_"].redux-notice {
+	display: none !important;
+}
+
+
+/*---------------------------------------------------- 
+	META BOXES
+---------------------------------------------------- */
+
+/* Font styles for CMB meta boxes */
+table.cmb_metabox td label {
+  font-size: 13px !important;
+  vertical-align: middle !important;
+}
+
+/* Hide image sizes from in-page ThinkUpSlider */
+#_thinkup_meta_sliderimages .imgpreview .sizes,
+#_thinkup_meta_sliderimages .imgpreview .preview {
+	display: none;
+}
+
+/* Color Upgrade tab */
+#redux-sidebar #redux-group-menu li:nth-child(10) a,
+#redux-sidebar #redux-group-menu li:nth-child(10) a:hover,
+#redux-sidebar #redux-group-menu li:nth-child(10).active a,
+#redux-sidebar #redux-group-menu li:nth-child(10).active a:hover {
+	opacity: 1;
+	color: #FFF;
+	background: #0067CE;
+	border: none;
+}
+#redux-main div:nth-child(10) .form-table {
+	display: none;
+}
+
+
+/*---------------------------------------------------- 
+	HIDE META OPTION FROM SHORTCODE CATEGORIES LIST
+---------------------------------------------------- */
+#thinkupshortcodes-categories option[value="metaoptions"] {
+	display: none;
+}
+
+
+/*---------------------------------------------------- 
+	HIDE IN-DEVELOPMENT FEATURES
+---------------------------------------------------- */
+
+#section-thinkup_portfolio_style fieldset ul li:nth-child(2),
+#section-thinkup_project_navigationswitch,
+section-thinkup_portfolio_textcheck {
+	display: none;
+}
+#section-thinkup_styles_colorscheme,
+._thinkup_meta_colorscheme {
+	display: none;
+}
+
+
+/*---------------------------------------------------- 
+	FIX REDUX IMAGE ISSUE - MEDIA UPLOADER
+---------------------------------------------------- */
+
+.redux-slides-image {
+	max-height: 340px;
+	max-width: 340px;
+	padding: 5px;
+	margin-top: 10px;
+	border: 1px solid #E3E3E3;
+	background: #F7F7F7;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
