@@ -16,15 +16,16 @@ var Engine = Matter.Engine,
     Mouse = Matter.Mouse;
 
 // create a Matter.js engine
-var engine = Engine.create(document.body, {
-  render: {
-    options: {
-      height: window.innerHeight,
-      width: window.innerWidth*0.75,
+var engine = Engine.create();
+
+var render = Render.create({
+    element: document.body,
+    engine: engine,
+    options:{
       wireframes: false,
-      showAngleIndicator: false
+      height: window.innerHeight,
+      width: window.innerWidth*0.75
     }
-  }
 });
 
 // gravity init
@@ -1029,3 +1030,4 @@ compositeArray[0].isMotor = true;
 // run the engine
 //console.log(compositeArray[2].bodies[0].vertices)
 Engine.run(engine);
+Render.run(render);

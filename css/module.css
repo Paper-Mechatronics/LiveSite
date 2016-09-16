@@ -77,6 +77,14 @@ body {
         text-align: center;
         margin-right: 31px;
     }
+    .btn-primary{
+        background-image: none;
+        background-color: #ddd;
+        color: #000;
+    }
+    /*.btn-primary:active{
+        background-image: linear-gradient(to bottom,#337ab7 0,#265a88 100%);
+    }*/
     input[type="range"]{
         width: 75% !important;
     }

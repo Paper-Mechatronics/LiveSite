@@ -16,15 +16,16 @@ var Engine = Matter.Engine,
     Mouse = Matter.Mouse;
 
 // create a Matter.js engine
-var engine = Engine.create(document.body, {
-  render: {
-    options: {
-      height: window.innerHeight,
-      width: window.innerWidth*0.75,
+var engine = Engine.create();
+
+var render = Render.create({
+    element: document.body,
+    engine: engine,
+    options:{
       wireframes: false,
-      showAngleIndicator: false
+      height: window.innerHeight,
+      width: window.innerWidth*0.75
     }
-  }
 });
 
 // gravity init
@@ -99,8 +100,6 @@ function drawPolygon(width, height){
   verts3.push({x:centerX+(width/2), y:centerY})
 
 }
-//drawPolygon();
-//World.add(engine.world, Bodies.fromVertices(300, 300, [verts3]))
 //////////////// COMPOSITES //////////////////////////////////////
 
 var compositeArray = [];
@@ -134,8 +133,6 @@ function addGearComposite(centerX, centerY){
   )
   Composite.add(compositeArray[totalComposites-1], constraintArray[totalConstraints-1]);
   World.add(engine.world,[compositeArray[totalComposites-1]] );
-  select(compositeArray[totalComposites-1].bodies[0]);
-  console.log(totalComposites)
 }
 function addPolyComposite(centerX, centerY, width, height){
   drawPolygon(width,height);
@@ -158,7 +155,6 @@ function addPolyComposite(centerX, centerY, width, height){
   )
   Composite.add(compositeArray[totalComposites-1], constraintArray[totalConstraints-1]);
   World.add(engine.world,[compositeArray[totalComposites-1]] );
-  select(compositeArray[totalComposites-1].bodies[0]);
 }
 
 function changeBody(index){
@@ -460,149 +456,6 @@ function createConstraint2(constraintStart, constraintDestination){
 //////////////////////// ADD TO WORLD //////////////////////
 
 
-World.add(engine.world, mouseConstraint);
-
-////////////////// MODIFICATION FUNCTIONS ////////////////////////////
-
-
-function removeFocus(){
-  if (previousSelection){
-    previousSelection.render.strokeStyle = "#000000";
-    for(var i=0; i<previousSelection.parts.length;i++){
-      previousSelection.parts[i].render.strokeStyle = "#000000";
-    }
-  }
-}
-function removeFocusAll(){
-  if (previousSelection){
-    previousSelection.render.strokeStyle = "#000000";
-    for(var i=0; i<previousSelection.parts.length;i++){
-      previousSelection.parts[i].render.strokeStyle = "#000000";
-    }
-    for(var j = 0; j<compositeArray.length;j++){
-      if(compositeArray[j].bodies[0]){
-        for(var i=0; i<compositeArray[j].bodies[0].parts.length;i++){
-          compositeArray[j].bodies[0].parts[i].render.strokeStyle = "#000000";
-        }
-      }
-    }
-  }
-}
-function select(body){
-  selected = body;
-  //console.log(body);
-  selected.render.strokeStyle = "black";
-  for(var i=0; i<selected.parts.length;i++){
-    selected.parts[i].render.strokeStyle = "black";
-  }
-  if (selected != previousSelection){
-    removeFocus();
-    previousSelection = selected;
-  }
-  updateSliders(selected);
-}
-
-function updateSliders(body){
-  for(var i = 0; i<compositeArray.length;i++){
-    if(body == compositeArray[i].bodies[0]){
-      //document.getElementById("changeSpeed").value = compositeArray[i].motorSpeed*1000;
-      //document.getElementById("changeRotation").value = compositeArray[i].bodies[0].angle*(180/Math.PI);
-      // document.getElementById("changeNumOfTeeth").value = compositeArray[i].numOfTeeth;
-      // document.getElementById("changeToothHeight").value = compositeArray[i].toothHeight;
-      // document.getElementById("changeToothWidth").value = compositeArray[i].toothWidthDegree*100;
-      // document.getElementById("changeRadius").value = compositeArray[i].radius;
-    }
-  }
-}
-
-
-///////////// Mouse Events ///////////////////////////////////
-
-Events.on(mouseConstraint, 'startdrag', function(event) {
-  for(var i = 0; i<jointComposites.length;i++){
-      console.log(jointComposites[i].constraints[0]);
-    }
-  //console.log(event.body);
-  mouseConstraint.constraint.stiffness = 0.1;
-  if(multiSelectionMode == true){
-    multiSelect(event.body);
-  }
-  else{
-    select(event.body);
-  }
-  var mousePosition = event.mouse.position;
-  if (dragMode == true){
-    //console.log('mousedown at ' + mousePosition.x + ' ' + mousePosition.y);
-    //console.log('enddrag', event);
-    Body.setPosition(event.body,mousePosition);
-    for(var i=0; i<compositeArray.length;i++){
-      if(Composite.get(compositeArray[i], event.body.id, "body")==event.body){
-        clicked = true;
-        clickedComposite = compositeArray[i];
-        console.log(clickedComposite.label);
-        //console.log(composite1.constraints[0].pointA.x);
-        clickedComposite.constraints[0].pointA.x = mousePosition.x;
-        clickedComposite.constraints[0].pointA.y = mousePosition.y;
-        //console.log("it works");
-      }
-    }
-  }
-  else if (constraintMode == true){
-    mouseConstraint.constraint.stiffness = 0;
-    for(var i=0; i<compositeArray.length;i++){
-      if(Composite.get(compositeArray[i], event.body.id, "body")==event.body){
-        //console.log("it works");
-        constraintStart = event.body;
-
-      }
-    }
-  }
-})
-  Events.on(mouseConstraint, 'mousemove', function(event) {
-    var mousePosition = event.mouse.position;
-    if (dragMode == true){
-      //console.log('mousedown at ' + mousePosition.x + ' ' + mousePosition.y);
-      //console.log(Composite.get(composite1, event.body.id, "body"));
-      if (clicked == true){
-        clickedComposite.constraints[0].pointA.x = (Math.round(mousePosition.x/snapDist))*snapDist;
-        clickedComposite.constraints[0].pointA.y = (Math.round(mousePosition.y/snapDist))*snapDist;
-        //console.log(clickedComposite.constraints[0].pointA.x);
-      }
-    }
-    else if(constraintMode == true){
-      var compositeBodies = [];
-      for(var i=0; i<compositeArray.length;i++){
-        compositeBodies.push(compositeArray[i].bodies[0]);
-      }
-      constraintDestination = Query.point(compositeBodies, mousePosition)[0];
-    }
-  })
-  Events.on(mouseConstraint, 'enddrag', function(event) {
-    var mousePosition = event.mouse.position;
-    if(dragMode == true){
-      // console.log('mousedown at ' + mousePosition.x + ' ' + mousePosition.y);
-      // console.log('enddrag', event);
-      Body.setPosition(event.body,mousePosition);
-      clicked = false;
-    }
-    else if(constraintMode == true){
-      if(removeConstraint){
-        deleteConstraint();
-      }
-      else{
-        if(constraintStart){
-          if(constraintDestination){
-            if(constraintDestination == constraintStart){
-            }
-            else{
-              overlay2();
-            }
-          }
-        }
-      }
-    }
-  })
-
 
 ///////////////// Animation /////////////////////////////////////
 
@@ -661,6 +514,7 @@ Events.on(engine, 'beforeUpdate', function(event) {
         }
       }
     }
+    updateFlapUI()
 })
 Events.on(engine, 'afterUpdate', function(event) {
     var gear2CenterY = compositeArray[1].bodies[0].position.y
@@ -675,19 +529,15 @@ Events.on(engine, 'afterUpdate', function(event) {
 var width = 350;
 addGearComposite((window.innerWidth)*(0.75*0.5)-(radius+(toothHeight*0.6)), (window.innerHeight)*(0.65));
 addGearComposite((window.innerWidth)*(0.75*0.5)+(radius+(toothHeight*0.6)), (window.innerHeight)*(0.65));
-// Body.setAngle(compositeArray[1].bodies[0], Math.PI)
 addPolyComposite((window.innerWidth)*(0.75*0.5)+((width/2)+50), 300, -width, 10)
-//compositeArray[2].rotation = Math.PI;
 addPolyComposite((window.innerWidth)*(0.75*0.5)-((width/2)+50), 300, width, 10)
 createConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
 createConstraint2(compositeArray[1].bodies[0], compositeArray[2].bodies[0])
-// createConstraint2(compositeArray[1].bodies[0], compositeArray[2].bodies[0],350)
-// compositeArray[0].isMotor = true;
 compositeArray[1].isMotor = true;
 compositeArray[1].motorSpeed = 0.051;
 compositeArray[0].motorSpeed = 0.051;
 compositeArray[0].motorDir = -1;
 compositeArray[1].motorDir = 1;
-//addPolyComposite(centerX, centerY, -width, 10)
 // run the engine
 Engine.run(engine);
+Render.run(render);

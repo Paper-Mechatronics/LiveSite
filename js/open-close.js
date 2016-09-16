@@ -12,26 +12,49 @@ var Engine = Matter.Engine,
     Render = Matter.Render,
     MouseConstraint = Matter.MouseConstraint,
     Vertices = Matter.Vertices,
+    Bounds = Matter.Bounds,
+    Vector = Matter.Vector,
     Query = Matter.Query,
     Mouse = Matter.Mouse;
 
 // create a Matter.js engine
-var engine = Engine.create(document.body, {
-  render: {
-    options: {
-      height: window.innerHeight,
-      width: window.innerWidth*0.75,
+// var engine = Engine.create(document.body, {
+//   render: {
+//     options: {
+//       height: window.innerHeight,
+//       width: window.innerWidth*0.75,
+//       wireframes: false,
+//       showAngleIndicator: false
+//     }
+//   }
+// });
+
+// var render = Render.create({
+//     element: document.body,
+//     engine: engine
+// });
+
+var engine = Engine.create();
+
+var render = Render.create({
+    element: document.body,
+    engine: engine,
+    options:{
       wireframes: false,
-      showAngleIndicator: false
+      height: window.innerHeight,
+      width: window.innerWidth*0.75
     }
-  }
 });
+
 // create mouse dragging
 var mouseConstraint = MouseConstraint.create(engine);
+var world = engine.world
 
 // gravity init
 engine.world.gravity.x = 0;
 engine.world.gravity.y = 0;
+console.log("Height = " + window.innerHeight) //1011 // 731 // 0.723
+console.log("Width = " + window.innerWidth) //1858 // 1218 // 0.6555
 
 ///////////////////// VARIABLES //////////////////////////////////////
 
@@ -90,8 +113,17 @@ rackPinionMod = true;
 camMod = false;
 crankMod = false;
 
+var basePoint = (450*((window.innerHeight/1011) - 0.7))
+var rackPinBase = 300 * (1 - (window.innerHeight/1011));
 
 ////////////////////// CREATE VERtiCES TO DRAW SHAPES //////////////
+// function scaleComposites(){
+//   for(var i = 0; i<compositeArray.length; i++){
+//     if(compositeArray[i].shape != "rect"){
+//       Composite.scale(compositeArray[i], scale, scale, compositeArray[i].constraints[0].pointA)
+//     }
+//   }
+// }
 function drawGear(){
   //new vertex array
   verts2 = [];
@@ -121,8 +153,8 @@ function drawLinGear(){
   for (var i = 0; i < linSteps; i++) {
     linGearVerts.push({ x: 230, y: 600 - ((400/linSteps)*i)});
     if(i > 0 && i%2 == 0){
-       linGearVerts.push({ x: 230 + 20, y: 600- ((400/linSteps)*i)-3.3333});
-       linGearVerts.push({ x: 230 + 20, y: 600 - ((400/linSteps)*i) - 9.999999});
+       linGearVerts.push({ x: 230 + 20, y: 600- ((400/linSteps)*i)-2});
+       linGearVerts.push({ x: 230 + 20, y: 600 - ((400/linSteps)*i) - 11.3332});
     }
   }
   // add last corner
@@ -139,6 +171,15 @@ function drawCam(){
   for (var i = 0; i < steps; i++) {
     verts2.push({ x: xValues[i], y: yValues[i]});
   }
+}
+function drawRect(){
+  // new vertex array
+  linGearVerts = [];
+  // create rectangle shape
+  linGearVerts.push({x: 200, y: 200})
+  linGearVerts.push({x: 200, y: 600})
+  linGearVerts.push({x: 230, y: 600})
+  linGearVerts.push({x: 230, y: 200})
 }
 //////////////// COMPOSITES //////////////////////////////////////
 // The Matter.Body module contains methods for creating and manipulating body models. 
@@ -177,6 +218,8 @@ function addGearComposite(centerX, centerY){
       // store information about body
       shape: "gear",
       radius: radius,
+      friction: 1,
+      density: 0.1,
       toothWidthDegree: toothWidthDegree,
       toothHeight: toothHeight,
       numOfTeeth: steps,
@@ -198,10 +241,9 @@ function addGearComposite(centerX, centerY){
   // add composite to the world
   World.add(engine.world,[compositeArray[totalComposites-1]] );
   // set new composite body as selected
-  select(compositeArray[totalComposites-1].bodies[0]);
-  selectedGearSnapBounds();
+  
   if (totalComposites>1){
-    otherGearSnapBounds();
+    
   }
 }
 function addLinGearComposite(centerX, centerY){
@@ -222,6 +264,8 @@ function addLinGearComposite(centerX, centerY){
         constraints:[],
         shape: "linGear",
         numOfTeeth: steps,
+        friction: 1,
+        density: 100,
         lock: true
       })
   )
@@ -234,7 +278,6 @@ function addLinGearComposite(centerX, centerY){
   )
   Composite.add(compositeArray[totalComposites-1], constraintArray[totalConstraints-1]);
   World.add(engine.world,[compositeArray[totalComposites-1]] );
-  select(compositeArray[totalComposites-1].bodies[0]);
 }
 function addRectComposite(width, height, centerX, centerY){
   // see addGearComposite() comments
@@ -257,71 +300,6 @@ function addRectComposite(width, height, centerX, centerY){
   )
   Composite.add(compositeArray[totalComposites-1], constraintArray[totalConstraints-1]);
   World.add(engine.world,[compositeArray[totalComposites-1]] );
-  select(compositeArray[totalComposites-1].bodies[0]);
-}
-
-function removeComposite(){
-  // if the user is in multi-Select mode the loop through the selected objects array selectionArray[] and remove composites
-  if(multiSelectionMode == true){
-    for(var i = 0;i<selectionArray.length;i++){
-      selected = selectionArray[i];
-      for(var j = 0; j<compositeArray.length;j++){
-        if(compositeArray[j].bodies[0] == selected){
-          for(var k=0; k<jointComposites.length;k++){
-            // if object has joint constraint then loop through composites
-            if(jointComposites[k].constraints[0].bodyA == selected || jointComposites[k].constraints[0].bodyB == selected){
-              for(var m=0; m<compositeArray.length;m++){
-                // set object that isn't being deleted to have property hasConstraint = false
-                if(jointComposites[k].constraints[0].bodyA != selected && jointComposites[k].constraints[0].bodyA == compositeArray[m].bodies[0]){
-                  compositeArray[m].hasConstraint = false;
-                }
-                if(jointComposites[k].constraints[0].bodyB != selected && jointComposites[k].constraints[0].bodyB == compositeArray[m].bodies[0]){
-                  compositeArray[m].hasConstraint = false;
-                }
-              }
-              // remove joint constraint
-              jointComposites[k].constraints[0].bodyA = null;
-              jointComposites[k].constraints[0].bodyB = null;
-              jointComposites[k].constraints[0].pointA = null;
-              jointComposites[k].constraints[0].pointB = null;
-            }
-          }
-          // remove composite
-          Composite.clear(compositeArray[j], true);
-          compositeArray.splice(j,1);
-        }
-      }
-      // decrease number of composites
-      totalComposites--;
-    }
-  }
-  // if normal selection mode is selected 
-  // refer to above comments
-  else{
-    for(var i=0; i<compositeArray.length;i++){
-      if(compositeArray[i].bodies[0] == selected){
-        for(var j=0; j<jointComposites.length;j++){
-          if(jointComposites[j].constraints[0].bodyA == selected || jointComposites[j].constraints[0].bodyB == selected){
-              for(var k=0; k<compositeArray.length;k++){
-                if(jointComposites[j].constraints[0].bodyA != selected && jointComposites[j].constraints[0].bodyA == compositeArray[k].bodies[0]){
-                  compositeArray[k].hasConstraint = false;
-                }
-                if(jointComposites[j].constraints[0].bodyB != selected && jointComposites[j].constraints[0].bodyB == compositeArray[k].bodies[0]){
-                  compositeArray[k].hasConstraint = false;
-                }
-              }
-            jointComposites[j].constraints[0].bodyA = null;
-            jointComposites[j].constraints[0].bodyB = null;
-            jointComposites[j].constraints[0].pointA = null;
-            jointComposites[j].constraints[0].pointB = null;
-          }
-        }
-        Composite.clear(compositeArray[i], true);
-        compositeArray.splice(i,1);
-      }
-    }
-    totalComposites--;
-  }
 }
 function deleteConstraint(constraintStart, constraintDestination){
   // find joints in jointComposites that have same body as start body and/or end body
@@ -370,6 +348,12 @@ function createConstraint2(constraintStart, constraintDestination){
         startOffset2 = 0
         startShape = "linGear"
       }
+      else if(compositeArray[i].shape == "circle"){
+        // if rectangle, set offset to half width of rectangle so it connects at end of rectangle
+        startOffset = 0;
+        startOffset2 = 0
+        startShape = "circle"
+      }
     }
     // set constraint offset for end body based on what type of body it is
     if(constraintDestination == compositeArray[i].bodies[0]){
@@ -385,8 +369,14 @@ function createConstraint2(constraintStart, constraintDestination){
       }
       else if(compositeArray[i].shape == "linGear"){
         destOffset = 0;
-        destOffset2 = 100;
+        destOffset2 = 0;
         destShape = "linGear"
+        console.log("working")
+      }
+      else if(compositeArray[i].shape == "circle"){
+        destOffset = 0;
+        destOffset2 = 0;
+        destShape = "circle"
         console.log("working")
       }
     }
@@ -445,6 +435,7 @@ function changeBody(index){
       })
     )
     compositeArray[index].radius = radius;
+    compositeArray[index].shape = "gear"
     for(var j=0; j<compositeArray[index].bodies[0].parts.length;j++){
       compositeArray[index].bodies[0].parts[j].render.strokeStyle = "#000000";
     }
@@ -471,6 +462,76 @@ function changeBody2(index){
       })
     )
     compositeArray[index].radius = radius;
+    compositeArray[index].shape = "cam"
+    for(var j=0; j<compositeArray[index].bodies[0].parts.length;j++){
+      compositeArray[index].bodies[0].parts[j].render.strokeStyle = "#000000";
+    }
+  }
+}
+function changeBody3(index){
+  for(var i=0; i<1;i++){
+    Composite.remove(compositeArray[index], compositeArray[index].bodies[0]);
+    var tmpConstraintXPoint
+    if(index == 0){
+      tmpConstraintXPoint = compositeArray[index].constraints[0].pointA.x
+    }
+    else{
+      tmpConstraintXPoint = compositeArray[index].constraints[0].pointA.x
+    }
+    var tmpConstraintYPoint = compositeArray[index].constraints[0].pointA.y
+    Composite.remove(compositeArray[index], compositeArray[index].constraints[0]);
+    Composite.add(compositeArray[index], Bodies.circle(tmpConstraintXPoint, tmpConstraintYPoint, 10))
+    Composite.add(compositeArray[index], Constraint.create({pointA: { x: tmpConstraintXPoint, y: tmpConstraintYPoint },
+        bodyB: compositeArray[index].bodies[0], 
+        stiffness: 1
+      })
+    )
+    compositeArray[index].radius = radius;
+    compositeArray[index].shape = "circle"
+    for(var j=0; j<compositeArray[index].bodies[0].parts.length;j++){
+      compositeArray[index].bodies[0].parts[j].render.strokeStyle = "#000000";
+    }
+  }
+}
+function changeBody4(index){
+  for(var i=0; i<1;i++){
+    Composite.remove(compositeArray[index], compositeArray[index].bodies[0]);
+    var tmpConstraintXPoint
+    tmpConstraintXPoint = compositeArray[index].constraints[0].pointA.x;
+    var tmpConstraintYPoint = compositeArray[index].constraints[0].pointA.y;
+    Composite.remove(compositeArray[index], compositeArray[index].constraints[0]);
+    linGearVerts = [];
+    drawLinGear();
+    Composite.add(compositeArray[index], Bodies.fromVertices(tmpConstraintXPoint, tmpConstraintYPoint, [linGearVerts]))
+    Composite.add(compositeArray[index], Constraint.create({pointA: { x: tmpConstraintXPoint, y: tmpConstraintYPoint },
+        bodyB: compositeArray[index].bodies[0], 
+        stiffness: 1
+      })
+    )
+    //compositeArray[index].radius = radius;
+    compositeArray[index].shape = "linGear"
+    for(var j=0; j<compositeArray[index].bodies[0].parts.length;j++){
+      compositeArray[index].bodies[0].parts[j].render.strokeStyle = "#000000";
+    }
+  }
+}
+function changeBody5(index){
+  for(var i=0; i<1;i++){
+    Composite.remove(compositeArray[index], compositeArray[index].bodies[0]);
+    var tmpConstraintXPoint
+    tmpConstraintXPoint = compositeArray[index].constraints[0].pointA.x;
+    var tmpConstraintYPoint = compositeArray[index].constraints[0].pointA.y;
+    Composite.remove(compositeArray[index], compositeArray[index].constraints[0]);
+    linGearVerts = [];
+    drawRect();
+    Composite.add(compositeArray[index], Bodies.fromVertices(tmpConstraintXPoint, tmpConstraintYPoint, [linGearVerts]))
+    Composite.add(compositeArray[index], Constraint.create({pointA: { x: tmpConstraintXPoint, y: tmpConstraintYPoint },
+        bodyB: compositeArray[index].bodies[0], 
+        stiffness: 1
+      })
+    )
+    //compositeArray[index].radius = radius;
+    compositeArray[index].shape = "linGear"
     for(var j=0; j<compositeArray[index].bodies[0].parts.length;j++){
       compositeArray[index].bodies[0].parts[j].render.strokeStyle = "#000000";
     }
@@ -496,8 +557,9 @@ function smallGear(){
     createConstraint2(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
   }
   if(rackPinionMod == true){
-    compositeArray[1].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*1.5))
+    compositeArray[1].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*1.8))
   }
+  document.getElementById("")
 }
 function mediumGear(){
   deleteConstraint(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
@@ -519,7 +581,7 @@ function mediumGear(){
     createConstraint2(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
   }
   if(rackPinionMod == true){
-    compositeArray[1].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*1.5))
+    compositeArray[1].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*1.8))
   }
 }
 function largeGear(){
@@ -541,56 +603,56 @@ function largeGear(){
     createConstraint2(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
   }
   if(rackPinionMod == true){
-    compositeArray[1].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*1.5))
+    compositeArray[1].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*1.8))
   }
 }
 function rackPinion(){
   deleteConstraint(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
-  // radius = 80;
   steps = (0.25 * radius)*2;
   toothWidthDegree = 2;
   toothWidth = (toothWidthDegree/conversionFactor);
+  changeBody4(0);
   changeBody(1);
-  Body.setPosition(compositeArray[1].bodies[0], {x:(window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*1.5)), y:(window.innerHeight)*(0.68)})
-  Body.setPosition(compositeArray[0].bodies[0], {x:compositeArray[0].bodies[0].position.x, y:(window.innerHeight)*(0.8)})
-  compositeArray[1].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*1.5))
-  compositeArray[1].constraints[0].pointA.y = (window.innerHeight)*(0.68)
+  Body.setPosition(compositeArray[1].bodies[0], {x:(window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*1.8)), y:(window.innerHeight)*(0.68) + rackPinBase})
+  Body.setPosition(compositeArray[0].bodies[0], {x:compositeArray[0].bodies[0].position.x, y:(window.innerHeight)*(0.8) + rackPinBase})
+  compositeArray[1].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*1.8))
+  compositeArray[1].constraints[0].pointA.y = (window.innerHeight)*(0.68) + rackPinBase
   compositeArray[0].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)
-  compositeArray[0].constraints[0].pointA.y = (window.innerHeight)*(0.8)
-  compositeArray[2].constraints[0].pointA.y = (window.innerHeight)*(0.58)-300
-  compositeArray[3].constraints[0].pointA.y = (window.innerHeight)*(0.58)-300
+  compositeArray[0].constraints[0].pointA.y = (window.innerHeight)*(0.8) + rackPinBase
+  compositeArray[2].constraints[0].pointA.y = compositeArray[0].constraints[0].pointA.y-550
+  compositeArray[3].constraints[0].pointA.y = compositeArray[0].constraints[0].pointA.y-550
   compositeArray[1].alternate = true;
 }
 function cam(){
   deleteConstraint(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
-  // radius = 80;
   steps = 40;
   camWidth = 40;
+  changeBody5(0);
   changeBody2(1);
   Body.setPosition(compositeArray[0].bodies[0], {x:(window.innerWidth)*(0.75*0.45), y:(window.innerHeight)*(0.6)})
-  Body.setPosition(compositeArray[1].bodies[0], {x:(window.innerWidth)*(0.75*0.45), y:(window.innerHeight)*(0.85)})
+  Body.setPosition(compositeArray[1].bodies[0], {x:(window.innerWidth)*(0.75*0.45), y:(window.innerHeight)- basePoint})
   compositeArray[1].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)
-  compositeArray[1].constraints[0].pointA.y = (window.innerHeight)*(0.85)
+  compositeArray[1].constraints[0].pointA.y = (window.innerHeight)- basePoint
   compositeArray[0].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)
-  compositeArray[0].constraints[0].pointA.y = (window.innerHeight)*(0.6)
-  compositeArray[2].constraints[0].pointA.y = (window.innerHeight)*(0.58)-300
-  compositeArray[3].constraints[0].pointA.y = (window.innerHeight)*(0.58)-300
+  compositeArray[0].constraints[0].pointA.y = (window.innerHeight)- basePoint - 240
+  compositeArray[2].constraints[0].pointA.y = compositeArray[0].constraints[0].pointA.y-400
+  compositeArray[3].constraints[0].pointA.y = compositeArray[0].constraints[0].pointA.y-400
   compositeArray[1].alternate = false;
 }
 function crank(){
-  // radius = 80;
   steps = (0.25 * radius)*2;
   toothWidthDegree = 2;
   toothWidth = (toothWidthDegree/conversionFactor);
   changeBody(1);
-  Body.setPosition(compositeArray[0].bodies[0], {x:(window.innerWidth)*(0.75*0.45), y:(window.innerHeight)*(0.5)})
-  Body.setPosition(compositeArray[1].bodies[0], {x:(window.innerWidth)*(0.75*0.45), y:(window.innerHeight)*(0.85)})
+  changeBody3(0);
+  Body.setPosition(compositeArray[0].bodies[0], {x:(window.innerWidth)*(0.75*0.45), y:(window.innerHeight)- basePoint-300})
+  Body.setPosition(compositeArray[1].bodies[0], {x:(window.innerWidth)*(0.75*0.45), y:(window.innerHeight)- basePoint})
   compositeArray[1].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)
-  compositeArray[1].constraints[0].pointA.y = (window.innerHeight)*(0.85)
+  compositeArray[1].constraints[0].pointA.y = (window.innerHeight)- basePoint
   compositeArray[0].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)
-  compositeArray[0].constraints[0].pointA.y = (window.innerHeight)*(0.5)
-  compositeArray[2].constraints[0].pointA.y = (window.innerHeight)*(0.58)-400
-  compositeArray[3].constraints[0].pointA.y = (window.innerHeight)*(0.58)-400
+  compositeArray[0].constraints[0].pointA.y = (window.innerHeight)- basePoint-300
+  compositeArray[2].constraints[0].pointA.y = compositeArray[0].constraints[0].pointA.y-300
+  compositeArray[3].constraints[0].pointA.y = compositeArray[0].constraints[0].pointA.y-300
   createConstraint2(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
   compositeArray[1].alternate = false;
 }
@@ -619,676 +681,80 @@ function changeMech(){
   }
 }
 
-//////////////// CONSTRAINTS //////////////////////////////////////
+//////////////// PARTS //////////////////////////////////////
+var numLargeGear = 0
+var numMediumGear = 0
+var numSmallGear = 0
+var numLinearGear = 0
+var numLargeCam = 0
+var numMediumCam = 0
+var numSmallCam = 0
+
+function showParts(){
+  numLargeGear = 0
+  numMediumGear = 0
+  numSmallGear = 0
+  numLinearGear = 0
+  numLargeCam = 0
+  numMediumCam = 0
+  numSmallCam = 0
+  for(var i = 0; i<compositeArray.length; i++){
+    if(compositeArray[i].shape == "gear"){
+      if(compositeArray[i].radius == 80){
+        numLargeGear ++
+      }
+      else if(compositeArray[i].radius == 64){
+        numMediumGear++
+      }
+      else if(compositeArray[i].radius == 48){
+        numSmallGear++
+      }
+    }
+    if(compositeArray[i].shape == "cam"){
+      if(compositeArray[i].radius == 80){
+        numLargeCam++
+      }
+      else if(compositeArray[i].radius == 64){
+        numMediumCam++
+      }
+      else if(compositeArray[i].radius == 48){
+        numSmallCam++
+      }
+    }
+    if(compositeArray[i].shape == "linGear"){
+      numLinearGear++
+    }
+  }
+  // console.log(numLargeGear)
+  var largeGears = numLargeGear.toString(); 
+  var mediumGears = numMediumGear.toString(); 
+  var smallGears = numSmallGear.toString(); 
+  localStorage.setItem("largeGears", largeGears);
+  localStorage.setItem("mediumGears", mediumGears);
+  localStorage.setItem("smallGears", smallGears);
+  window.location.replace("./jsPDF/parts.html")
+}
 
 
 //////////////////////// ADD TO WORLD //////////////////////
+// make the world bounds a little bigger than the render bounds
+world.bounds.min.x = 300;
+world.bounds.min.y = 300;
+world.bounds.max.x = window.innerWidth*0.75;
+world.bounds.max.y = window.innerHeight;
 
-// add mouse constraint to world
-World.add(engine.world, mouseConstraint);
+// keep track of current bounds scale (view zoom)
+var boundsScaleTarget = 1,
+    boundsScale = {
+        x: 1,
+        y: 1
+};
 
-////////////////// MODIFICATION FUNCTIONS ////////////////////////////
-function createRect(){
-  el = document.getElementById("overlay");
-  el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
-  var width = document.getElementById("widthInput").value;
-  var height = document.getElementById("heightInput").value;
-  if(width && height){
-    addRectComposite(width, height);
-  }
-}
-// modify number of teeth of gear
-// function changeNumOfTeeth(value){
-//   if(value){
-//     // value must be even number
-//     if(value % 2 != 0){
-//       value++;
-//     }
-//     steps = value;
-//     // modify body
-//     changeBody();
-//   }
-// }
-// change motor speed
-function changeSpeed(value){
-  for(var i = 0; i<compositeArray.length;i++){
-    // find selected body in compositeArray[] and change motor speed parameter
-    if(selected == compositeArray[i].bodies[0]){
-      compositeArray[1].motorSpeed = parseInt(value)/1000;
-    }
-  }
-}
-// function changeToothWidth(value){
-//   toothWidthDegree = parseInt(value)/100;
-//   toothWidth = (toothWidthDegree/conversionFactor);
-//   changeBody();
-// }
-// function changeToothHeight(value){
-//   toothHeight = parseInt(value);
-//   changeBody();
-// }
-// function changeRadius(value){
-//   radius = parseInt(value);
-//   changeBody();
-// }
-// function changeScale(value){
-//   Composite.scale(composite1,value/100,value/100,composite1.constraints[0].pointA);
-// }
-function selectingMode(){
-  // remove focus
-  removeFocusAll();
-  // set turn other modes off
-  selectionMode = true;
-  dragMode = false;
-  constraintMode = false;
-  addConstraint = false;
-  removeConstraint = false;
-  multiSelectionMode = false;
-}
-function draggingMode(){
-  // remove focus
-  removeFocusAll();
-  // set turn other modes off
-  dragMode = true;
-  selectionMode = false;
-  constraintMode = false;
-  addConstraint = false;
-  removeConstraint = false;
-  multiSelectionMode = false;
-
-}
-function constrainingMode(){
-  // remove focus
-  removeFocusAll();
-  // set turn other modes off
-  constraintMode = true;
-  addConstraint = true;
-  removeConstraint = false;
-  selectionMode = false;
-  dragMode = false;
-  multiSelectionMode = false;
-}
-function constrainingDeleteMode(){
-  // remove focus
-  removeFocusAll();
-  // set turn other modes off
-  constraintMode = true;
-  removeConstraint = true;
-  addConstraint = false;
-  selectionMode = false;
-  dragMode = false;
-  multiSelectionMode = false;
-}
-function multiSelectingMode(){
-  // remove focus
-  removeFocusAll();
-  // set turn other modes off
-  selectionArray = [];
-  multiSelectionMode = true;
-  selectionMode = false;
-  dragMode = false;
-  constraintMode = false;
-  addConstraint = false;
-  removeConstraint = false;
-}
-// deselect function
-function removeFocus(){
-  if (previousSelection){
-    // remove stroke style of previously selected body
-    previousSelection.render.strokeStyle = "#000000";
-    // change stroke of all parts of previous body 
-    for(var i=0; i<previousSelection.parts.length;i++){
-      previousSelection.parts[i].render.strokeStyle = "#000000";
-    }
-  }
-}
-// deselect all selected bodies
-function removeFocusAll(){
-  if (previousSelection){
-    // remove stroke style of previously selected body
-    previousSelection.render.strokeStyle = "#000000";
-    for(var i=0; i<previousSelection.parts.length;i++){
-      // change stroke of all parts of previous body 
-      previousSelection.parts[i].render.strokeStyle = "#000000";
-    }
-    // loop through all objects and remove their stroke
-    for(var j = 0; j<compositeArray.length;j++){
-      if(compositeArray[j].bodies[0]){
-        for(var i=0; i<compositeArray[j].bodies[0].parts.length;i++){
-          compositeArray[j].bodies[0].parts[i].render.strokeStyle = "#000000";
-        }
-      }
-    }
-  }
-}
-// set body as selected
-function select(body){
-  selected = body;
-  // set stroke to black to indicate selected
-  selected.render.strokeStyle = "black";
-  // set all parts to black stroke
-  for(var i=0; i<selected.parts.length;i++){
-    selected.parts[i].render.strokeStyle = "black";
-  }
-  // delselect previous selection
-  if (selected != previousSelection){
-    removeFocus();
-    // set previous selection to current selection
-    previousSelection = selected;
-  }
-  // update sliders with selected objects parameters (only rotation right now)
-  updateSliders(selected);
-}
-// select multiple objects
-function multiSelect(body){
-  // add selected body to selectionArray[] 
-  selectionArray.push(body);
-  // set stroke style of all bodies and parts to black
-  for(var i = 0;i<selectionArray.length;i++){
-    selectionArray[i].render.strokeStyle = "black";
-    for(var j=0; j<selected.parts.length;j++){
-      selectionArray[i].parts[j].render.strokeStyle = "black";
-    }
-  }
-}
-// update slider positions for selected body
-function updateSliders(body){
-  for(var i = 0; i<compositeArray.length;i++){
-    // find selected body in compositeArray[] and change html element value
-    if(body == compositeArray[i].bodies[0]){
-      //document.getElementById("changeSpeed").value = compositeArray[i].motorSpeed*1000;
-      //document.getElementById("changeRotation").value = compositeArray[i].bodies[0].angle*(180/Math.PI);
-      // document.getElementById("changeNumOfTeeth").value = compositeArray[i].numOfTeeth;
-      // document.getElementById("changeToothHeight").value = compositeArray[i].toothHeight;
-      // document.getElementById("changeToothWidth").value = compositeArray[i].toothWidthDegree*100;
-      // document.getElementById("changeRadius").value = compositeArray[i].radius;
-    }
-  }
-}
-// function motorSet(){
-//   for(var i=0;i<motors.length;i++){
-//     if(selected == motors[i]){
-//       motors[i] = selected;
-//     }
-//   }
-// }
-
-// set object as having a motor
-function addMotor(){
-  // for multiSelectionMode
-  if(multiSelectionMode == true){
-    for(var i = 0;i<selectionArray.length;i++){
-      selected = selectionArray[i];
-      for(var j = 0; j<compositeArray.length;j++){
-        // find selected body in compositeArray[] and set isMotor = true and lock = false
-        if(selected == compositeArray[j].bodies[0]){
-          compositeArray[j].isMotor = true;
-          compositeArray[j].lock = false;
-        }
-      }
-    }
-  }
-  // if single selection
-  // see above
-  else{
-    for(var i = 0; i<compositeArray.length;i++){
-      if(selected == compositeArray[i].bodies[0]){
-        compositeArray[i].isMotor = true;
-        compositeArray[i].lock = false;
-      }
-    }
-  }
-}
-
-// remove body as motor
-function removeMotor(){
-  // for multiSelectionMode
-  if(multiSelectionMode == true){
-    for(var i = 0;i<selectionArray.length;i++){
-      selected = selectionArray[i];
-      for(var j = 0; j<compositeArray.length;j++){
-        // find selected body in compositeArray[] and set isMotor = false and lock = true if body is a rectangle
-        if(selected == compositeArray[j].bodies[0]){
-          compositeArray[j].isMotor = false;
-          if(compositeArray[j].shape == "rect"){
-            compositeArray[j].lock = true;
-          }
-          // immediately set speed of rotation to 0 or else is slows to a stop
-          Body.setAngularVelocity(compositeArray[j].bodies[0],0);
-        }
-      }
-    }
-  }
-  // single selection
-  // see above
-  else{
-    for(var i = 0; i<compositeArray.length;i++){
-      if(selected == compositeArray[i].bodies[0]){
-        compositeArray[i].isMotor = false;
-        if(compositeArray[i].shape == "rect"){
-          compositeArray[i].lock = true;
-        }
-        Body.setAngularVelocity(compositeArray[i].bodies[0],0);
-      }
-    }
-  }
-}
-// reverse motor direction
-function reverseMotor(){
-  // for multiselection mode
-  if(multiSelectionMode == true){
-    for(var i = 0;i<selectionArray.length;i++){
-      selected = selectionArray[i];
-      for(var j = 0; j<compositeArray.length;j++){
-        // find selected body in compositeArray[] and reverse motorDir
-        if(selected == compositeArray[j].bodies[0]){
-          compositeArray[j].motorDir = compositeArray[j].motorDir*-1;
-        }
-      }
-    }
-  }
-  // single selection
-  // see above
-  else{
-    for(var i = 0; i<compositeArray.length;i++){
-      if(selected == compositeArray[i].bodies[0]){
-        compositeArray[i].motorDir = compositeArray[i].motorDir*-1;
-      }
-    }
-  }
-}
-// set motor to alternate directions
-function alternateMotor(){
-  // for multiselection mode
-  if(multiSelectionMode == true){
-    for(var i = 0;i<selectionArray.length;i++){
-      selected = selectionArray[i];
-      for(var j = 0; j<compositeArray.length;j++){
-        // find selected body in compositeArray[] and set alternate = true
-        if(selected == compositeArray[j].bodies[0]){
-          compositeArray[j].alternate = true;
-        }
-      }
-    }
-  }
-  // single selection
-  // see above
-  else{
-    for(var i = 0; i<compositeArray.length;i++){
-      if(selected == compositeArray[i].bodies[0]){
-        compositeArray[i].alternate = true;
-      }
-    }
-  }
-}
-// turn off motor direction alternating
-function nonAlternateMotor(){
-  // for multiselection mode
-  if(multiSelectionMode == true){
-    for(var i = 0;i<selectionArray.length;i++){
-      selected = selectionArray[i];
-      for(var j = 0; j<compositeArray.length;j++){
-        // find selected body in compositeArray[] and set alternate = false
-        if(selected == compositeArray[j].bodies[0]){
-          compositeArray[j].alternate = false;
-        }
-      }
-    }
-  }
-  // single selection
-  // see above
-  else{
-    for(var i = 0; i<compositeArray.length;i++){
-      if(selected == compositeArray[i].bodies[0]){
-        compositeArray[i].alternate = false;
-      }
-    }
-  }
-}
-
-// function changeTimeInterval(value){
-//   timeInterval = value;
-// }
-
-// set object rotation with slider
-function rotateObject(value){
-  for(var i = 0; i<compositeArray.length;i++){
-    // find selected body in compositeArray[] and set angle to specified rotation
-    if(selected == compositeArray[i].bodies[0]){
-      compositeArray[i].rotation = value*(Math.PI/180);
-      Body.setAngle(compositeArray[i].bodies[0],compositeArray[i].rotation);
-    }
-  }
-}
-// set object rotation with input box
-function setObjectRotation(){
-  // for multiselection mode
-  if(multiSelectionMode == true){
-    // display modal for user input
-    overlay3();
-    for(var i = 0;i<selectionArray.length;i++){
-      selected = selectionArray[i];
-      for(var j = 0; j<compositeArray.length;j++){
-        // find selected body in compositeArray[] and set angle of body to specified rotation
-        if(selected == compositeArray[j].bodies[0]){
-          compositeArray[j].rotation = document.getElementById("changeAngle").value*(Math.PI/180);
-          Body.setAngle(compositeArray[j].bodies[0],compositeArray[j].rotation);
-        }
-      }
-    }
-  }
-  // single selection
-  // see above
-  else{
-    for(var i = 0; i<compositeArray.length;i++){
-      if(selected == compositeArray[i].bodies[0]){
-        overlay3();
-        compositeArray[i].rotation = document.getElementById("changeAngle").value*(Math.PI/180);
-        Body.setAngle(compositeArray[i].bodies[0],compositeArray[i].rotation);
-      }
-    }
-  } 
-}
-
-// set body rotation to 0
-// see setObjectRotation()
-function resetRotation(){
-  if(multiSelectionMode == true){
-    for(var i = 0;i<selectionArray.length;i++){
-      selected = selectionArray[i];
-      for(var j = 0; j<compositeArray.length;j++){
-        if(selected == compositeArray[j].bodies[0]){
-          compositeArray[j].rotation = 0;
-          Body.setAngle(compositeArray[j].bodies[0],compositeArray[j].rotation);
-        }
-      }
-    }
-  }
-  else{
-    for(var i = 0; i<compositeArray.length;i++){
-      if(selected == compositeArray[i].bodies[0]){
-        compositeArray[i].rotation = 0;
-        Body.setAngle(compositeArray[i].bodies[0],compositeArray[i].rotation);
-        //rotationAngle = value*(Math.PI/180);
-      }
-    }
-  }
-}
-
-// set body to have locked rotation if is not a motor by lock = true
-function lockRotation(){
-  if(multiSelectionMode == true){
-    for(var i = 0;i<selectionArray.length;i++){
-      selected = selectionArray[i];
-      for(var j = 0; j<compositeArray.length;j++){
-        if(selected == compositeArray[j].bodies[0]){
-          if(compositeArray[j].isMotor == false){
-            compositeArray[j].lock = true;
-          }
-          Body.setAngle(compositeArray[j].bodies[0],compositeArray[j].rotation);
-        }
-      }
-    }
-  }
-  else{
-    for(var i = 0; i<compositeArray.length;i++){
-      if(selected == compositeArray[i].bodies[0]){
-        if(compositeArray[i].isMotor == false){
-          compositeArray[i].lock = true;
-        }
-        Body.setAngle(compositeArray[i].bodies[0],compositeArray[i].rotation);
-      }
-    }
-  }
-}
-
-// set body to have lock = false
-function unlockRotation(){
-  if(multiSelectionMode == true){
-    for(var i = 0;i<selectionArray.length;i++){
-      selected = selectionArray[i];
-      for(var j = 0; j<compositeArray.length;j++){
-        if(selected == compositeArray[j].bodies[0]){
-          if(compositeArray[j].isMotor == false){
-            compositeArray[j].lock = false;
-          }
-          Body.setAngle(compositeArray[j].bodies[0],compositeArray[j].rotation);
-        }
-      }
-    }
-  }
-  else{
-    for(var i = 0; i<compositeArray.length;i++){
-      if(selected == compositeArray[i].bodies[0]){
-        if(compositeArray[i].isMotor == false){
-          compositeArray[i].lock = false;
-        }
-        Body.setAngle(compositeArray[i].bodies[0],compositeArray[i].rotation);
-      }
-    }
-  }
-}
-
-function selectedGearSnapBounds(){
-  for(var i = 0; i<compositeArray.length;i++){
-    if(selected == compositeArray[i].bodies[0]){
-      if(compositeArray[i].shape == "gear"){
-        for (var j = 0; j < 20; j++) {
-          pointXCheck = compositeArray[i].constraints[0].pointA.x + (compositeArray[i].radius+(compositeArray[i].toothHeight*1.5)) * Math.cos(2 * Math.PI * j / 20)
-          pointYCheck = compositeArray[i].constraints[0].pointA.y + (compositeArray[i].radius+(compositeArray[i].toothHeight*1.5)) * Math.sin(2 * Math.PI * j / 20)
-          circlePoints1.push({x:pointXCheck, y:pointYCheck})
-          //World.add(engine.world,[Bodies.rectangle(pointXCheck, pointYCheck, 2, 2)]);
-        }
-      }
-    }
-  }
-}
-function otherGearSnapBounds(){
-  for(var i = 0; i<compositeArray.length;i++){
-    if(compositeArray[i].bodies[0] != selected){
-      if(compositeArray[i].shape == "gear"){
-        circlePoints2 = []
-        // for (var j = 0; j < 20; j++) {
-        //   pointXCheck2 = compositeArray[i].constraints[0].pointA.x + (compositeArray[i].radius+(compositeArray[i].toothHeight*1.5)) * Math.cos(2 * Math.PI * j / 20)
-        //   pointYCheck2 = compositeArray[i].constraints[0].pointA.y + (compositeArray[i].radius+(compositeArray[i].toothHeight*1.5)) * Math.sin(2 * Math.PI * j / 20)
-        //   //circlePoints2.push({x:pointXCheck2, y:pointYCheck2})
-        //   //World.add(engine.world,[Bodies.rectangle(pointXCheck2, pointYCheck2, 2, 2)]);
-          // for(var k = 0;k<circlePoints1.length;k++){
-        var a = selected.position.x-compositeArray[i].constraints[0].pointA.x
-        var b = selected.position.y-compositeArray[i].constraints[0].pointA.y
-        var dist = Math.sqrt( (a)*(a) + (b)*(b) );
-        if (dist<(compositeArray[i].radius*3)){
-          var distFromRad = compositeArray[i].radius*3
-          var slope = (selected.position.y-compositeArray[i].constraints[0].pointA.y)/(selected.position.x-compositeArray[i].constraints[0].pointA.x)
-          console.log("Distance to center:" + dist);
-          console.log("Distance from radius: " + distFromRad);
-          console.log(slope);
-          for(var j = 0; j< 230;j++){
-            a = selected.position.x-compositeArray[i].constraints[0].pointA.x
-            b = selected.position.y-compositeArray[i].constraints[0].pointA.y
-            dist = Math.sqrt( (a)*(a) + (b)*(b) );
-            if(selected.position.x<compositeArray[i].constraints[0].pointA.x){
-              Body.setPosition(selected, {x:selected.position.x + 1, y:selected.position.y + (1*slope)})
-              clickedComposite.constraints[0].pointA.x = clickedComposite.constraints[0].pointA.x +1;
-              clickedComposite.constraints[0].pointA.y = clickedComposite.constraints[0].pointA.y + (1*slope);
-            }
-            if(selected.position.x>compositeArray[i].constraints[0].pointA.x){
-              Body.setPosition(selected, {x:selected.position.x - 1, y:selected.position.y + (1*slope)})
-              clickedComposite.constraints[0].pointA.x = clickedComposite.constraints[0].pointA.x -1;
-              clickedComposite.constraints[0].pointA.y = clickedComposite.constraints[0].pointA.y + (1*slope);
-            }
-            
-            //clickedComposite.constraints[0].pointA.y = clickedComposite.constraints[0].pointA.y + (1*slope);
-            //console.log(dist)
-            if(dist<178){
-              clicked = false;
-              clickedComposite = null;
-              set = true;
-              return;
-            }
-          }
-        }
-          // }
-        // }
-      }
-    }
-  }
-}
-function compareGearBounds(){
-  if (selected){
-    for(var i = 0; i<compositeArray.length;i++){
-      if(compositeArray[i].bodies[0] != selected){
-
-      }
-    }
-  }
-}
-
-///////////// Mouse Events ///////////////////////////////////
-
-// On mouse down startdrag is called
-Events.on(mouseConstraint, 'startdrag', function(event) {
-  // set mouse constraint stiffness to 0.1 so the body snaps the mouse to center
-  mouseConstraint.constraint.stiffness = 0.1;
-  // run multiselect if multiselect mode is active
-  if(multiSelectionMode == true){
-    multiSelect(event.body);
-  }
-  // if single select just select one object
-  else{
-    select(event.body);
-  }
-  // set mouse position variable
-  var mousePosition = event.mouse.position;
-  // i like turtles
-  // if drag mode is active
-  if (dragMode == true){
-    //console.log('mousedown at ' + mousePosition.x + ' ' + mousePosition.y);
-    //console.log('enddrag', event);
-    // set position of object to the mouse position
-    Body.setPosition(event.body,mousePosition);
-    for(var i=0; i<compositeArray.length;i++){
-      // find body within composite
-      if(Composite.get(compositeArray[i], event.body.id, "body")==event.body && set == false){
-        clicked = true;
-        clickedComposite = compositeArray[i];
-        // set constraint position of object to clicked mouse position
-        clickedComposite.constraints[0].pointA.x = mousePosition.x;
-        clickedComposite.constraints[0].pointA.y = mousePosition.y;
-      }
-    }
-  }
-  // if constraint mode is active
-  else if (constraintMode == true){
-    // stiffness set to 0 so that connector line displays 
-    mouseConstraint.constraint.stiffness = 0;
-    for(var i=0; i<compositeArray.length;i++){
-      if(Composite.get(compositeArray[i], event.body.id, "body")==event.body){
-        // set constraint start body as body clicked 
-        constraintStart = event.body;
-
-      }
-    }
-  }
-})
-// triggered when mouse is moved
-  Events.on(mouseConstraint, 'mousemove', function(event) {
-    // change mouse position
-    var mousePosition = event.mouse.position;
-    // if dragmode is active
-    if (dragMode == true){
-      //console.log('mousedown at ' + mousePosition.x + ' ' + mousePosition.y);
-      //console.log(Composite.get(composite1, event.body.id, "body"));
-      if (clicked == true && set == false){
-        // set snap distance by rounding mouse position
-        clickedComposite.constraints[0].pointA.x = (Math.round(mousePosition.x/snapDist))*snapDist;
-        clickedComposite.constraints[0].pointA.y = (Math.round(mousePosition.y/snapDist))*snapDist;
-        otherGearSnapBounds();
-      }
-    }
-    // if constraint mode is active
-    else if(constraintMode == true){
-      // create new array for composite bodies
-      var compositeBodies = [];
-      for(var i=0; i<compositeArray.length;i++){
-        // add all composite bodies to compositeBodies[] array
-        compositeBodies.push(compositeArray[i].bodies[0]);
-      }
-      // set constraint destination to whatever body your mouse is over
-      constraintDestination = Query.point(compositeBodies, mousePosition)[0];
-    }
-  })
-  Events.on(mouseConstraint, 'enddrag', function(event) {
-    // update mouse position
-    var mousePosition = event.mouse.position;
-    // if dragmode is active
-    if(dragMode == true){
-      // console.log('mousedown at ' + mousePosition.x + ' ' + mousePosition.y);
-      // console.log('enddrag', event);
-      // set position of selected object to current position
-      Body.setPosition(event.body,mousePosition);
-      clicked = false;
-    }
-    // if constraint mode active
-    else if(constraintMode == true){
-      // remove constraint
-      if(removeConstraint){
-        deleteConstraint();
-      }
-      else{
-        if(constraintStart){
-          if(constraintDestination){
-            if(constraintDestination == constraintStart){
-            }
-            else{
-              // display modal asking for length if both a constraint start and constraint destination exists
-              overlay2();
-            }
-          }
-        }
-      }
-    }
-    // clicked composite is nothing
-    clickedComposite = null;
-    set = false;
-  })
-
-
-
-
-/////////////////// BOUNDARIES //////////////////////////////////
-
-// add boundaries
-// var offset = 5;
-// World.add(engine.world, [
-//   Bodies.rectangle(400, -offset, 800 + 2 * offset, 50, { isStatic: true }),
-//   Bodies.rectangle(400, 600 + offset, 800 + 2 * offset, 50, { isStatic: true }),
-//   Bodies.rectangle(800 + offset, 300, 50, 600 + 2 * offset, { isStatic: true }),
-//   Bodies.rectangle(-offset, 300, 50, 600 + 2 * offset, { isStatic: true })
-// ]);
-
-
-
-
+// console.log(mouseConstraint)
+// mouseConstraint.mouse.wheelDelta = 1;
 
 ///////////////// Animation /////////////////////////////////////
-
-
-// Events.on(engine, 'collisionActive', function(event) {
-//   var pairs = event.pairs;
-//   //console.log(pairs);
-// })
-
-// called every frame before physics is applied
-// var dist;
-// a = compositeArray[2].position.x-compositeArray[0].constraints[0].pointA.x
-// b = compositeArray[2].position.y-compositeArray[0].constraints[0].pointA.y
-// dist = Math.sqrt( (a)*(a) + (b)*(b) );
 Events.on(engine, 'beforeUpdate', function(event) {
-
-  //Body.setPosition(compositeArray[1].bodies[0],{x:(window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*1.5)) , y:600})
-  
-    //console.log(set)
     // increment counter just in case we need to do something that happens ever couple of frames
     counter += 1;
     // functions that need to be called every frame on each body in the world
@@ -1318,7 +784,6 @@ Events.on(engine, 'beforeUpdate', function(event) {
       else{
         if(compositeArray[i].shape == "gear"){
           if(clickedComposite != compositeArray[i]){
-            //Body.setPosition(compositeArray[i].bodies[0],{x:compositeArray[i].constraints[0].pointA.x, y:compositeArray[i].constraints[0].pointA.y})
           }
         }
       }
@@ -1341,38 +806,40 @@ Events.on(engine, 'beforeUpdate', function(event) {
         // set rotational velocity of gear to the motor speed * motor direction of object
         Body.setAngularVelocity(compositeArray[i].bodies[0], compositeArray[i].motorSpeed*compositeArray[i].motorDir);
       }
-    }
-    // always keep locked object rotation to specified rotation angle even when clicked
-    if (clicked == true){
-      if(clickedComposite.lock == true){
-        Body.setAngle(clickedComposite.bodies[0], clickedComposite.rotation);
-      }
-    }
-
-    // every 1.5 sec
-    if (counter >= 60 * timeInterval) {
-        //rotationSpeed = rotationSpeed *-1;
-        // reset counter
-        counter = 0;
-        scaleFactor = 1;
-    }
-    engine.render.options.height = window.innerHeight
+    }    
+    //engine.render.options.height = window.innerHeight
     for(var i = 0; i<compositeArray.length; i++){
       if(compositeArray[i].radius != 0){
         for(var j=0; j<compositeArray[i].bodies[0].parts.length;j++){
           compositeArray[i].bodies[0].parts[j].render.strokeStyle = "#000000";
           if(compositeArray[i].radius == 48){
             compositeArray[i].bodies[0].parts[j].render.fillStyle = "#FF6B6B";
+            for(var p = 0; p<compositeArray[0].bodies[0].parts.length; p++){
+              compositeArray[0].bodies[0].parts[p].render.fillStyle = "#8d2f2f";
+              compositeArray[0].bodies[0].parts[p].render.strokeStyle = "#8d2f2f";
+            }
+            
           }
           else if(compositeArray[i].radius == 64){
             compositeArray[i].bodies[0].parts[j].render.fillStyle = "#4ECDC4";
+            for(var p = 0; p<compositeArray[0].bodies[0].parts.length; p++){
+              compositeArray[0].bodies[0].parts[p].render.fillStyle = "#15605b";
+              compositeArray[0].bodies[0].parts[p].render.strokeStyle = "#15605b";
+            }
+            
           }
           else if(compositeArray[i].radius == 80){
-            compositeArray[i].bodies[0].parts[j].render.fillStyle = "#c7f464";
+            compositeArray[i].bodies[0].parts[j].render.fillStyle = "#bc98f9";
+            for(var p = 0; p<compositeArray[0].bodies[0].parts.length; p++){
+              compositeArray[0].bodies[0].parts[p].render.fillStyle = "#7149b6";
+              compositeArray[0].bodies[0].parts[p].render.strokeStyle = "#7149b6";
+            }
+
           }
         }
       }
     }
+    updateUI()
 })
 // called every frame after physics is applied
 // same as above
@@ -1385,9 +852,6 @@ Events.on(engine, 'afterUpdate', function(event) {
     forceDir = -1;
   }
 
-  //if(compositeArray[0].bodies[0].)
-  //Body.applyForce(compositeArray[2].bodies[0], {x:compositeArray[2].bodies[0].position.x-compositeArray[2].width/2,y:compositeArray[2].bodies[0].position.y}, {x:0,y:0.008 * compositeArray[1].motorDir*-1})
-  //Body.applyForce(compositeArray[3].bodies[0], {x:compositeArray[3].bodies[0].position.x+compositeArray[2].width/2,y:compositeArray[3].bodies[0].position.y}, {x:0,y:0.008 * compositeArray[1].motorDir*-1})
   for(var i = 0; i<compositeArray.length;i++){
     if(compositeArray[i].lock == true){
       if(compositeArray[i].shape == "gear"){
@@ -1407,6 +871,12 @@ Events.on(engine, 'afterUpdate', function(event) {
         }
         if(clickedComposite != compositeArray[i]){
           Body.setPosition(compositeArray[i].bodies[0],{x:compositeArray[i].constraints[0].pointA.x, y:compositeArray[i].bodies[0].position.y})
+        }
+      }
+      if(compositeArray[i].shape == "circle"){
+        compositeArray[i].bodies[0].position.x = compositeArray[i].constraints[0].pointA.x
+        if(compositeArray[i].lock == true){
+          Body.setAngle(compositeArray[i].bodies[0], compositeArray[i].rotation);
         }
       }
     }
@@ -1443,32 +913,28 @@ Events.on(engine, 'afterUpdate', function(event) {
   if(rackPinionMod == true){
     Body.setAngle(compositeArray[2].bodies[0], compositeArray[1].bodies[0].angle*0.35);
     Body.setAngle(compositeArray[3].bodies[0], compositeArray[1].bodies[0].angle*-0.35);
+    // if(compositeArray[1].motorDir == 1){
+    //   Body.setPosition(compositeArray[0].bodies[0],compositeArray[0].bodies[0].position.x,compositeArray[0].bodies[0].position.y +1 )
+    // }
   }
+
 })
+
 
 ////////////////////// RUN /////////////////////////////
 
 // run the engine
-addLinGearComposite((window.innerWidth)*(0.75*0.45),(window.innerHeight)*(0.8))
-addGearComposite((window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*1.5)) ,(window.innerHeight)*(0.68))
-addRectComposite(300, 10,(window.innerWidth)*(0.75*0.45)-200,(window.innerHeight)*(0.58)-300)
-addRectComposite(-300, 10,(window.innerWidth)*(0.75*0.45)+200,(window.innerHeight)*(0.58)-300)
+addLinGearComposite((window.innerWidth)*(0.75*0.45),(window.innerHeight)*(0.8) + rackPinBase)
+compositeArray[0].constraints[0].stiffness = 0.0000001;
+addGearComposite((window.innerWidth)*(0.75*0.45)+((radius)+((toothHeight)*2)) ,(window.innerHeight)*(0.68) + rackPinBase)
+addRectComposite((300), 5,(window.innerWidth)*(0.75*0.45)-200,compositeArray[0].constraints[0].pointA.y-550)
+addRectComposite((-300), 5,(window.innerWidth)*(0.75*0.45)+200,compositeArray[0].constraints[0].pointA.y-550)
 compositeArray[1].isMotor = true;
 compositeArray[1].alternate = true;
-//Body.applyForce(compositeArray[2].bodies[0], {x:583.075,y:340.32}, {x:0,y:-0.01})
 console.log(compositeArray[1].bodies[0].position.x-150)
 console.log(compositeArray[1].bodies[0].position.y)
+// if(scale != 1){
+//   scaleComposites();
+// }
 Engine.run(engine);
-
-
-
-
-// for(var k = 0; k<compositeArray.length;k++){
-//             if(compositeArray[k].shape == "gear"){
-//               for (var m = 0; m < compositeArray[k].numOfTeeth; m++) {
-//                 pointCheck2 = centerX + compositeArray[k].radius+(toothHeight*1.5) * Math.cos(2 * Math.PI * j / steps)
-//               if(pointCheck){
-//               }
-//               }
-//             }
-//           }
+Render.run(render);

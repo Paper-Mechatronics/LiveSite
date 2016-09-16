@@ -77,6 +77,11 @@ body {
         text-align: center;
         margin-right: 31px;
     }
+    .btn-primary{
+        background-image: none;
+        background-color: #ddd;
+        color: #000;
+    }
     input[type="range"]{
         width: 75% !important;
     }
