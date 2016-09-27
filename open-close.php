@@ -28,6 +28,7 @@ else{
     <link rel="stylesheet" type="text/css" href="css/module.css">
   </head>
   <body>
+    <script src="js/functions.js" type="text/javascript"></script>
     <script src="js/open-close.js" type="text/javascript"></script>
     <script src="js/updateUI.js" type="text/javascript"></script>
     <script src="js/showParts.js" type="text/javascript"></script>
@@ -77,8 +78,8 @@ else{
             <div>
             <p>Motor Rotation:</p>
             <br>
-                <button class = "object btn btn-primary" type="button" id="setSmallGear" onclick="">180</button>
-                <button class = "object btn btn-primary" type="button" id="setMedGear" onclick="">Continuous</button>
+                <button class = "object btn btn-primary" type="button" id="alternate" onclick="">180</button>
+                <button class = "object btn btn-primary" type="button" id="continuous" onclick="">Continuous</button>
             </div>
         </div>
         <div class = "footer">

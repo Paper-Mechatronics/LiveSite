@@ -17,6 +17,10 @@ var boundsScaleTarget = 1,
 // console.log(mouseConstraint)
 // mouseConstraint.mouse.wheelDelta = 1;
 
+if (rackPinionModule == true){
+  scale = scale -0.2
+}
+
 ///////////////// Animation /////////////////////////////////////
 Events.on(engine, 'beforeUpdate', function(event) {
   console.log("working")

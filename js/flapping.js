@@ -1044,3 +1044,11 @@ compositeArray[0].motorDir = -1;
 compositeArray[1].motorDir = 1;
 // run the engine
 Engine.run(engine);
+
+// Composite.add(compositeArray[3], Constraint.create({pointA: { x: poly1CenterX+compositeArray[3].width/2, y: poly1CenterY+100 },
+//           bodyB: compositeArray[3].bodies[0] ,
+//           pointB: { x: compositeArray[3].width/2, y: 25}, 
+//           stiffness: 1
+          
+//         })
+// )

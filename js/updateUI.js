@@ -49,7 +49,6 @@ function updateFlapUI(){
     $('#setMedGearL').css("color", "#000") 
     $('#setSmallGearL').css("color", "#fff") 
   }
-
   if(compositeArray[1].radius == 80){
     $('#setLargeGearR').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
     $('#setMedGearR').css("background-image", "none") 
@@ -86,5 +85,20 @@ function updateFlapUI(){
     $('#setDriveGearL').css("background-image", "none") 
     $('#setDriveGearL').css("color", "#000")
     $('#setDriveGearR').css("color", "#fff")
+  }
+}
+
+function rotationUI(){
+  if(compositeArray[1].alternate){
+    $('#alternate').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+    $('#continuous').css("background-image", "none") 
+    $('#continuous').css("color", "#000")
+    $('#alternate').css("color", "#fff")
+  }
+  else if(!compositeArray[1].alternate){
+    $('#continuous').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+    $('#alternate').css("background-image", "none") 
+    $('#alternate').css("color", "#000")
+    $('#continuous').css("color", "#fff")
   }
 }

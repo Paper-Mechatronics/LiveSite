@@ -29,8 +29,10 @@ else{
     <link rel="stylesheet" type="text/css" href="css/module.css">
   </head>
   <body>
+    <script src="js/functions.js" type="text/javascript"></script>
     <script src="js/cam.js" type="text/javascript"></script>
     <script src="js/updateUI.js" type="text/javascript"></script>
+    <script src="js/scaling.js" type="text/javascript"></script>
     <div class = "container">
         <div class = "module-name">
             <p>Cam +</p>
@@ -63,6 +65,7 @@ else{
         <div class = "controls-dark">
             <div>
                 <p>Gear Size:</p>
+                <br>
                 <button class = "gear-size object btn btn-primary" type="button" id="setSmallGear" onclick="smallGear()">1</button>
                 <button class = "gear-size object btn btn-primary" type="button" id="setMedGear" onclick="mediumGear()">2</button>
                 <button class = "gear-size object btn btn-primary" type="button" id="setLargeGear" onclick="largeGear()">3</button>
@@ -70,8 +73,9 @@ else{
             <br>
             <div>
             <p>Motor Rotation:</p>
-                <button class = "object btn btn-primary" type="button" id="setSmallGear" onclick="">180</button>
-                <button class = "object btn btn-primary" type="button" id="setMedGear" onclick="">Continuous</button>
+            <br>
+                <button class = "object btn btn-primary" type="button" id="alternate" onclick="">180</button>
+                <button class = "object btn btn-primary" type="button" id="continuous" onclick="">Continuous</button>
             </div>
         </div>
         <div class = "footer">

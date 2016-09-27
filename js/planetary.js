@@ -1210,6 +1210,7 @@ Events.on(engine, 'beforeUpdate', function(event) {
     // compositeArray[2].bodies[0].vertices[2].y = 325;
     // compositeArray[2].bodies[0].vertices[5].y = 300;
     // compositeArray[2].bodies[0].vertices[5].x = 750;
+    
 })
 Events.on(engine, 'afterUpdate', function(event) {
     // console.log(compositeArray[0].constraints[0].length)
