@@ -47,19 +47,11 @@ else{
             </div>
             <div id = "a-slider" class = "slider-div">
                 <label>A:</label>
-                <input type="range" id="changeSpeed" value="40" min="0" max="100">
+                <input type="range" id="changeSpeed" value="40" min="0" max="100" onchange = "circleJointHeight(this.value)">
             </div>
             <div id = "a-slider" class = "slider-div">
                 <label>B:</label>
-                <input type="range" id="changeTimeInterval" value="3" min="1" max="30">
-            </div>
-            <div id = "a-slider" class = "slider-div">
-                <label>C:</label>
-                <input type="range" id="changeTimeInterval" value="3" min="1" max="30">
-            </div>
-            <div id = "a-slider" class = "slider-div">
-                <label>D:</label>
-                <input type="range" id="changeTimeInterval" value="3" min="1" max="30">
+                <input type="range" id="changeTimeInterval" value="30" min="20" max="40" onchange = "changeMotorSpeed(this.value)">
             </div>
             <br>
         </div>
@@ -75,8 +67,8 @@ else{
             <div>
             <p>Motor Rotation:</p>
             <br>
-                <button class = "object btn btn-primary" type="button" id="alternate" onclick="">180</button>
-                <button class = "object btn btn-primary" type="button" id="continuous" onclick="">Continuous</button>
+                <button class = "object btn btn-primary" type="button" id="alternate" onclick="alternatingGear()">180</button>
+                <button class = "object btn btn-primary" type="button" id="continuous" onclick="continuous()">Continuous</button>
             </div>
         </div>
         <div class = "footer">

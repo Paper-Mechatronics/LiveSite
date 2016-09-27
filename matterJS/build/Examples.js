@@ -1712,10 +1712,10 @@ if (!_isBrowser) {
         World.add(world, stack);
 
         // get the centre of the viewport
-        var viewportCentre = {
-            x: engine.render.options.width * 0.5,
-            y: engine.render.options.height * 0.5
-        };
+        // var viewportCentre = {
+        //     x: engine.render.options.width * 0.5,
+        //     y: engine.render.options.height * 0.5
+        // };
 
         // make the world bounds a little bigger than the render bounds
         world.bounds.min.x = -300;

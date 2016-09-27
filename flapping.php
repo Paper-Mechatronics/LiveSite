@@ -45,19 +45,15 @@ else{
             </div>
             <div id = "a-slider" class = "slider-div">
                 <label>A:</label>
-                <input type="range" id="changeSpeed" value="40" min="0" max="100">
+                <input type="range" id="changeSpeed" value="40" min="0" max="100" onchange = "beamSpacing(this.value)">
             </div>
             <div id = "a-slider" class = "slider-div">
                 <label>B:</label>
-                <input type="range" id="changeTimeInterval" value="3" min="1" max="30">
+                <input type="range" id="changeTimeInterval" value="320" min="250" max="450" onchange = "">
             </div>
             <div id = "a-slider" class = "slider-div">
                 <label>C:</label>
-                <input type="range" id="changeTimeInterval" value="3" min="1" max="30">
-            </div>
-            <div id = "a-slider" class = "slider-div">
-                <label>D:</label>
-                <input type="range" id="changeTimeInterval" value="3" min="1" max="30">
+                <input type="range" id="changeTimeInterval" value="30" min="20" max="40" onchange = "changeMotorSpeed(this.value)">
             </div>
             <br>
         </div>
