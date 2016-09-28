@@ -128,22 +128,21 @@ body {
         padding-bottom: 10px;
     }
     .controls label, .controls input{
-        display: inline-block;
+        
     }
     .slider-div{
         height: 30px;
-        position: relative;
+        
     }
     .slider-div input, .slider-div label{
-        position: absolute;
+        position: relative;
         height: 100%;
+        z-index: 1000;
     }
     .slider-div label{
         font-size: 1.2em;
     }
-    .slider-div input{
-        margin-left: 30px;
-    }
+    
     input[type=checkbox]
     {
       /* Double-sized Checkboxes */
@@ -207,4 +206,7 @@ body {
     }
     .btn-icon {
         max-width: 100%;
+    }
+    label{
+        display: initial;
     }

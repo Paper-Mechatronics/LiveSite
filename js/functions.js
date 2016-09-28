@@ -131,6 +131,14 @@ var rotationPoint = 0;
 var beamSpace =50
 var crankMod = false;
 
+var module = {
+  horizontalSpace: 50,
+  verticalSpace: 0,
+  connectorLength: 369,
+  pivotPoint: 0,
+  motorSpeed: 40
+}
+
 ////////////////////// CREATE VERtiCES TO DRAW SHAPES //////////////
 // function scaleComposites(){
 //   for(var i = 0; i<compositeArray.length; i++){
@@ -1139,6 +1147,146 @@ function createConstraintInner(constraintStart, constraintDestination){
     }
   }
 }
+function createConstraintFlap(constraintStart, constraintDestination, length, originalWidth){
+  var startOffset;
+  var startOffset2;
+  var destOffset;
+  var destOffset2;
+  for(var i = 0; i<compositeArray.length;i++){
+    if(constraintStart == compositeArray[i].bodies[0]){
+      if(compositeArray[i].shape == "gear"){
+        if(originalWidth>0){
+          startOffset = compositeArray[i].radius *0.8;
+        }
+        else{
+          startOffset = compositeArray[i].radius *-0.8;
+        }
+      }
+      else if(compositeArray[i].shape == "rect"){
+        startOffset = compositeArray[i].width*-0.5;
+        startOffset2 = 0;
+      }
+      else if(compositeArray[i].shape == "poly"){
+        startOffset = compositeArray[i].width*-0.5;
+        startOffset2 = 0;
+      }
+    }
+    if(constraintDestination == compositeArray[i].bodies[0]){
+      if(compositeArray[i].shape == "gear"){
+        destOffset = compositeArray[i].radius *0.8;
+      }
+      else if(compositeArray[i].shape == "rect"){
+        destOffset = compositeArray[i].width*-0.5;
+        destOffset2 = 0;
+      }
+      else if(compositeArray[i].shape == "poly"){
+        if(originalWidth<0){
+          destOffset = destOffset = (originalWidth*0.5) - length - 100
+        }
+        else{
+          destOffset = destOffset = (originalWidth*0.5) - length + 100
+        }
+        destOffset2 = 0;
+      }
+    }
+  }
+  var cLength = length;
+  if(startOffset && destOffset){
+    var constraintLength;
+    if(cLength){
+      constraintLength = cLength;
+    }
+    else{
+      constraintLength = 250;
+    }
+    jointComposites.push(Composite.create({
+        constraints: [Constraint.create({pointA: { x: startOffset*Math.cos(constraintStart.angle), y: startOffset*Math.sin(constraintStart.angle)  },
+          bodyA: constraintStart ,
+          bodyB: constraintDestination ,
+          pointB: { x: destOffset*Math.cos(constraintDestination.angle) + destOffset2*Math.sin(constraintDestination.angle), y: destOffset*Math.sin(constraintDestination.angle) + destOffset2*Math.cos(constraintDestination.angle)}, 
+          stiffness: 0.001
+        })]
+    }))
+    totalJointComposites++;
+    World.add(engine.world, jointComposites[totalJointComposites-1]);
+    for(var i = 0; i<compositeArray.length;i++){
+      if(constraintStart == compositeArray[i].bodies[0]){
+        compositeArray[i].hasConstraint = true;
+      }
+      if(constraintDestination == compositeArray[i].bodies[0]){
+        compositeArray[i].hasConstraint = true;
+      }
+    }
+    for(var i = 0; i<jointComposites.length;i++){
+      // console.log(jointComposites[i].constraints[0].bodyA);
+    }
+  }
+}
+// function createConstraintFlap2(constraintStart, constraintDestination, length, originalWidth){
+//   var startOffset;
+//   var startOffset2;
+//   var destOffset;
+//   var destOffset2;
+//   for(var i = 0; i<compositeArray.length;i++){
+//     if(constraintStart == compositeArray[i].bodies[0]){
+//       if(compositeArray[i].shape == "gear"){
+//         startOffset = compositeArray[i].radius *-0.8;
+//       }
+//       else if(compositeArray[i].shape == "rect"){
+//         startOffset = compositeArray[i].width*-0.5;
+//         startOffset2 = 0;
+//       }
+//       else if(compositeArray[i].shape == "poly"){
+//         startOffset = compositeArray[i].width*-0.5;
+//         startOffset2 = 0;
+//       }
+//     }
+//     if(constraintDestination == compositeArray[i].bodies[0]){
+//       if(compositeArray[i].shape == "gear"){
+//         destOffset = compositeArray[i].radius *-0.8;
+//       }
+//       else if(compositeArray[i].shape == "rect"){
+//         destOffset = compositeArray[i].width*-0.5;
+//         destOffset2 = 0;
+//       }
+//       else if(compositeArray[i].shape == "poly"){
+//         destOffset = (originalWidth*0.5) - length - 100
+//         destOffset2 = 0;
+//       }
+//     }
+//   }
+//   var cLength = length;
+//   if(startOffset && destOffset){
+//     var constraintLength;
+//     if(cLength){
+//       constraintLength = cLength;
+//     }
+//     else{
+//       constraintLength = 250;
+//     }
+//     jointComposites.push(Composite.create({
+//         constraints: [Constraint.create({pointA: { x: startOffset*Math.cos(constraintStart.angle), y: startOffset*Math.sin(constraintStart.angle)  },
+//           bodyA: constraintStart ,
+//           bodyB: constraintDestination ,
+//           pointB: { x: destOffset*Math.cos(constraintDestination.angle) + destOffset2*Math.sin(constraintDestination.angle), y: destOffset*Math.sin(constraintDestination.angle) + destOffset2*Math.cos(constraintDestination.angle)}, 
+//           stiffness: 0.001
+//         })]
+//     }))
+//     totalJointComposites++;
+//     World.add(engine.world, jointComposites[totalJointComposites-1]);
+//     for(var i = 0; i<compositeArray.length;i++){
+//       if(constraintStart == compositeArray[i].bodies[0]){
+//         compositeArray[i].hasConstraint = true;
+//       }
+//       if(constraintDestination == compositeArray[i].bodies[0]){
+//         compositeArray[i].hasConstraint = true;
+//       }
+//     }
+//     for(var i = 0; i<jointComposites.length;i++){
+//       // console.log(jointComposites[i].constraints[0].bodyA);
+//     }
+//   }
+// }
 // redraw and generate shape if any parameters are modified (WIP) ignore for now
 function changeBody(index){
   for(var i=0; i<1;i++){
@@ -1152,6 +1300,8 @@ function changeBody(index){
     Composite.remove(compositeArray[index], compositeArray[index].constraints[0]);
     verts2 = [];
     drawGear();
+    compositeArray[index].radius = radius;
+    compositeArray[index].shape = "gear"
     Composite.add(compositeArray[index], Bodies.fromVertices(tmpConstraintXPoint, tmpConstraintYPoint, [verts2]))
     if(compositeArray[index].shape == "gear"){
       Composite.add(compositeArray[index], Bodies.circle(tmpConstraintXPoint, tmpConstraintYPoint, 1))
@@ -1161,8 +1311,6 @@ function changeBody(index){
         stiffness: 1
       })
     )
-    compositeArray[index].radius = radius;
-    compositeArray[index].shape = "gear"
     for(var j=0; j<compositeArray[index].bodies[0].parts.length;j++){
       compositeArray[index].bodies[0].parts[j].render.strokeStyle = "#000000";
     }
@@ -1363,46 +1511,64 @@ function changeMotorSpeed(value){
     }
   }
 }
-// var prevSpaceValue = 50;
-// var changeSpaceWidth = 0;
-// var spaceValue = 50
-// function beamSpacing(value){
-//   if(compositeArray[2] && compositeArray[3]){
-//     changeSpaceWidth = value - prevSpaceValue
-//     compositeArray[2].constraints[0].pointA.x = compositeArray[0].constraints[0].pointA.x - value
-//     compositeArray[3].constraints[0].pointA.x = compositeArray[0].constraints[0].pointA.x - (value*-1)
-//     jointComposites[totalJointComposites-1].constraints[0].pointA.x = jointComposites[totalJointComposites-1].constraints[0].pointA.x + changeSpaceWidth
-//     jointComposites[totalJointComposites-2].constraints[0].pointA.x = jointComposites[totalJointComposites-2].constraints[0].pointA.x - changeSpaceWidth
-//     prevSpaceValue = value
-//     beamSpace = parseInt(value);
-//   }
-//   console.log("BeamSpace Value = " + value)
-// }
-// var prevPivotValue = 100;
-// var initialPivotValue = 100;
-// var pivotValue = 100;
-// var changePivotHeight;
-// function pivotHeight(value){
-//   if(compositeArray[2] && compositeArray[3]){
-//     changePivotHeight = value - prevPivotValue
-//     // if(openCloseModule){
-//     //   if(crankMod){
-//     //     deleteConstraint(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
-//     //     compositeArray[0].constraints[0].pointA.y = compositeArray[0].constraints[0].pointA.y - changePivotHeight
-//     //     createConstraint2(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
-//     //   }
-//     // }
-//     jointComposites[totalJointComposites-1].constraints[0].pointA.y = jointComposites[totalJointComposites-1].constraints[0].pointA.y - changePivotHeight
-//     jointComposites[totalJointComposites-2].constraints[0].pointA.y = jointComposites[totalJointComposites-2].constraints[0].pointA.y - changePivotHeight
-//     prevPivotValue = value
-//     pivotValue = value
-//     // rotationPoint = value/150
-//     console.log("Pivot Value = " + value)
+function updateSliders(){
+  if(document.getElementById("horizontalSpace")){
+    document.getElementById("horizontalSpaceValue").innerHTML = module.horizontalSpace
+    document.getElementById("horizontalSpace").value = module.horizontalSpace
 
-//   }
-// }
+  }
+  if(document.getElementById("verticalSpace")){
+    document.getElementById("verticalSpaceValue").innerHTML = module.verticalSpace
+    document.getElementById("verticalSpace").value = module.verticalSpace
+  }
+  if(document.getElementById("connectorLength")){
+    document.getElementById("connectorLengthValue").innerHTML = module.connectorLength
+    document.getElementById("connectorLength").value = module.connectorLength
+  }
+  if(document.getElementById("pivotPoint")){
+    document.getElementById("pivotPointValue").innerHTML = module.pivotPoint + "%"
+    document.getElementById("pivotPoint").value = Math.round((module.pivotPoint/50)*150)
+  }
+  if(document.getElementById("motorSpeed")){
+    document.getElementById("motorSpeedValue").innerHTML = module.motorSpeed
+    document.getElementById("motorSpeed").value = module.motorSpeed
+  }
+}
+function horizontalInput(value){
+  if(document.getElementById("horizontalSpace")){
+    module.horizontalSpace = value;
+  }
+}
+function verticalInput(value){
+  if(document.getElementById("verticalSpace")){
+    module.verticalSpace = value
+  }
+}
+function connectorInput(value){
+  if(document.getElementById("connectorLength")){
+    module.connectorLength = value
+  }
+}
+function pivotInput(value){
+  if(document.getElementById("pivotPoint")){
+    if(compositeArray[2]){
+      if(flapModule){
+        module.pivotPoint = Math.round((value/350)*100)
+      }
+      else{
+        module.pivotPoint = Math.round((value/300)*100)
+      }
+    }
+  }
+}
+function speedInput(value){
+  if(document.getElementById("motorSpeed")){
+    module.motorSpeed = value
+  }
+}
 
 Events.on(engine, 'beforeUpdate', function(event) {
+  updateSliders()
   // console.log(compositeArray[0].bodies[0].position.y)
   // pivotHeight()
     // increment counter just in case we need to do something that happens ever couple of frames

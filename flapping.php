@@ -44,16 +44,20 @@ else{
             <div id = "preview">
             </div>
             <div id = "a-slider" class = "slider-div">
-                <label>A:</label>
-                <input type="range" id="changeSpeed" value="40" min="0" max="100" onchange = "beamSpacing(this.value)">
+                <label>Horizontal Spacing (A): <span id = "horizontalSpaceValue"></span></label>
+                <input type="range" id="horizontalSpace" value="40" min="0" max="100" oninput = "horizontalInput(this.value)" onchange = "beamSpacing(this.value)">
             </div>
+            <br>
             <div id = "a-slider" class = "slider-div">
-                <label>B:</label>
-                <input type="range" id="changeTimeInterval" value="320" min="250" max="450" onchange = "">
+                <label>Connector Length (C): <span id = "connectorLengthValue"></span></label>
+                <br>
+                <input type="range" id="connectorLength" value="320" min="250" max="450" oninput = "connectorInput(this.value)" onchange = "constraintLength(this.value)">
             </div>
+            <br>
             <div id = "a-slider" class = "slider-div">
-                <label>C:</label>
-                <input type="range" id="changeTimeInterval" value="30" min="20" max="40" onchange = "changeMotorSpeed(this.value)">
+                <label>Motor Speed (E): <span id = "motorSpeedValue"></span></label>
+                <br>
+                <input type="range" id="motorSpeed" value="30" min="20" max="40" oninput = "speedInput(this.value)" onchange = "changeMotorSpeed(this.value)">
             </div>
             <br>
         </div>

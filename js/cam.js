@@ -96,8 +96,8 @@ function beamSpacing(value){
       changeSpaceWidth = value - prevSpaceValue
       compositeArray[2].constraints[0].pointA.x = compositeArray[0].constraints[0].pointA.x - value
       compositeArray[3].constraints[0].pointA.x = compositeArray[0].constraints[0].pointA.x - (value*-1)
-      // jointComposites[jointComposites.length-1].constraints[0].pointA.x = jointComposites[jointComposites.length-1].constraints[0].pointA.x + changeSpaceWidth
-      // jointComposites[jointComposites.length-2].constraints[0].pointA.x = jointComposites[jointComposites.length-2].constraints[0].pointA.x - changeSpaceWidth
+      jointComposites[jointComposites.length-1].constraints[0].pointA.x = jointComposites[jointComposites.length-1].constraints[0].pointA.x + changeSpaceWidth
+      jointComposites[jointComposites.length-2].constraints[0].pointA.x = jointComposites[jointComposites.length-2].constraints[0].pointA.x - changeSpaceWidth
       prevSpaceValue = value
       beamSpace = parseInt(value);
     }

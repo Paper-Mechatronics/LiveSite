@@ -122,21 +122,7 @@ var changePivotHeight;
 function pivotHeight(value){
   if(openCloseMod){
     if(compositeArray[2] && compositeArray[3]){
-      changePivotHeight = value - prevPivotValue
-      // if(openCloseModule){
-      //   if(crankMod){
-      //     deleteConstraint(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
-      //     compositeArray[0].constraints[0].pointA.y = compositeArray[0].constraints[0].pointA.y - changePivotHeight
-      //     createConstraint2(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
-      //   }
-      // }
-      
-        jointComposites[jointComposites.length-1].constraints[0].pointA.y = jointComposites[jointComposites.length-1].constraints[0].pointA.y - changePivotHeight
-        jointComposites[jointComposites.length-2].constraints[0].pointA.y = jointComposites[jointComposites.length-2].constraints[0].pointA.y - changePivotHeight
-      prevPivotValue = value
-      pivotValue = value
-      // rotationPoint = value/150
-      console.log("Pivot Value = " + value)
+      circleJointHeight(value)
 
     }
   }

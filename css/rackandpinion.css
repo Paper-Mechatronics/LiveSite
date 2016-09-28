@@ -126,21 +126,22 @@ body {
         
     }
     .controls label, .controls input{
-        display: inline-block;
+        
+    }
+    .controls label, .controls input{
+        
     }
     .slider-div{
         height: 30px;
-        position: relative;
     }
     .slider-div input, .slider-div label{
-        position: absolute;
         height: 100%;
     }
     .slider-div label{
         font-size: 1.2em;
     }
-    .slider-div input{
-        margin-left: 30px;
+    label{
+        display: initial;
     }
     input[type=checkbox]
     {

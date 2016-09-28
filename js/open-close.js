@@ -115,6 +115,9 @@ function rackPinion(){
   createConstraintFake(compositeArray[0].bodies[0], compositeArray[2].bodies[0])
   createConstraintFake(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
   constraintPosition(0)
+  module.connectorLength = c
+  module.pivotPoint = 0
+  module.verticalSpace = 0;
 }
 function cam(){
   rectBase = 400
@@ -139,6 +142,8 @@ function cam(){
   createConstraintFake(compositeArray[0].bodies[0], compositeArray[2].bodies[0])
   createConstraintFake(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
   constraintPosition(113)
+  module.connectorLength = c
+  module.pivotPoint = Math.round((113/300)*100)
 
 }
 function crank(){
@@ -165,6 +170,9 @@ function crank(){
   createConstraintFake(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
   compositeArray[1].alternate = false;
   constraintPosition(150)
+  module.connectorLength = c
+  module.pivotPoint = (150/300)*100
+  module.verticalSpace = 75;
 }
 function changeMech(){
   var string = document.getElementById("changeMech").value;
@@ -236,6 +244,7 @@ function beamSpacing(value){
     beamSpace = parseInt(value);
   }
   console.log("BeamSpace Value = " + value)
+  document.getElementById("horizontalSpaceValue").innerHTML = value
 }
 var prevPivotValue = 100;
 var initialPivotValue = 100;
@@ -380,6 +389,7 @@ createConstraintFake(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
 compositeArray[1].isMotor = true;
 compositeArray[1].alternate = true;
 compositeArray[1].motorSpeed = 0.021
+module.motorSpeed = compositeArray[1].motorSpeed*1000
 pivotHeight(0)
 Engine.run(engine);
 Render.run(render);

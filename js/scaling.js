@@ -23,7 +23,7 @@ if (rackPinionModule == true){
 
 ///////////////// Animation /////////////////////////////////////
 Events.on(engine, 'beforeUpdate', function(event) {
-  console.log("working")
+  // console.log("working")
   var world = engine.world,
       mouse = mouseConstraint.mouse,
       translate;

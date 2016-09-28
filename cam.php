@@ -45,24 +45,32 @@ else{
             <div id = "preview">
             </div>
             <div id = "a-slider" class = "slider-div">
-                <label>A:</label>
-                <input type="range" id="changeSpeed" value="40" min="0" max="100" onchange = "beamSpacing(this.value)">
+                <label>Horizontal Spacing (A): <span id = "horizontalSpaceValue"></span></label>
+                <input type="range" id="horizontalSpace" value="40" min="0" max="100" oninput = "horizontalInput(this.value)" onchange = "beamSpacing(this.value)">
             </div>
+            <br>
             <div id = "a-slider" class = "slider-div">
-                <label>B:</label>
-                <input type="range" value="0" min="0" max="100" onchange = "pivotHeight(this.value)">
+                <label>Vertical Spacing (B): <span id = "verticalSpaceValue"></span></label>
+                <br>
+                <input type="range" id="verticalSpace" value="0" min="0" max="100" oninput = "verticalInput(this.value)" onchange = "pivotHeight(this.value)">
             </div>
+            <br>
             <div id = "a-slider" class = "slider-div">
-                <label>C:</label>
-                <input type="range" id="changeTimeInterval" value="320" min="250" max="450" onchange = "constraintLength(this.value)">
+                <label>Connector Length (C): <span id = "connectorLengthValue"></span></label>
+                <br>
+                <input type="range" id="connectorLength" value="320" min="250" max="450" oninput = "connectorInput(this.value)" onchange = "constraintLength(this.value)">
             </div>
+            <br>
             <div id = "a-slider" class = "slider-div">
-                <label>D:</label>
-                <input type="range" id="changeTimeInterval" value="0" min="0" max="150" onchange = "constraintPosition(this.value)">
+                <label>Pivot Point (D): <span id = "pivotPointValue"></span></label>
+                <br>
+                <input type="range" id="pivotPoint" value="0" min="0" max="150" oninput = "pivotInput(this.value)" onchange = "constraintPosition(this.value)">
             </div>
+            <br>
             <div id = "a-slider" class = "slider-div">
-                <label>E:</label>
-                <input type="range" id="changeTimeInterval" value="30" min="20" max="40" onchange = "changeMotorSpeed(this.value)">
+                <label>Motor Speed (E): <span id = "motorSpeedValue"></span></label>
+                <br>
+                <input type="range" id="motorSpeed" value="30" min="20" max="40" oninput = "speedInput(this.value)" onchange = "changeMotorSpeed(this.value)">
             </div>
             <br>
         </div>

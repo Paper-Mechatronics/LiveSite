@@ -3,6 +3,7 @@ var c = 369
 var rectBase = 600
 var originalWidth1
 var originalWidth2
+module.verticalSpace = 100
 // generate small gear
 function smallGear(){
   angleFactor = 0.21
@@ -365,7 +366,7 @@ function continuous(){
 function alternatingGear(){
   document.getElementById("mirror").disabled = false;
     changeBody(1)
-    Body.setPosition(compositeArray[0].bodies[0], {x:compositeArray[0].constraints[0].pointA.x, y:compositeArray[0].constraints[0].pointA.y+130})
+    Body.setPosition(compositeArray[0].bodies[0], {x:compositeArray[0].constraints[0].pointA.x, y:compositeArray[0].constraints[0].pointA.y})
     compositeArray[1].alternate = true;
     compositeArray[0].constraints[0].stiffness = 0.00001
     compositeArray[1].motorDir = 1;
@@ -458,8 +459,8 @@ function constraintPosition(value){
     createConstraintFake2(compositeArray[0].bodies[0], compositeArray[2].bodies[0],-value,originalWidth1)
     createConstraintFake2(compositeArray[0].bodies[0], compositeArray[3].bodies[0],value, originalWidth2)
     if(flipY){
-      compositeArray[compositeArray.length-1].width = originalWidth1 - value
-      compositeArray[compositeArray.length-2].width = originalWidth2 - (-value)
+      compositeArray[compositeArray.length-2].width = originalWidth1 - value
+      compositeArray[compositeArray.length-1].width = originalWidth2 - (-value)
       if(paired){
         deleteConstraint(compositeArray[compositeArray.length-1].bodies[0], compositeArray[5].bodies[0])
         deleteConstraint(compositeArray[compositeArray.length-2].bodies[0], compositeArray[5].bodies[0])
@@ -517,16 +518,31 @@ Events.on(engine, 'afterUpdate', function(event) {
       Body.setAngle(compositeArray[2].bodies[0], angleC - 1.5708 );
       Body.setAngle(compositeArray[3].bodies[0], -(angleC - 1.5708));
       if(flipY){
+        var bottom2 = compositeArray[compositeArray.length-3].constraints[0].pointA.y + 600
+        var top2 = compositeArray[compositeArray.length-3].bodies[0].position.y + 200 + pivotValue
+        var b2 = bottom2 - top2
+        var a2 = compositeArray[compositeArray.length-1].width
+        // var c = Math.sqrt((rectWidth*rectWidth)+(pivotSpace*pivotSpace))
+        var angleC2 = Math.acos(((a2*a2)+(b2*b2)-(c*c))/(2*a2*b2))
+        // if(compositeArray[compositeArray.length-1].width != originalWidth1){
+        //     angleC2 = angleC
+        //   }
         if(paired){
-          Body.setAngle(compositeArray[compositeArray.length -2].bodies[0], angleC - 0.93 );
-          Body.setAngle(compositeArray[compositeArray.length -1].bodies[0], -(angleC - 0.93));
+          Body.setAngle(compositeArray[compositeArray.length -2].bodies[0], angleC2 - 1.5708);
+          Body.setAngle(compositeArray[compositeArray.length -1].bodies[0], -(angleC2 - 1.5708));
+          console.log(compositeArray[2].bodies[0].angle)
+          console.log(compositeArray[compositeArray.length-1].bodies[0].angle)
         }
         else if(shared){
-          Body.setAngle(compositeArray[compositeArray.length -1].bodies[0], angleC - 1.5708 );
-          Body.setAngle(compositeArray[compositeArray.length -2].bodies[0], -(angleC - 1.5708));
+          Body.setAngle(compositeArray[compositeArray.length -2].bodies[0], angleC2 - 1.5708 );
+          Body.setAngle(compositeArray[compositeArray.length -1].bodies[0], -(angleC2 - 1.5708));
         }
         // console.log(angleC)
       }
+    }
+    if(flipY){
+      Body.setVelocity(compositeArray[compositeArray.length-1].bodies[0], {x:0, y:0})
+      Body.setVelocity(compositeArray[compositeArray.length-2].bodies[0], {x:0, y:0})
     }
     Body.setVelocity(compositeArray[2].bodies[0], {x:0, y:0})
     Body.setVelocity(compositeArray[3].bodies[0], {x:0, y:0})
