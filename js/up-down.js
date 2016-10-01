@@ -90,6 +90,7 @@ function largeGear(){
   }
 }
 function rackPinion(){
+  removeUIConstraints(compositeArray[0])
   deleteConstraint(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
   // radius = 80;
   steps = (0.25 * radius)*2;
@@ -104,8 +105,10 @@ function rackPinion(){
   compositeArray[0].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)
   compositeArray[0].constraints[0].pointA.y = (window.innerHeight)*(0.6)
   compositeArray[1].alternate = true;
+  createUIConstraints(compositeArray[0], 50, 0,6)
 }
 function cam(){
+  removeUIConstraints(compositeArray[0])
   deleteConstraint(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
   // radius = 60;
   steps = 40;
@@ -119,8 +122,10 @@ function cam(){
   compositeArray[0].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)
   compositeArray[0].constraints[0].pointA.y = (window.innerHeight)*(0.4)
   compositeArray[1].alternate = false;
+  createUIConstraints(compositeArray[0], 50, 0,6)
 }
 function crank(){
+  removeUIConstraints(compositeArray[0])
   // radius = 80;
   steps = (0.25 * radius)*2;
   toothWidthDegree = 2;
@@ -202,11 +207,50 @@ function circleJointHeight(value){
   }
 }
 
+var prevSpaceValue = 50;
+var changeSpaceWidth = 0;
+var spaceValue = 50
+function beamSpacing(value){
+  if(compositeArray[2] && compositeArray[3]){
+    changeSpaceWidth = value - prevSpaceValue
+    compositeArray[2].constraints[0].pointA.x = compositeArray[0].constraints[0].pointA.x - value
+    compositeArray[3].constraints[0].pointA.x = compositeArray[0].constraints[0].pointA.x - (value*-1)
+    if(!crankMod){
+      jointComposites[totalJointComposites-1].constraints[0].pointA.x = jointComposites[totalJointComposites-1].constraints[0].pointA.x + changeSpaceWidth
+      jointComposites[totalJointComposites-2].constraints[0].pointA.x = jointComposites[totalJointComposites-2].constraints[0].pointA.x - changeSpaceWidth
+    }
+    prevSpaceValue = value
+    beamSpace = parseInt(value);
+  }
+  console.log("BeamSpace Value = " + value)
+  document.getElementById("horizontalSpaceValue").innerHTML = value
+}
+var prevPivotValue = 100;
+var initialPivotValue = 100;
+var pivotValue = 100;
+var changePivotHeight;
+function pivotHeight(value){
+  if(crankMod){
+    circleJointHeight(value)
+  }
+  else{
+    changePivotHeight = value - prevPivotValue
+    // jointComposites[totalJointComposites-1].constraints[0].pointA.y = jointComposites[totalJointComposites-1].constraints[0].pointA.y - changePivotHeight
+    // jointComposites[totalJointComposites-2].constraints[0].pointA.y = jointComposites[totalJointComposites-2].constraints[0].pointA.y - changePivotHeight
+    prevPivotValue = value
+    pivotValue = value
+    // rotationPoint = value/150
+    console.log("Pivot Value = " + value)
+  }
+}
+
+
 ////////////////////// RUN /////////////////////////////
 
 // run the engine
 addLinGearComposite((window.innerWidth)*(0.75*0.45),(window.innerHeight)*(0.6))
 addGearComposite((window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*1.8)) ,(window.innerHeight)*(0.48))
+createUIConstraints(compositeArray[0], 50, 0,6)
 // Composite.add(compositeArray[0],Bodies.circle(compositeArray[0].constraints[0].pointA.x,compositeArray[0].constraints[0].pointA.y -275, 10))
 // addCircleComposite(compositeArray[0].constraints[0].pointA.x, compositeArray[0].constraints[0].pointA.y - 275, 10)
 // createConstraint2(compositeArray[0].bodies[0], compositeArray[0].bodies[0])

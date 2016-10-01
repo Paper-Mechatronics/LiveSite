@@ -44,20 +44,14 @@ else{
             <div id = "preview">
             </div>
             <div id = "a-slider" class = "slider-div">
-                <label>Horizontal Spacing (A): <span id = "horizontalSpaceValue"></span></label>
+                <label>(A) Horizontal Spacing: <span id = "horizontalSpaceValue"></span></label>
                 <input type="range" id="horizontalSpace" value="40" min="0" max="100" oninput = "horizontalInput(this.value)" onchange = "beamSpacing(this.value)">
             </div>
             <br>
             <div id = "a-slider" class = "slider-div">
-                <label>Connector Length (C): <span id = "connectorLengthValue"></span></label>
+                <label>(C) Connector Length: <span id = "connectorLengthValue"></span></label>
                 <br>
                 <input type="range" id="connectorLength" value="320" min="250" max="450" oninput = "connectorInput(this.value)" onchange = "constraintLength(this.value)">
-            </div>
-            <br>
-            <div id = "a-slider" class = "slider-div">
-                <label>Motor Speed (E): <span id = "motorSpeedValue"></span></label>
-                <br>
-                <input type="range" id="motorSpeed" value="30" min="20" max="40" oninput = "speedInput(this.value)" onchange = "changeMotorSpeed(this.value)">
             </div>
             <br>
         </div>
@@ -91,6 +85,13 @@ else{
                 <button class = "object btn btn-primary" type="button" id="alternate" onclick="">180</button>
                 <button class = "object btn btn-primary" type="button" id="continuous" onclick="">Continuous</button>
             </div>
+            <br>
+            <div id = "a-slider" class = "slider-div">
+                <label>Motor Speed: <span id = "motorSpeedValue"></span> (<span id = "motorAngleValue"></span>&deg;)</label>
+                <br>
+                <input type="range" id="motorSpeed" value="30" min="20" max="40" oninput = "speedInput(this.value)" onchange = "changeMotorSpeed(this.value)">
+            </div>
+            <br>
         </div>
         <div class = "footer">
             <a href = "http://www.papermech.net/open-close.php">

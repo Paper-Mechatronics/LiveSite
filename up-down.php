@@ -46,12 +46,9 @@ else{
             <div id = "preview">
             </div>
             <div id = "a-slider" class = "slider-div">
-                <label>A:</label>
-                <input type="range" id="changeSpeed" value="40" min="0" max="100" onchange = "circleJointHeight(this.value)">
-            </div>
-            <div id = "a-slider" class = "slider-div">
-                <label>B:</label>
-                <input type="range" id="changeTimeInterval" value="30" min="20" max="40" onchange = "changeMotorSpeed(this.value)">
+                <label>(A) Vertical Spacing: <span id = "verticalSpaceValue"></span></label>
+                <br>
+                <input type="range" id="verticalSpace" value="0" min="0" max="100" oninput = "verticalInput(this.value)" onchange = "pivotHeight(this.value)">
             </div>
             <br>
         </div>
@@ -70,6 +67,13 @@ else{
                 <button class = "object btn btn-primary" type="button" id="alternate" onclick="alternatingGear()">180</button>
                 <button class = "object btn btn-primary" type="button" id="continuous" onclick="continuous()">Continuous</button>
             </div>
+            <br>
+            <div id = "a-slider" class = "slider-div">
+                <label>Motor Speed: <span id = "motorSpeedValue"></span> (<span id = "motorAngleValue"></span>&deg;)</label>
+                <br>
+                <input type="range" id="motorSpeed" value="30" min="20" max="40" oninput = "speedInput(this.value)" onchange = "changeMotorSpeed(this.value)">
+            </div>
+            <br>
         </div>
         <div class = "footer">
             <a href = "http://www.papermech.net/open-close.php">

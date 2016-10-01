@@ -92,9 +92,12 @@ function largeGear(){
   }
 }
 function rackPinion(){
+  removeUIConstraints(compositeArray[0])
   rectBase = 600
   var c = 369
   pivotValue = 0
+  prevSpaceValue = 50
+  prevPivotValue = 0;
   deleteConstraint(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
   deleteConstraint(compositeArray[2].bodies[0], compositeArray[0].bodies[0])
   deleteConstraint(compositeArray[3].bodies[0], compositeArray[0].bodies[0])
@@ -118,11 +121,15 @@ function rackPinion(){
   module.connectorLength = c
   module.pivotPoint = 0
   module.verticalSpace = 0;
+  createUIConstraints(compositeArray[0], 50, 0,6)
 }
 function cam(){
+  removeUIConstraints(compositeArray[0])
   rectBase = 400
   pivotValue = 0
   c = 267
+  prevSpaceValue = 50
+  prevPivotValue = 0;
   deleteConstraint(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
   deleteConstraint(compositeArray[2].bodies[0], compositeArray[0].bodies[0])
   deleteConstraint(compositeArray[3].bodies[0], compositeArray[0].bodies[0])
@@ -144,11 +151,16 @@ function cam(){
   constraintPosition(113)
   module.connectorLength = c
   module.pivotPoint = Math.round((113/300)*100)
+  createUIConstraints(compositeArray[0], 50, 0,6)
 
 }
 function crank(){
+  removeUIConstraints(compositeArray[0])
   rectBase = 600
   c = 423
+  pivotValue = 0
+  prevSpaceValue = 50
+  prevPivotValue = 0;
   deleteConstraint(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
   deleteConstraint(compositeArray[2].bodies[0], compositeArray[0].bodies[0])
   deleteConstraint(compositeArray[3].bodies[0], compositeArray[0].bodies[0])
@@ -285,6 +297,8 @@ function constraintPosition(value){
   compositeArray[3].width = originalWidth2 - (-value)
   createConstraintFake2(compositeArray[0].bodies[0], compositeArray[2].bodies[0],-value,originalWidth1)
   createConstraintFake2(compositeArray[0].bodies[0], compositeArray[3].bodies[0],value, originalWidth2)
+  jointComposites[jointComposites.length-1].constraints[0].pointA.x = jointComposites[jointComposites.length-1].constraints[0].pointA.x + (prevSpaceValue - 50)
+  jointComposites[jointComposites.length-2].constraints[0].pointA.x = jointComposites[jointComposites.length-2].constraints[0].pointA.x - (prevSpaceValue - 50)
   console.log("constraintPosition Value = " + value)
 
 }
@@ -379,6 +393,7 @@ Events.on(engine, 'afterUpdate', function(event) {
 // run the engine
 addLinGearComposite((window.innerWidth)*(0.75*0.45),(window.innerHeight)*(0.8) + rackPinBase)
 compositeArray[0].constraints[0].stiffness = 0.0000001;
+createUIConstraints(compositeArray[0], prevSpaceValue, prevPivotValue,6)
 addGearComposite((window.innerWidth)*(0.75*0.45)+((radius)+((toothHeight)*2)) ,(window.innerHeight)*(0.68) + rackPinBase)
 addRectComposite((300), 5,(window.innerWidth)*(0.75*0.45)-200,compositeArray[0].constraints[0].pointA.y-rectBase)
 addRectComposite((-300), 5,(window.innerWidth)*(0.75*0.45)+200,compositeArray[0].constraints[0].pointA.y-rectBase)

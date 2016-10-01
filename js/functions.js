@@ -1222,6 +1222,58 @@ function createConstraintFlap(constraintStart, constraintDestination, length, or
     }
   }
 }
+function createUIConstraints(composite, initialXSpace, initialYSpace, radius){
+  if(composite.shape == "linGear"){
+    Composite.add(composite, Bodies.circle(composite.bodies[0].position.x - initialXSpace, composite.bodies[0].position.y - 200 - initialYSpace, radius))
+    Composite.add(composite, Bodies.circle(composite.bodies[0].position.x + initialXSpace, composite.bodies[0].position.y - 200 - initialYSpace, radius))
+    composite.bodies[1].render.fillStyle = "#bc98f9"
+    composite.bodies[2].render.fillStyle = "#bc98f9"
+    composite.bodies[1].render.strokeStyle = "#000"
+    composite.bodies[2].render.strokeStyle = "#000"
+    Composite.add(composite, Constraint.create({bodyA: composite.bodies[1], bodyB: composite.bodies[2], stiffness: 0.00001}))
+    Composite.add(composite, Constraint.create({pointA: {x:composite.bodies[0].position.x, y: composite.bodies[0].position.y-200 - initialYSpace}, pointB: {x:0, y:-200}, bodyB: composite.bodies[0], stiffness: 0.00001}))
+    // UIJointComposites.push(Composite.create({
+    //     constraints: [Constraint.create({pointA: { x: startOffset*Math.cos(constraintStart.angle), y: startOffset*Math.sin(constraintStart.angle) + startOffset2*Math.cos(constraintStart.angle) },
+    //     bodyA: constraintStart ,
+    //     bodyB: constraintDestination ,
+    //     pointB: { x: destOffset*Math.cos(constraintDestination.angle) + destOffset2*Math.sin(constraintDestination.angle), y: destOffset*Math.sin(constraintDestination.angle) + destOffset2*Math.cos(constraintDestination.angle)}, 
+    //     stiffness: 0.00001
+    //     })]
+    // }))
+  }
+}
+function createUIConstraintsMirror(composite, initialXSpace, initialYSpace, radius){
+  if(composite.shape == "linGear"){
+    Composite.add(composite, Bodies.circle(composite.bodies[0].position.x - initialXSpace, composite.bodies[0].position.y + 200 + initialYSpace, radius))
+    Composite.add(composite, Bodies.circle(composite.bodies[0].position.x + initialXSpace, composite.bodies[0].position.y + 200 + initialYSpace, radius))
+    composite.bodies[1].render.fillStyle = "#bc98f9"
+    composite.bodies[2].render.fillStyle = "#bc98f9"
+    composite.bodies[1].render.strokeStyle = "#000"
+    composite.bodies[2].render.strokeStyle = "#000"
+    Composite.add(composite, Constraint.create({bodyA: composite.bodies[1], bodyB: composite.bodies[2], stiffness: 0.00001}))
+    Composite.add(composite, Constraint.create({pointA: {x:composite.bodies[0].position.x, y: composite.bodies[0].position.y+200 + initialYSpace}, pointB: {x:0, y:-200}, bodyB: composite.bodies[0], stiffness: 0.00001}))
+    // UIJointComposites.push(Composite.create({
+    //     constraints: [Constraint.create({pointA: { x: startOffset*Math.cos(constraintStart.angle), y: startOffset*Math.sin(constraintStart.angle) + startOffset2*Math.cos(constraintStart.angle) },
+    //     bodyA: constraintStart ,
+    //     bodyB: constraintDestination ,
+    //     pointB: { x: destOffset*Math.cos(constraintDestination.angle) + destOffset2*Math.sin(constraintDestination.angle), y: destOffset*Math.sin(constraintDestination.angle) + destOffset2*Math.cos(constraintDestination.angle)}, 
+    //     stiffness: 0.00001
+    //     })]
+    // }))
+  }
+}
+function removeUIConstraints(composite){
+  if(composite.bodies[1] && composite.bodies[2]){
+    composite.constraints.splice(composite.constraints.length-1,1);
+    composite.constraints.splice(composite.constraints.length-1,1);
+    composite.bodies.splice(1,1);
+    composite.bodies.splice(1,1);
+  }
+  // composite.constraints[composite.constraints.length-1].bodyA = null;
+  // composite.constraints[composite.constraints.length-1].bodyB = null;
+  // composite.constraints[composite.constraints.length-2].pointA = null;
+  // composite.constraints[composite.constraints.length-2].pointB = null;
+}
 // function createConstraintFlap2(constraintStart, constraintDestination, length, originalWidth){
 //   var startOffset;
 //   var startOffset2;
@@ -1566,6 +1618,23 @@ function speedInput(value){
     module.motorSpeed = value
   }
 }
+function motorAngle(angle){
+  angleEl = document.getElementById("motorAngleValue")
+  var rotAngle = 0
+  var degreeAngle = 0
+  if(angleEl){
+    var rotationNumber = Math.floor(angle/(2*Math.PI))
+    var rotAngle = angle - ((2*Math.PI)*rotationNumber)
+    degreeAngle = Math.round(rotAngle * (180/Math.PI))
+    // if(degreeAngle>360){
+    //   degreeAngle = degreeAngle - 360
+    // }
+    // var degreeAngle = Math.round(rotAngle * (180/Math.PI))
+    angleEl.innerHTML = degreeAngle
+    console.log(angle)
+    console.log(rotationNumber)
+  }
+}
 
 Events.on(engine, 'beforeUpdate', function(event) {
   updateSliders()
@@ -1577,30 +1646,52 @@ Events.on(engine, 'beforeUpdate', function(event) {
     for(var i = 0; i<compositeArray.length;i++){
       if(compositeArray[i].bodies[1]){
         compositeArray[i].bodies[1].collisionFilter.mask = otherCategory
-        Body.setPosition(compositeArray[i].bodies[1], {x:compositeArray[i].constraints[0].pointA.x, y:compositeArray[i].bodies[0].position.y})
-        Body.setAngle(compositeArray[i].bodies[1], compositeArray[i].bodies[0].angle)
-        if(compositeArray[i].radius == 80){
-          if(compositeArray[i].isMotor && compositeArray[i].realMotor){
-            compositeArray[i].bodies[1].render.sprite.texture = "./img/gear_m_large.png"
+        if(compositeArray[i].shape == "linGear"){
+          if(i == 0){
+            Body.setPosition(compositeArray[i].bodies[1], {x:compositeArray[i].bodies[0].position.x - parseInt(prevSpaceValue) , y:compositeArray[i].bodies[0].position.y  - 200 - prevPivotValue})
+            if(compositeArray[i].bodies[2]){
+              Body.setPosition(compositeArray[i].bodies[2], {x:compositeArray[i].bodies[0].position.x + parseInt(prevSpaceValue) , y:compositeArray[i].bodies[0].position.y  - 200 - prevPivotValue})
+              // console.log(prevSpaceValue)
+            }
+            compositeArray[i].constraints[compositeArray[i].constraints.length-1].pointA.x = compositeArray[i].bodies[0].position.x
+            compositeArray[i].constraints[compositeArray[i].constraints.length-1].pointA.y = compositeArray[i].bodies[1].position.y
           }
           else{
-            compositeArray[i].bodies[1].render.sprite.texture = "./img/gear_nm_large.png"
+            Body.setPosition(compositeArray[i].bodies[1], {x:compositeArray[i].bodies[0].position.x - parseInt(prevSpaceValue) , y:compositeArray[i].bodies[0].position.y  + 200 + parseInt(prevPivotValue)})
+            if(compositeArray[i].bodies[2]){
+              Body.setPosition(compositeArray[i].bodies[2], {x:compositeArray[i].bodies[0].position.x + parseInt(prevSpaceValue) , y:compositeArray[i].bodies[0].position.y  + 200 + parseInt(prevPivotValue)})
+              console.log(prevSpaceValue)
+            }
+            compositeArray[i].constraints[compositeArray[i].constraints.length-1].pointA.x = compositeArray[i].bodies[0].position.x
+            compositeArray[i].constraints[compositeArray[i].constraints.length-1].pointA.y = compositeArray[i].bodies[1].position.y
           }
         }
-        else if(compositeArray[i].radius == 64){
-          if(compositeArray[i].isMotor && compositeArray[i].realMotor){
-            compositeArray[i].bodies[1].render.sprite.texture = "./img/gear_m_med.png"
+        else{
+          Body.setPosition(compositeArray[i].bodies[1], {x:compositeArray[i].constraints[0].pointA.x, y:compositeArray[i].bodies[0].position.y})
+          Body.setAngle(compositeArray[i].bodies[1], compositeArray[i].bodies[0].angle)
+          if(compositeArray[i].radius == 80){
+            if(compositeArray[i].isMotor && compositeArray[i].realMotor){
+              compositeArray[i].bodies[1].render.sprite.texture = "./img/gear_m_large.png"
+            }
+            else{
+              compositeArray[i].bodies[1].render.sprite.texture = "./img/gear_nm_large.png"
+            }
           }
-          else{
-            compositeArray[i].bodies[1].render.sprite.texture = "./img/gear_nm_med.png"
+          else if(compositeArray[i].radius == 64){
+            if(compositeArray[i].isMotor && compositeArray[i].realMotor){
+              compositeArray[i].bodies[1].render.sprite.texture = "./img/gear_m_med.png"
+            }
+            else{
+              compositeArray[i].bodies[1].render.sprite.texture = "./img/gear_nm_med.png"
+            }
           }
-        }
-        else if(compositeArray[i].radius == 48){
-          if(compositeArray[i].isMotor && compositeArray[i].realMotor){
-            compositeArray[i].bodies[1].render.sprite.texture = "./img/gear_m_small.png"
-          }
-          else{
-            compositeArray[i].bodies[1].render.sprite.texture = "./img/gear_nm_small.png"
+          else if(compositeArray[i].radius == 48){
+            if(compositeArray[i].isMotor && compositeArray[i].realMotor){
+              compositeArray[i].bodies[1].render.sprite.texture = "./img/gear_m_small.png"
+            }
+            else{
+              compositeArray[i].bodies[1].render.sprite.texture = "./img/gear_nm_small.png"
+            }
           }
         }
       }
@@ -1641,6 +1732,9 @@ Events.on(engine, 'beforeUpdate', function(event) {
 
       // if body is set as a motor
       if(compositeArray[i].isMotor == true){
+        if(i < 2){
+          motorAngle(compositeArray[i].bodies[0].angle)
+        }
         // and if alternating is active
         if(compositeArray[i].alternate ==true){
           // if body angle is less than 0 change motor direction
