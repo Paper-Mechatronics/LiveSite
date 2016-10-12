@@ -44,14 +44,20 @@ else{
             <div id = "preview">
             </div>
             <div id = "a-slider" class = "slider-div">
-                <label>(A) Horizontal Spacing: <span id = "horizontalSpaceValue"></span></label>
+                <label>Horizontal Spacing: <span id = "horizontalSpaceValue"></span></label>
                 <input type="range" id="horizontalSpace" value="40" min="0" max="100" oninput = "horizontalInput(this.value)" onchange = "beamSpacing(this.value)">
             </div>
             <br>
             <div id = "a-slider" class = "slider-div">
-                <label>(C) Connector Length: <span id = "connectorLengthValue"></span></label>
+                <label>Connector Length: <span id = "connectorLengthValue"></span></label>
                 <br>
                 <input type="range" id="connectorLength" value="320" min="250" max="450" oninput = "connectorInput(this.value)" onchange = "constraintLength(this.value)">
+            </div>
+            <br>
+            <div id = "a-slider" class = "slider-div">
+                <label>Beam Length: <span id = "beamWidthValue"></span></label>
+                <br>
+                <input type="range" id="beamWidth" value="0" min="0" max="150" oninput = "beamWidthInput(this.value)" onchange = "beamWidth(this.value)">
             </div>
             <br>
         </div>
@@ -82,16 +88,23 @@ else{
             <div>
             <p>Motor Rotation:</p>
             <br>
-                <button class = "object btn btn-primary" type="button" id="alternate" onclick="">180</button>
-                <button class = "object btn btn-primary" type="button" id="continuous" onclick="">Continuous</button>
+                <button class = "object btn btn-primary" type="button" id="alternate" onclick="alternateMotor()">180</button>
+                <button class = "object btn btn-primary" type="button" id="continuous" onclick="continuousMotor()">Continuous</button>
             </div>
             <br>
             <div id = "a-slider" class = "slider-div">
                 <label>Motor Speed: <span id = "motorSpeedValue"></span> (<span id = "motorAngleValue"></span>&deg;)</label>
                 <br>
-                <input type="range" id="motorSpeed" value="30" min="20" max="40" oninput = "speedInput(this.value)" onchange = "changeMotorSpeed(this.value)">
+                <input type="range" id="motorSpeed" value="40" min="5" max="50" oninput = "speedInput(this.value)" onchange = "changeMotorSpeed(this.value)">
             </div>
             <br>
+            <div>
+            <p>Simulation:</p>
+            <br>
+                <button class = "object btn btn-primary" type="button" id="alternate" onclick="startRunner()">Start</button>
+                <button class = "object btn btn-primary" type="button" id="continuous" onclick="stopRunner()">Stop</button>
+            
+            </div>
         </div>
         <div class = "footer">
             <a href = "http://www.papermech.net/open-close.php">

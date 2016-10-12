@@ -141,6 +141,7 @@ body {
     }
     .slider-div label{
         font-size: 1.2em;
+        font-weight: normal;
     }
     
     input[type=checkbox]

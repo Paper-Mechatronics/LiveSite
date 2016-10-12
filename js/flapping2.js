@@ -34,6 +34,7 @@ function changeBodyFlap(index){
       compositeArray[index].bodies[0].parts[j].render.strokeStyle = "#000000";
     }
   }
+  tickFunction()
 }
 function smallGearL(){
   deleteConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
@@ -46,7 +47,8 @@ function smallGearL(){
   toothWidthDegree = 4;
   toothWidth = (toothWidthDegree/conversionFactor);
   changeBodyFlap(0);
-  createConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
+  createConstraintFake2(compositeArray[0].bodies[0], compositeArray[3].bodies[0], beamWidthChange, originalWidth2)
+  tickFunction()
 }
 function mediumGearL(){
   deleteConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
@@ -59,7 +61,8 @@ function mediumGearL(){
   toothWidthDegree = 3;
   toothWidth = (toothWidthDegree/conversionFactor);
   changeBodyFlap(0);
-  createConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
+  createConstraintFake2(compositeArray[0].bodies[0], compositeArray[3].bodies[0], beamWidthChange, originalWidth2)
+  tickFunction()
 }
 function largeGearL(){
   deleteConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
@@ -72,7 +75,8 @@ function largeGearL(){
   toothWidthDegree = 2;
   toothWidth = (toothWidthDegree/conversionFactor);
   changeBodyFlap(0);
-  createConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
+  createConstraintFake2(compositeArray[0].bodies[0], compositeArray[3].bodies[0], beamWidthChange, originalWidth2)
+  tickFunction()
 }
 function smallGearR(){
   deleteConstraint(compositeArray[1].bodies[0], compositeArray[2].bodies[0])
@@ -85,7 +89,8 @@ function smallGearR(){
   toothWidthDegree = 4;
   toothWidth = (toothWidthDegree/conversionFactor);
   changeBodyFlap(1);
-  createConstraint3(compositeArray[1].bodies[0], compositeArray[2].bodies[0])
+  createConstraintFake2(compositeArray[1].bodies[0], compositeArray[2].bodies[0], -beamWidthChange, originalWidth1)
+  tickFunction()
 }
 function mediumGearR(){
   deleteConstraint(compositeArray[1].bodies[0], compositeArray[2].bodies[0])
@@ -98,7 +103,8 @@ function mediumGearR(){
   toothWidthDegree = 3;
   toothWidth = (toothWidthDegree/conversionFactor);
   changeBodyFlap(1);
-  createConstraint3(compositeArray[1].bodies[0], compositeArray[2].bodies[0])
+  createConstraintFake2(compositeArray[1].bodies[0], compositeArray[2].bodies[0], -beamWidthChange, originalWidth1)
+  tickFunction()
 }
 function largeGearR(){
   deleteConstraint(compositeArray[1].bodies[0], compositeArray[2].bodies[0])
@@ -111,7 +117,8 @@ function largeGearR(){
   toothWidthDegree = 2;
   toothWidth = (toothWidthDegree/conversionFactor);
   changeBodyFlap(1);
-  createConstraint3(compositeArray[1].bodies[0], compositeArray[2].bodies[0])
+  createConstraintFake2(compositeArray[1].bodies[0], compositeArray[2].bodies[0], -beamWidthChange, originalWidth1)
+  v
 }
 function motorL(){
   Body.setAngle(compositeArray[0].bodies[0], 0)
@@ -140,15 +147,13 @@ function beamSpacing(value){
   console.log("BeamSpace Value = " + value)
   console.log(compositeArray[2].bodies[0].angle)
   console.log(compositeArray[3].bodies[0].angle)
+  tickFunction()
 }
 var prevPivotValue = 80;
 var initialPivotValue = 100;
 var pivotValue = 80;
 var changePivotHeight;
-function constraintLength(value){
-  c = parseInt(value) + 100
-  console.log("c Value = " + value)
-}
+
 function constraintPosition(value){
   deleteConstraint(compositeArray[2].bodies[0], compositeArray[1].bodies[0])
   deleteConstraint(compositeArray[3].bodies[0], compositeArray[0].bodies[0])
@@ -159,9 +164,10 @@ function constraintPosition(value){
   createConstraintFlap(compositeArray[0].bodies[0], compositeArray[3].bodies[0], value, originalWidth2)
   createConstraintFlap(compositeArray[1].bodies[0], compositeArray[2].bodies[0], -value, originalWidth1)
   console.log("constraintPosition Value = " + value)
-
+  tickFunction()
 }
 Events.on(engine, 'afterUpdate', function(event) {
+  // console.log(compositeArray[1].bodies[0])
     var gear2CenterY = compositeArray[1].bodies[0].position.y
     var gear2CenterChangeY =  ((compositeArray[1].radius*(-0.8)) * Math.sin(compositeArray[1].bodies[0].angle))
     var gear2CenterChangeX =  ((compositeArray[1].radius*-0.8) * Math.cos(compositeArray[1].bodies[0].angle))
@@ -190,7 +196,7 @@ Events.on(engine, 'afterUpdate', function(event) {
     var xAngle1 = Math.asin(gear1CenterChangeX/b)
     var xAngle2 = Math.asin(gear2CenterChangeX/b2)
     //console.log(((a*a)+(b*b)-(c*c))/(2*a*b))
-    if(angleC){
+    if(angleC && angleC2){
       Body.setAngle(compositeArray[3].bodies[0], angleC - 1.5708 - xAngle1 );
       Body.setAngle(compositeArray[2].bodies[0], angleC2 - 1.5708 - xAngle2 );
     }
@@ -199,11 +205,16 @@ Events.on(engine, 'afterUpdate', function(event) {
     Body.setVelocity(compositeArray[2].bodies[0], {x:0, y:0})
   })
 ////////////////////// RUN /////////////////////////////
-var width = 350;
+var width = 300;
+rectBase = 300
 addGearComposite((window.innerWidth)*(0.75*0.5)-(radius+(toothHeight*0.6)), (window.innerHeight)*(0.65));
 addGearComposite((window.innerWidth)*(0.75*0.5)+(radius+(toothHeight*0.6)), (window.innerHeight)*(0.65));
-addPolyComposite((window.innerWidth)*(0.75*0.5)+((width/2)+50), compositeArray[0].constraints[0].pointA.y-300, -width, 5)
-addPolyComposite((window.innerWidth)*(0.75*0.5)-((width/2)+50), compositeArray[0].constraints[0].pointA.y-300, width, 5)
+addRectComposite((-width), 5,(window.innerWidth)*(0.75*0.5)+((width/2)+50),compositeArray[0].constraints[0].pointA.y-rectBase)
+addRectComposite((width), 5,(window.innerWidth)*(0.75*0.5)-((width/2)+50),compositeArray[0].constraints[0].pointA.y-rectBase)
+
+
+// addPolyComposite((window.innerWidth)*(0.75*0.5)+((width/2)+50), compositeArray[0].constraints[0].pointA.y-300, -width, 5)
+// addPolyComposite((window.innerWidth)*(0.75*0.5)-((width/2)+50), compositeArray[0].constraints[0].pointA.y-300, width, 5)
 originalWidth1 = compositeArray[2].width
 originalWidth2 = compositeArray[3].width
 createConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
@@ -214,5 +225,7 @@ compositeArray[0].motorSpeed = 0.051;
 compositeArray[0].motorDir = -1;
 compositeArray[1].motorDir = 1;
 // run the engine
-Engine.run(engine);
+// Engine.run(engine);
 Render.run(render);
+// Runner.run(engine);
+Runner.start(runner, engine)

@@ -102,3 +102,13 @@ function rotationUI(){
     $('#continuous').css("color", "#fff")
   }
 }
+function sliderDisplay(){
+  if(!openCloseMod){
+    $('.hideThis').hide()
+    $('.hideThis2').show()
+  }
+  else{
+    $('.hideThis').show()
+    $('.hideThis2').hide()
+  }
+}

@@ -16,6 +16,7 @@ else{
     <meta charset="UTF-8">
     <title>Up-Down</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <!-- <script type="text/javascript" src = "js/jquery-1.7.1.min.js"></script> -->
     <link rel="shortcut icon" type="image/png" href="wp-content/uploads/2016/06/cropped-noun_221895_cc-32x32.png"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <!-- Optional theme -->
@@ -45,10 +46,10 @@ else{
         <div class = "controls">
             <div id = "preview">
             </div>
-            <div id = "a-slider" class = "slider-div">
-                <label>(A) Vertical Spacing: <span id = "verticalSpaceValue"></span></label>
+            <div id = "vertical-slider" class = "slider-div hideThis2">
+                <label>Vertical Spacing: <span id = "pivot2PointValue"></span></label>
                 <br>
-                <input type="range" id="verticalSpace" value="0" min="0" max="100" oninput = "verticalInput(this.value)" onchange = "pivotHeight(this.value)">
+                <input type="range" id="pivot2Point" value="0" min="0" max="100" oninput = "pivot2Input(this.value)" onchange = "pivot3Height(this.value)">
             </div>
             <br>
         </div>
@@ -71,9 +72,16 @@ else{
             <div id = "a-slider" class = "slider-div">
                 <label>Motor Speed: <span id = "motorSpeedValue"></span> (<span id = "motorAngleValue"></span>&deg;)</label>
                 <br>
-                <input type="range" id="motorSpeed" value="30" min="20" max="40" oninput = "speedInput(this.value)" onchange = "changeMotorSpeed(this.value)">
+                <input type="range" id="motorSpeed" value="40" min="5" max="50" oninput = "speedInput(this.value)" onchange = "changeMotorSpeed(this.value)">
             </div>
             <br>
+            <div>
+            <p>Simulation:</p>
+            <br>
+                <button class = "object btn btn-primary" type="button" id="alternate" onclick="startRunner()">Start</button>
+                <button class = "object btn btn-primary" type="button" id="continuous" onclick="stopRunner()">Stop</button>
+            
+            </div>
         </div>
         <div class = "footer">
             <a href = "http://www.papermech.net/open-close.php">

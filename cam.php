@@ -44,27 +44,41 @@ else{
         <div class = "controls">
             <div id = "preview">
             </div>
-            <div id = "a-slider" class = "slider-div">
-                <label>(A) Horizontal Spacing: <span id = "horizontalSpaceValue"></span></label>
+            <div id = "preview">
+            </div>
+            <div id = "horizontal-slider" class = "slider-div hideThis">
+                <label>Horizontal Spacing: <span id = "horizontalSpaceValue"></span></label>
                 <input type="range" id="horizontalSpace" value="40" min="0" max="100" oninput = "horizontalInput(this.value)" onchange = "beamSpacing(this.value)">
             </div>
-            <br>
-            <div id = "a-slider" class = "slider-div">
-                <label>(B) Vertical Spacing: <span id = "verticalSpaceValue"></span></label>
+            <br class = "hideThis">
+            <div id = "vertical-slider" class = "slider-div hideThis">
+                <label>Vertical Spacing: <span id = "verticalSpaceValue"></span></label>
                 <br>
                 <input type="range" id="verticalSpace" value="0" min="0" max="100" oninput = "verticalInput(this.value)" onchange = "pivotHeight(this.value)">
             </div>
-            <br>
-            <div id = "a-slider" class = "slider-div">
-                <label>(C) Connector Length: <span id = "connectorLengthValue"></span></label>
+            <br class = "hideThis2">
+            <div id = "vertical-slider" class = "slider-div hideThis2">
+                <label>Vertical Spacing 2: <span id = "pivot2PointValue"></span></label>
+                <br>
+                <input type="range" id="pivot2Point" value="0" min="0" max="100" oninput = "pivot2Input(this.value)" onchange = "pivot3Height(this.value)">
+            </div>
+            <br class = "hideThis">
+            <div id = "connector-slider" class = "slider-div hideThis">
+                <label>Connector Length: <span id = "connectorLengthValue"></span></label>
                 <br>
                 <input type="range" id="connectorLength" value="320" min="250" max="450" oninput = "connectorInput(this.value)" onchange = "constraintLength(this.value)">
             </div>
-            <br>
-            <div id = "a-slider" class = "slider-div">
-                <label> (D) Pivot Point: <span id = "pivotPointValue"></span></label>
+            <br class = "hideThis">
+            <div id = "pivot-slider" class = "slider-div hideThis">
+                <label>Pivot Point: <span id = "pivotPointValue"></span></label>
                 <br>
                 <input type="range" id="pivotPoint" value="0" min="0" max="150" oninput = "pivotInput(this.value)" onchange = "constraintPosition(this.value)">
+            </div>
+            <br class = "hideThis">
+            <div id = "beam-slider" class = "slider-div hideThis">
+                <label>Beam Length: <span id = "beamWidthValue"></span></label>
+                <br>
+                <input type="range" id="beamWidth" value="0" min="0" max="40" oninput = "beamWidthInput(this.value)" onchange = "beamWidth(this.value)">
             </div>
             <br>
         </div>
@@ -87,9 +101,16 @@ else{
             <div id = "a-slider" class = "slider-div">
                 <label>Motor Speed: <span id = "motorSpeedValue"></span> (<span id = "motorAngleValue"></span>&deg;)</label>
                 <br>
-                <input type="range" id="motorSpeed" value="30" min="20" max="40" oninput = "speedInput(this.value)" onchange = "changeMotorSpeed(this.value)">
+                <input type="range" id="motorSpeed" value="40" min="5" max="50" oninput = "speedInput(this.value)" onchange = "changeMotorSpeed(this.value)">
             </div>
             <br>
+            <div>
+            <p>Simulation:</p>
+            <br>
+                <button class = "object btn btn-primary" type="button" id="alternate" onclick="startRunner()">Start</button>
+                <button class = "object btn btn-primary" type="button" id="continuous" onclick="stopRunner()">Stop</button>
+            
+            </div>
         </div>
         <div class = "footer">
             <a href = "http://www.papermech.net/open-close.php">
