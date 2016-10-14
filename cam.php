@@ -101,16 +101,16 @@ else{
             <div id = "a-slider" class = "slider-div">
                 <label>Motor Speed: <span id = "motorSpeedValue"></span> (<span id = "motorAngleValue"></span>&deg;)</label>
                 <br>
-                <input type="range" id="motorSpeed" value="40" min="5" max="50" oninput = "speedInput(this.value)" onchange = "changeMotorSpeed(this.value)">
+                <input type="range" id="motorSpeed" value="40" min="0" max="50" oninput = "speedInput(this.value)" onchange = "changeMotorSpeed(this.value)">
             </div>
             <br>
-            <div>
+            <!--<div>
             <p>Simulation:</p>
             <br>
                 <button class = "object btn btn-primary" type="button" id="alternate" onclick="startRunner()">Start</button>
                 <button class = "object btn btn-primary" type="button" id="continuous" onclick="stopRunner()">Stop</button>
             
-            </div>
+            </div>-->
         </div>
         <div class = "footer">
             <a href = "http://www.papermech.net/open-close.php">

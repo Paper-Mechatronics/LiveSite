@@ -142,7 +142,7 @@ var module = {
   pivotPoint: 0,
   pivot2Point: 0,
   motorSpeed: 40,
-  beamWidth: 300
+  beamWidth: 0
 }
 
 var newWidth1;
@@ -216,13 +216,13 @@ function drawCam(){
     verts2.push({ x: xValues[i], y: yValues[i]});
   }
 }
-function drawRect(){
+function drawRect(height){
   // new vertex array
   linGearVerts = [];
   // create rectangle shape
   linGearVerts.push({x: 200, y: 200})
-  linGearVerts.push({x: 200, y: 600})
-  linGearVerts.push({x: 230, y: 600})
+  linGearVerts.push({x: 200, y: 200+height})
+  linGearVerts.push({x: 230, y: 200+height})
   linGearVerts.push({x: 230, y: 200})
 }
 function drawPolygon(width, height){
@@ -875,6 +875,12 @@ function createConstraintFake(constraintStart, constraintDestination){
         startOffset2 = -200 - pivotValue
         startShape = "linGear"
       }
+      else if(compositeArray[i].shape == "linRect"){
+        // if rectangle, set offset to half width of rectangle so it connects at end of rectangle
+        startOffset = 0;
+        startOffset2 = -(compositeArray[i].height/2) - pivotValue
+        startShape = "linRect"
+      }
       else if(compositeArray[i].shape == "circle"){
         // if rectangle, set offset to half width of rectangle so it connects at end of rectangle
         startOffset = 0;
@@ -901,23 +907,12 @@ function createConstraintFake(constraintStart, constraintDestination){
         destShape = "gear"
       }
       else if(compositeArray[i].shape == "rect"){
-        if(startShape == "linGear"){
+        if(startShape == "linGear" || startShape == "linRect" || startShape == "circle"){
           if(compositeArray[i].width>0){
             startOffset = -spaceValue
           }
           else{
             startOffset = spaceValue
-          }
-        }
-        if(startShape == "circle"){
-          // console.log("working")
-          if(compositeArray[i].width>0){
-            startOffset = -spaceValue
-            // console.log(startOffset)
-          }
-          else{
-            startOffset = spaceValue
-            // console.log(startOffset)
           }
         }
         destOffset = compositeArray[i].width*-0.5;;
@@ -1017,6 +1012,12 @@ function createConstraintFake2(constraintStart, constraintDestination, length, o
         startOffset2 = -200 - pivotValue
         startShape = "linGear"
       }
+      else if(compositeArray[i].shape == "linRect"){
+        // if rectangle, set offset to half width of rectangle so it connects at end of rectangle
+        startOffset = 0;
+        startOffset2 = -(compositeArray[i].height/2) - pivotValue
+        startShape = "linRect"
+      }
       else if(compositeArray[i].shape == "circle"){
         // if rectangle, set offset to half width of rectangle so it connects at end of rectangle
         startOffset = 0;
@@ -1037,7 +1038,7 @@ function createConstraintFake2(constraintStart, constraintDestination, length, o
         destShape = "gear"
       }
       else if(compositeArray[i].shape == "rect"){
-        if(startShape == "linGear"){
+        if(startShape == "linGear" || startShape == "linRect"){
           if(compositeArray[i].width>0){
             startOffset = -spaceValue
           }
@@ -1503,6 +1504,24 @@ function createUIConstraints(composite, initialXSpace, initialYSpace, radius){
     //     })]
     // }))
   }
+  if(composite.shape == "linRect"){
+    Composite.add(composite, Bodies.circle(composite.bodies[0].position.x - initialXSpace, composite.bodies[0].position.y - (composite.height/2) - initialYSpace, radius))
+    Composite.add(composite, Bodies.circle(composite.bodies[0].position.x + initialXSpace, composite.bodies[0].position.y - (composite.height/2) - initialYSpace, radius))
+    composite.bodies[1].render.fillStyle = "#bc98f9"
+    composite.bodies[2].render.fillStyle = "#bc98f9"
+    composite.bodies[1].render.strokeStyle = "#000"
+    composite.bodies[2].render.strokeStyle = "#000"
+    Composite.add(composite, Constraint.create({bodyA: composite.bodies[1], bodyB: composite.bodies[2], stiffness: 0.00001}))
+    Composite.add(composite, Constraint.create({pointA: {x:composite.bodies[0].position.x, y: composite.bodies[0].position.y-(composite.height/2) - initialYSpace}, pointB: {x:0, y:-(composite.height/2)}, bodyB: composite.bodies[0], stiffness: 0.00001}))
+    // UIJointComposites.push(Composite.create({
+    //     constraints: [Constraint.create({pointA: { x: startOffset*Math.cos(constraintStart.angle), y: startOffset*Math.sin(constraintStart.angle) + startOffset2*Math.cos(constraintStart.angle) },
+    //     bodyA: constraintStart ,
+    //     bodyB: constraintDestination ,
+    //     pointB: { x: destOffset*Math.cos(constraintDestination.angle) + destOffset2*Math.sin(constraintDestination.angle), y: destOffset*Math.sin(constraintDestination.angle) + destOffset2*Math.cos(constraintDestination.angle)}, 
+    //     stiffness: 0.00001
+    //     })]
+    // }))
+  }
   if(composite.shape == "circle"){
     Composite.add(composite, Bodies.circle(composite.bodies[0].position.x - initialXSpace, composite.bodies[0].position.y - initialYSpace, radius))
     Composite.add(composite, Bodies.circle(composite.bodies[0].position.x + initialXSpace, composite.bodies[0].position.y - initialYSpace, radius))
@@ -1567,6 +1586,12 @@ function createUIConstraintsSingle(composite, initialXSpace, initialYSpace, radi
     composite.bodies[1].render.fillStyle = "#bc98f9"
     composite.bodies[1].render.strokeStyle = "#000"
     Composite.add(composite, Constraint.create({pointA: {x:composite.bodies[0].position.x, y: composite.bodies[0].position.y-200 - initialYSpace}, pointB: {x:0, y:-200}, bodyB: composite.bodies[0], stiffness: 0.00001}))
+  }
+  if(composite.shape == "linRect"){
+    Composite.add(composite, Bodies.circle(composite.bodies[0].position.x, composite.bodies[0].position.y - (composite.height/2) - initialYSpace, radius))
+    composite.bodies[1].render.fillStyle = "#bc98f9"
+    composite.bodies[1].render.strokeStyle = "#000"
+    Composite.add(composite, Constraint.create({pointA: {x:composite.bodies[0].position.x, y: composite.bodies[0].position.y-(composite.height/2) - initialYSpace}, pointB: {x:0, y:-(composite.height/2)}, bodyB: composite.bodies[0], stiffness: 0.00001}))
   }
   if(composite.shape == "circle"){
     Composite.add(composite, Bodies.circle(composite.bodies[0].position.x, composite.bodies[0].position.y - initialYSpace, radius))
@@ -1738,7 +1763,7 @@ function changeBody4(index){
   }
   tickFunction()
 }
-function changeBody5(index){
+function changeBody5(index, height){
   for(var i=0; i<1;i++){
     if(compositeArray[index].bodies[1]){
       Composite.remove(compositeArray[index], compositeArray[index].bodies[1]);
@@ -1749,7 +1774,7 @@ function changeBody5(index){
     var tmpConstraintYPoint = compositeArray[index].constraints[0].pointA.y;
     Composite.remove(compositeArray[index], compositeArray[index].constraints[0]);
     linGearVerts = [];
-    drawRect();
+    drawRect(height);
     Composite.add(compositeArray[index], Bodies.fromVertices(tmpConstraintXPoint, tmpConstraintYPoint, [linGearVerts]))
     Composite.add(compositeArray[index], Constraint.create({pointA: { x: tmpConstraintXPoint, y: tmpConstraintYPoint },
         bodyB: compositeArray[index].bodies[0], 
@@ -1757,7 +1782,8 @@ function changeBody5(index){
       })
     )
     //compositeArray[index].radius = radius;
-    compositeArray[index].shape = "linGear"
+    compositeArray[index].shape = "linRect"
+    compositeArray[index].height = height
     for(var j=0; j<compositeArray[index].bodies[0].parts.length;j++){
       compositeArray[index].bodies[0].parts[j].render.strokeStyle = "#000000";
     }
@@ -2096,6 +2122,9 @@ function sleep(milliseconds) {
     }
   }
 }
+function pause(){
+  module.motorSpeed = 0
+}
 //////////////////// FRAME UPDATE /////////////////////////////////////
 Events.on(engine, 'beforeUpdate', function(event) {
   updateSliders()
@@ -2145,6 +2174,42 @@ Events.on(engine, 'beforeUpdate', function(event) {
 
           }
         }
+        else if(compositeArray[i].shape == "linRect"){
+          if(i == 0){
+            // console.log(jointComposites[jointComposites.length-2])
+            if(jointComposites[jointComposites.length-2] && jointComposites[jointComposites.length-2].constraints[0].pointA != null){
+              Body.setPosition(compositeArray[i].bodies[1], {x:compositeArray[i].bodies[0].position.x + jointComposites[jointComposites.length-2].constraints[0].pointA.x , y:compositeArray[i].bodies[0].position.y  - (compositeArray[i].height/2) - prevPivotValue})
+              if(compositeArray[i].bodies[2]){
+                Body.setPosition(compositeArray[i].bodies[2], {x:compositeArray[i].bodies[0].position.x + jointComposites[jointComposites.length-1].constraints[0].pointA.x , y:compositeArray[i].bodies[0].position.y  - (compositeArray[i].height/2) - prevPivotValue})
+                // console.log(prevSpaceValue)
+              }
+            }
+            else{
+              Body.setPosition(compositeArray[i].bodies[1], {x:compositeArray[i].bodies[0].position.x, y:compositeArray[i].bodies[0].position.y  - (compositeArray[i].height/2) - pivot2Value})
+              // if(compositeArray[i].bodies[2]){
+              //   Body.setPosition(compositeArray[i].bodies[2], {x:compositeArray[i].bodies[0].position.x + parseInt(prevSpaceValue) , y:compositeArray[i].bodies[0].position.y  - (compositeArray[i].height/2) - prevPivotValue})
+              //   // console.log(prevSpaceValue)
+              // }
+            }
+            compositeArray[i].constraints[compositeArray[i].constraints.length-1].pointA.x = compositeArray[i].bodies[0].position.x
+            compositeArray[i].constraints[compositeArray[i].constraints.length-1].pointA.y = compositeArray[i].bodies[1].position.y
+          }
+          else{
+            if(jointComposites[jointComposites.length-2] && jointComposites[jointComposites.length-2].constraints[0].pointA != null){
+              Body.setPosition(compositeArray[i].bodies[1], {x:compositeArray[i].bodies[0].position.x - parseInt(prevSpaceValue) , y:compositeArray[i].bodies[0].position.y  + (compositeArray[i].height/2) + parseInt(prevPivotValue)})
+              if(compositeArray[i].bodies[2]){
+                Body.setPosition(compositeArray[i].bodies[2], {x:compositeArray[i].bodies[0].position.x + parseInt(prevSpaceValue) , y:compositeArray[i].bodies[0].position.y  + (compositeArray[i].height/2) + parseInt(prevPivotValue)})
+                console.log(prevSpaceValue)
+              }
+            }
+            else{
+              Body.setPosition(compositeArray[i].bodies[1], {x:compositeArray[i].bodies[0].position.x, y:compositeArray[i].bodies[0].position.y  + (compositeArray[i].height/2) + parseInt(pivot2Value)})
+            }
+            compositeArray[i].constraints[compositeArray[i].constraints.length-1].pointA.x = compositeArray[i].bodies[0].position.x
+            compositeArray[i].constraints[compositeArray[i].constraints.length-1].pointA.y = compositeArray[i].bodies[1].position.y
+
+          }
+        }
         else if(compositeArray[i].shape == "circle"){
           if(i == 0){
             // console.log(jointComposites[jointComposites.length-2])
@@ -2154,8 +2219,8 @@ Events.on(engine, 'beforeUpdate', function(event) {
               Body.setPosition(compositeArray[i].bodies[1], {x:compositeArray[i].bodies[0].position.x + jointComposites[jointComposites.length-2].constraints[0].pointA.x , y:compositeArray[i].bodies[0].position.y - parseInt(pivot2Value)})
               if(compositeArray[i].bodies[2]){
                 Body.setPosition(compositeArray[i].bodies[2], {x:compositeArray[i].bodies[0].position.x + jointComposites[jointComposites.length-1].constraints[0].pointA.x , y:compositeArray[i].bodies[0].position.y - parseInt(pivot2Value)})
-                console.log(compositeArray[i].bodies[2].position.y)
-                console.log(compositeArray[i].bodies[1].position.y)
+                // console.log(compositeArray[i].bodies[2].position.y)
+                // console.log(compositeArray[i].bodies[1].position.y)
               }
             }
             else{
@@ -2239,6 +2304,18 @@ Events.on(engine, 'beforeUpdate', function(event) {
             compositeArray[i].lock = true;
           }
         }
+        if(compositeArray[i].shape == "linRect"){
+          if(compositeArray[i].lock == true){
+            Body.setAngle(compositeArray[i].bodies[0], compositeArray[i].rotation);
+            if(compositeArray[i].bodies[1]){
+              // Body.setAngle(compositeArray[i].bodies[1], compositeArray[i].rotation);
+              // Body.setPosition(compositeArray[i].bodies[1],{x:compositeArray[i].constraints[0].pointA.x, y: compositeArray[i].bodies[1].position.y})
+            }
+          }
+          else{
+            compositeArray[i].lock = true;
+          }
+        }
       }
       // if locked not true .......... 
       else{
@@ -2293,11 +2370,13 @@ Events.on(engine, 'beforeUpdate', function(event) {
           if(compositeArray[i].radius == 48){
             compositeArray[i].bodies[0].parts[j].render.fillStyle = "#FF6B6B";
             for(var k = 0; k<compositeArray.length; k++){
-              if(compositeArray[k].bodies[1] && compositeArray[k].bodies[2]){
+              if(compositeArray[k].bodies[1]){
                 compositeArray[k].bodies[1].render.fillStyle = "#FF6B6B";
-                compositeArray[k].bodies[2].render.fillStyle = "#FF6B6B";
+                if(compositeArray[k].bodies[2]){
+                  compositeArray[k].bodies[2].render.fillStyle = "#FF6B6B";
+                }
               }
-              if(compositeArray[k].shape == "linGear"){
+              if(compositeArray[k].shape == "linGear" || compositeArray[k].shape == "linRect"){
                 for(var p = 0; p<compositeArray[k].bodies[0].parts.length; p++){
                   compositeArray[k].bodies[0].parts[p].render.fillStyle = "#8d2f2f";
                   compositeArray[k].bodies[0].parts[p].render.strokeStyle = "#8d2f2f";
@@ -2314,11 +2393,13 @@ Events.on(engine, 'beforeUpdate', function(event) {
           else if(compositeArray[i].radius == 64){
             compositeArray[i].bodies[0].parts[j].render.fillStyle = "#4ECDC4";
             for(var k = 0; k<compositeArray.length; k++){
-              if(compositeArray[k].bodies[1] && compositeArray[k].bodies[2]){
+              if(compositeArray[k].bodies[1]){
                 compositeArray[k].bodies[1].render.fillStyle = "#4ECDC4";
-                compositeArray[k].bodies[2].render.fillStyle = "#4ECDC4";
+                if(compositeArray[k].bodies[2]){
+                  compositeArray[k].bodies[2].render.fillStyle = "#4ECDC4";
+                }
               }
-              if(compositeArray[k].shape == "linGear"){
+              if(compositeArray[k].shape == "linGear" || compositeArray[k].shape == "linRect"){
                 for(var p = 0; p<compositeArray[k].bodies[0].parts.length; p++){
                   compositeArray[k].bodies[0].parts[p].render.fillStyle = "#15605b";
                   compositeArray[k].bodies[0].parts[p].render.strokeStyle = "#15605b";
@@ -2335,11 +2416,13 @@ Events.on(engine, 'beforeUpdate', function(event) {
           else if(compositeArray[i].radius == 80){
             compositeArray[i].bodies[0].parts[j].render.fillStyle = "#bc98f9";
             for(var k = 0; k<compositeArray.length; k++){
-              if(compositeArray[k].bodies[1] && compositeArray[k].bodies[2]){
+              if(compositeArray[k].bodies[1]){
                 compositeArray[k].bodies[1].render.fillStyle = "#bc98f9";
-                compositeArray[k].bodies[2].render.fillStyle = "#bc98f9";
+                if(compositeArray[k].bodies[2]){
+                  compositeArray[k].bodies[2].render.fillStyle = "#bc98f9";
+                }
               }
-              if(compositeArray[k].shape == "linGear"){
+              if(compositeArray[k].shape == "linGear" || compositeArray[k].shape == "linRect"){
                 for(var p = 0; p<compositeArray[k].bodies[0].parts.length; p++){
                   compositeArray[k].bodies[0].parts[p].render.fillStyle = "#7149b6";
                   compositeArray[k].bodies[0].parts[p].render.strokeStyle = "#7149b6";
@@ -2389,7 +2472,7 @@ Events.on(engine, 'afterUpdate', function(event) {
           Body.setAngle(compositeArray[i].bodies[0], compositeArray[i].rotation);
         }
       }
-      if(compositeArray[i].shape == "linGear"){
+      if(compositeArray[i].shape == "linGear" || compositeArray[i].shape == "linRect"){
         if(compositeArray[i].lock == true){
           Body.setAngle(compositeArray[i].bodies[0], compositeArray[i].rotation);
         }

@@ -42,7 +42,7 @@
         <span class="stretch"></span>
         <br>
         <a id = "four-href" href = "#"><div class="box"><div><p id = "four">Rotate</p></div><img id = "four-img" src="img/front_motion_rotate.png"></div></a>
-        <a id = "five-href" href = "#"><div class="box"><div><p id = "five">Walking</p></div><img id = "five-img" src="img/front_motion_walk.png"></div></a>
+        <a id = "five-href" href = "walking.php"><div class="box"><div><p id = "five">Walking</p></div><img id = "five-img" src="img/front_motion_walk.png"></div></a>
         <a id = "six-href" style = "visibility:hidden;" href = "#"><div class="box"><div><p id = "six">Jansen Mechanism</p></div><img id = "seven-img" src="img/front_motion_walk.png"></div></a>
         <span class="stretch"></span>
         <br>

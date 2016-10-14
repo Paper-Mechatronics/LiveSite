@@ -3,10 +3,10 @@ include('wp-blog-header.php');
 
 global $user_identity;
 if($user_identity){
-	echo $user_identity;
+    echo $user_identity;
 }
 else{
-	//die('Sorry, you must be <a href="'. get_bloginfo('home') . '/wp-login.php?redirect_to=' . $_SERVER['PHP_SELF'] . '">logged in</a> to view this page.');
+    //die('Sorry, you must be <a href="'. get_bloginfo('home') . '/wp-login.php?redirect_to=' . $_SERVER['PHP_SELF'] . '">logged in</a> to view this page.');
 }
 //echo do_shortcode( '[contact-form-7 id="1234" title="Contact form 1"]' );
 ?>
@@ -14,7 +14,7 @@ else{
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Open-Close</title>
+    <title>Walking</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <link rel="shortcut icon" type="image/png" href="wp-content/uploads/2016/06/cropped-noun_221895_cc-32x32.png"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -29,50 +29,46 @@ else{
   </head>
   <body>
     <script src="js/functions.js" type="text/javascript"></script>
-    <script src="js/open-close.js" type="text/javascript"></script>
+    <script src="js/walking.js" type="text/javascript"></script>
     <script src="js/updateUI.js" type="text/javascript"></script>
     <script src="js/showParts.js" type="text/javascript"></script>
     <script src="js/scaling.js" type="text/javascript"></script>
-    <!--<script src = "js/Demo.js" type="text/javascript"></script>
-    <script src = "js/Example.js" type="text/javascript"></script>
-    <script src = "js/views.js" type="text/javascript"></script>-->
     <div class = "container">
         <div class = "module-name">
-            <p>Open-Close +</p>
-            <select id = "changeMech" class = "rendering" onchange = "changeMech()">
-                <option value="rack-pinion">Rack and Pinion</option>
-                <option value="cam">Cam</option>
-                <option value="crank">Crank</option>
+            <p>Crank +</p>
+            <select id = "changeMotion" class = "rendering" onchange = "changeMotion()">
+                <option value="upDown">Up-Down</option>
+                <option value="openClose">Open-Close</option>
             </select> 
         </div>
         <div class = "controls">
             <div id = "preview">
             </div>
             <div id = "a-slider" class = "slider-div">
-                <label>Horizontal Spacing: <span id = "horizontalSpaceValue"></span></label>
+                <label>(A) Horizontal Spacing: <span id = "horizontalSpaceValue"></span></label>
                 <input type="range" id="horizontalSpace" value="40" min="0" max="100" oninput = "horizontalInput(this.value)" onchange = "beamSpacing(this.value)">
             </div>
             <br>
             <div id = "a-slider" class = "slider-div">
-                <label>Vertical Spacing: <span id = "verticalSpaceValue"></span></label>
+                <label>(B) Vertical Spacing: <span id = "verticalSpaceValue"></span></label>
                 <br>
                 <input type="range" id="verticalSpace" value="0" min="0" max="100" oninput = "verticalInput(this.value)" onchange = "pivotHeight(this.value)">
             </div>
             <br>
             <div id = "a-slider" class = "slider-div">
-                <label>Connector Length: <span id = "connectorLengthValue"></span></label>
+                <label>(C) Connector Length: <span id = "connectorLengthValue"></span></label>
                 <br>
                 <input type="range" id="connectorLength" value="320" min="250" max="450" oninput = "connectorInput(this.value)" onchange = "constraintLength(this.value)">
             </div>
             <br>
             <div id = "a-slider" class = "slider-div">
-                <label>Pivot Point: <span id = "pivotPointValue"></span></label>
+                <label> (D) Pivot Point: <span id = "pivotPointValue"></span></label>
                 <br>
                 <input type="range" id="pivotPoint" value="0" min="0" max="150" oninput = "pivotInput(this.value)" onchange = "constraintPosition(this.value)">
             </div>
             <br>
             <div id = "a-slider" class = "slider-div">
-                <label>Beam Length: <span id = "beamWidthValue"></span></label>
+                <label>(E) Beam Length: <span id = "beamWidthValue"></span></label>
                 <br>
                 <input type="range" id="beamWidth" value="0" min="0" max="150" oninput = "beamWidthInput(this.value)" onchange = "beamWidth(this.value)">
             </div>
@@ -90,27 +86,16 @@ else{
             <div>
             <p>Motor Rotation:</p>
             <br>
-                <button class = "object btn btn-primary" type="button" id="alternate" onclick="alternatingGear()">180</button>
-                <button class = "object btn btn-primary" type="button" id="continuous" onclick="continuous()">Continuous</button>
-            
+                <button class = "object btn btn-primary" type="button" id="alternate" onclick="">180</button>
+                <button class = "object btn btn-primary" type="button" id="continuous" onclick="">Continuous</button>
             </div>
             <br>
             <div id = "a-slider" class = "slider-div">
                 <label>Motor Speed: <span id = "motorSpeedValue"></span> (<span id = "motorAngleValue"></span>&deg;)</label>
                 <br>
-                <button class = "object btn btn-primary simulation glyphicon glyphicon-pause" type="button" onclick="pause()"><!-- <span class="glyphicon glyphicon-pause" aria-hidden="true"></span> --></button>
-                <input class = "simulation" type="range" id="motorSpeed" value="40" min="0" max="50" oninput = "speedInput(this.value)" onchange = "changeMotorSpeed(this.value)">
-                <br>
+                <input type="range" id="motorSpeed" value="40" min="5" max="50" oninput = "speedInput(this.value)" onchange = "changeMotorSpeed(this.value)">
             </div>
             <br>
-            <br>
-            <!--<div>
-            <p>Simulation:</p>
-            <br>
-                <button class = "object btn btn-primary" type="button" id="alternate" onclick="startRunner()">Start</button>
-                <button class = "object btn btn-primary" type="button" id="continuous" onclick="stopRunner()">Stop</button>
-            
-            </div>-->
         </div>
         <div class = "footer">
             <a href = "http://www.papermech.net/open-close.php">
@@ -122,7 +107,7 @@ else{
             </a>
             <a id = "showParts" href = "#" onclick = "showParts()">
                 <div class = "footer-btn-div">
-                    <button href = "" class = "footer-btn object btn btn-primary" type="button" ><img class = "btn-icon" src="img/show_parts.png"></button>
+                    <button href = "http://www.papermech.net/jsPDF/parts.html" class = "footer-btn object btn btn-primary" type="button" ><img class = "btn-icon" src="img/show_parts.png"></button>
                     <br>
                     <p>Show Parts</p>
                 </div>

@@ -38,9 +38,17 @@ function showParts(){
   var mediumGears = numMediumGear.toString(); 
   var smallGears = numSmallGear.toString(); 
   var linGears = numLinearGear.toString();
+  var constraintLength = parseInt(module.connectorLength) + parseInt(newWidth1) + parseInt(2*module.horizontalSpace)
+  var connectorLength = module.connectorLength
+  var beamLength = newWidth1
+  var horizontalSpace = module.horizontalSpace*2
   localStorage.setItem("largeGears", largeGears);
   localStorage.setItem("mediumGears", mediumGears);
   localStorage.setItem("smallGears", smallGears);
   localStorage.setItem("linGears", linGears);
+  localStorage.setItem("constraintLength", constraintLength);
+  localStorage.setItem("connectorLength", connectorLength);
+  localStorage.setItem("beamLength", beamLength);
+  localStorage.setItem("horizontalSpace", horizontalSpace);
   window.location.replace("./jsPDF/parts.html")
 }
