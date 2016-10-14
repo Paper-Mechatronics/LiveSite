@@ -1,0 +1,26 @@
+#editor{
+	display:none;
+}
+.checkbox{
+	display: none !important;
+}
+/*.span5{
+	display:none !important;
+}*/
+.span6 {
+	width: 100% !important;
+	height: 100% !important;
+}
+.container{
+	width: 100% !important;
+	height: 100% !important;
+}
+.row-fluid{
+	height: 100% !important;
+}
+.preview-pane{
+	height: 750px;
+}
+.pull-right{
+	float: left;
+}

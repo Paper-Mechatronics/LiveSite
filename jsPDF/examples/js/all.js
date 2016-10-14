@@ -29,6 +29,7 @@ var offset1 = 2 *scale*size
 var offset2 = 11.33332 * scale*size
 var linToothHeight = .25*64*scale*size;
 var varArray = []
+var frameScale = 0.8
 varArray.push(horizontalSpace)
 varArray.push(connectorLength)
 varArray.push(beamLength)
@@ -80,7 +81,7 @@ function arrange(){
     centerX = centerX + (200*scale*size)
   }
 }
-
+var labelArray = ["1", "2", "3"]
 var doc = new jsPDF("landscape");
 function showAll(){
   for(var x = 0; x<numOfLargeGears; x++){
@@ -162,121 +163,46 @@ function showAll(){
     }
   }
   doc.addPage();
+  console.log(constraintLength)
   for(var i = 0; i<2;i++){
-    // doc.rect((35+(40*i))*scale2*size,30*scale2*size,30*scale2*size,constraintLength*scale2*size)
-    doc.rect(30*scale2*size,(35+(40*i))*scale2*size,constraintLength*scale2*size,30*scale2*size)
-    var increment = 0
-    for(var j = 0; j<4;j++){
+  // doc.rect((35+(40*i))*scale2*size,30*scale2*size,30*scale2*size,constraintLength*scale2*size)
+  doc.rect(xMargin*scale2*size,(yMargin+(linkageHeightPlus*i))*scale2*size,constraintLength*scale2*size,linkageHeight*scale2*size)
+  var increment = 0
+    for(var j = 0; j<3;j++){
       increment += varArray[j]
-      console.log(increment)
-      // doc.line((35+(40*i))*scale2*size,(30+increment)*scale2*size,(65+(40*i))*scale2*size,(30+increment)*scale2*size)
-      doc.line((30+increment)*scale2*size,(35+(40*i))*scale2*size,(30+increment)*scale2*size,(65+(40*i))*scale2*size)
+      // console.log(increment)
+      // doc.line((yMargin+(40*i))*scale2*size,(xMargin+increment)*scale2*size,(65+(40*i))*scale2*size,(xMargin+increment)*scale2*size)
+      if(i == 0){
+        doc.line((xMargin+increment)*scale2*size,(yMargin+(linkageHeightPlus*i))*scale2*size,(xMargin+increment)*scale2*size,((yMargin+linkageHeight)+(linkageHeightPlus*i))*scale2*size)
+        doc.text((xMargin+increment - (varArray[j]/2))*scale2*size, (yMargin+(linkageHeightPlus*i))*scale2*size, labelArray[j]);
+        // doc.text(20, 20, 'Hello world!');
+        // doc.text(20, 20, 'Hello world!');
+        if(j == 0){
+          doc.circle((xMargin+(horizontalSpace*(1/3)))*scale2*size, ((yMargin+linkageHeight/2)+(linkageHeightPlus*i))*scale2*size, (5*scale*size));
+          doc.circle((xMargin+(horizontalSpace*(2/3)))*scale2*size, ((yMargin+linkageHeight/2)+(linkageHeightPlus*i))*scale2*size, (3*scale*size));
+        }
+      }
+      else{
+        doc.line(((xMargin+constraintLength) - increment)*scale2*size,(yMargin+(linkageHeightPlus*i))*scale2*size,((xMargin+constraintLength) - increment)*scale2*size,((yMargin+linkageHeight)+(linkageHeightPlus*i))*scale2*size)
+        doc.text(((xMargin+constraintLength) - increment + (varArray[j]/2))*scale2*size, (yMargin+(linkageHeightPlus*i))*scale2*size, labelArray[j]);
+        if(j == 0){
+          doc.circle(((xMargin+constraintLength) - increment+(horizontalSpace*(1/3)))*scale2*size, ((yMargin+linkageHeight/2)+(linkageHeightPlus*i))*scale2*size, (5*scale*size));
+          doc.circle(((xMargin+constraintLength) - increment+(horizontalSpace*(2/3)))*scale2*size, ((yMargin+linkageHeight/2)+(linkageHeightPlus*i))*scale2*size, (3*scale*size));
+        }
+      }
+      
     }
   }
   doc.addPage();
-  doc.rect(30*scale*size,30*scale*size,448*scale*size,112*scale*size)
-  doc.rect(30*scale*size,(30+112+5)*scale*size,448*scale*size,15*scale*size)
-  doc.rect(30*scale*size,(30+112+5+15+5)*scale*size,448*scale*size,15*scale*size)
-  doc.rect(30*scale*size,(30+112+5+15+5+15+5)*scale*size,168*scale*size,112*scale*size)
-  doc.rect((30+168+5)*scale*size,(30+112+5+15+5+15+5)*scale*size,168*scale*size,15*scale*size)
-  doc.rect((30+168+5)*scale*size,(30+112+5+15+5+15+5+15+5)*scale*size,168*scale*size,15*scale*size)
+  doc.rect(30*frameScale*size,30*frameScale*size,448*frameScale*size,112*frameScale*size)
+  doc.rect(30*frameScale*size,(30+112+5)*frameScale*size,448*frameScale*size,15*frameScale*size)
+  doc.rect(30*frameScale*size,(30+112+5+15+5)*frameScale*size,448*frameScale*size,15*frameScale*size)
+  doc.rect(30*frameScale*size,(30+112+5+15+5+15+5)*frameScale*size,168*frameScale*size,112*frameScale*size)
+  doc.rect((30+168+5)*frameScale*size,(30+112+5+15+5+15+5)*frameScale*size,168*frameScale*size,15*frameScale*size)
+  doc.rect((30+168+5)*frameScale*size,(30+112+5+15+5+15+5+15+5)*frameScale*size,168*frameScale*size,15*frameScale*size)
   doc.addPage();
-  doc.rect(30*scale*size,(30)*scale*size,448*scale*size,300*scale*size)
-  doc.rect((30+217)*scale*size,(30+84)*scale*size,115*scale*size,55*scale*size)
-  doc.circle((30+250)*scale*size, (30+112)*scale*size, (5*scale*size));
+  doc.rect(30*frameScale*size,(30)*frameScale*size,448*frameScale*size,300*frameScale*size)
+  doc.rect((30+217)*frameScale*size,(30+84)*frameScale*size,115*frameScale*size,55*frameScale*size)
+  doc.circle((30+250)*frameScale*size, (30+112)*frameScale*size, (5*frameScale*size));
 }
-function showGears(){
-  for(var x = 0; x<numOfLargeGears; x++){
-    arrange()
-    radius = 80
-    steps = (0.25 * radius)*2;
-    toothWidthDegree = 1;
-    toothWidth = (toothWidthDegree/conversionFactor);
-    radius = 80 *scale*size
-    drawGear();
-    doc.circle(centerX, centerY, (10*scale*size*0.4));
-    centerY = centerY + (196*scale*size);
-    for (var i = 0; i<verts2.length; i++){
-      if(i+1 == verts2.length){
-        doc.line(verts2[i].x, verts2[i].y, verts2[0].x, verts2[0].y); // horizontal line
-      }
-      else{
-        doc.line(verts2[i].x, verts2[i].y, verts2[i+1].x, verts2[i+1].y);
-      }
-    }
-  }
-  //centerX = centerX + (200*scale*size);
-  //centerY = 100*scale*size
-  for(var x = 0; x<numOfMediumGears; x++){
-    arrange()
-    radius = 64
-    steps = (0.25 * radius)*2;
-    toothWidthDegree = 2;
-    toothWidth = (toothWidthDegree/conversionFactor);
-    radius = 64 *scale*size
-    drawGear();
-    doc.circle(centerX, centerY, (10*scale*size*0.4));
-    centerY = centerY + (168*scale*size);
-    for (var i = 0; i<verts2.length; i++){
-      if(i+1 == verts2.length){
-        doc.line(verts2[i].x, verts2[i].y, verts2[0].x, verts2[0].y); // horizontal line
-      }
-      else{
-        doc.line(verts2[i].x, verts2[i].y, verts2[i+1].x, verts2[i+1].y);
-      }
-    }
-  }
-  for(var x = 0; x<numOfSmallGears; x++){
-    arrange()
-    radius = 48
-    steps = (0.25 * radius)*2;
-    toothWidthDegree = 3;
-    toothWidth = (toothWidthDegree/conversionFactor);
-    radius = 48 *scale*size
-    drawGear();
-    doc.circle(centerX, centerY, (10*scale*size*0.4));
-    centerY = centerY + (136*scale*size);
-    for (var i = 0; i<verts2.length; i++){
-      if(i+1 == verts2.length){
-        doc.line(verts2[i].x, verts2[i].y, verts2[0].x, verts2[0].y); // horizontal line
-      }
-      else{
-        doc.line(verts2[i].x, verts2[i].y, verts2[i+1].x, verts2[i+1].y);
-      }
-    }
-  }
-  if(numOfLinGears){
-    doc.addPage();
-    centerX = 10*scale*size;
-    centerY = 10*scale*size;
-    for(var x = 0; x<numOfLinGears; x++){
-      if(x>0){
-        centerX = centerX + (60*scale*size);
-      }
-      drawLinGear();
-      for (var i = 0; i<linGearVerts.length; i++){
-        if(i+1 == linGearVerts.length){
-          doc.line(linGearVerts[i].x, linGearVerts[i].y, linGearVerts[0].x, linGearVerts[0].y); // horizontal line
-        }
-        else{
-          doc.line(linGearVerts[i].x, linGearVerts[i].y, linGearVerts[i+1].x, linGearVerts[i+1].y);
-        }
-      }
-    }
-  }
-}
-function showLinkages(){
-  for(var i = 0; i<2;i++){
-    // doc.rect((35+(40*i))*scale2*size,30*scale2*size,30*scale2*size,constraintLength*scale2*size)
-    doc.rect(30*scale2*size,(35+(40*i))*scale2*size,constraintLength*scale2*size,30*scale2*size)
-    var increment = 0
-    for(var j = 0; j<4;j++){
-      increment += varArray[j]
-      console.log(increment)
-      // doc.line((35+(40*i))*scale2*size,(30+increment)*scale2*size,(65+(40*i))*scale2*size,(30+increment)*scale2*size)
-      doc.line((30+increment)*scale2*size,(35+(40*i))*scale2*size,(30+increment)*scale2*size,(65+(40*i))*scale2*size)
-    }
-  }
-} 
-
 showAll()

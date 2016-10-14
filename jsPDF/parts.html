@@ -13,6 +13,7 @@
 
 		<!-- Editor CSS -->
 		<link href="./examples/css/editor.css" rel="stylesheet">
+		<link href="./examples/css/custom.css" rel="stylesheet">
 
 		<!-- See closing body for JS -->
 
@@ -20,6 +21,7 @@
 	</head>
 
 	<body>
+		<script src="examples/js/landscape.js"></script>
 		
 		<div class="container">
 
@@ -42,8 +44,13 @@
 				</div>
 
 				<div id="editor" class="bypass"></div>
-
 			   <div class="controls">
+			   		<button class = "gear-size object btn btn-primary" type="button" id="setSmallWidth" onclick="updatePage()">1</button>
+   	                <button class = "gear-size object btn btn-primary" type="button" id="setMediumWidth" onclick="updatePage()">2</button>
+	                <button class = "gear-size object btn btn-primary" type="button" id="setLargeWidth" onclick="updatePage()">3</button>
+	                
+	                <br>
+	                <br>
 					<div class="pull-right">
 						<!--<a href="#" class="btn btn-primary">Download Your Code</a>-->
 						<a href="#" class="btn btn-primary download-pdf">Download PDF</a>
@@ -78,7 +85,8 @@
 
 		<!-- Analytics -->
 		<script type="text/javascript">
-			
+			$(".preview-pane").height(window.innerHeight * 0.75)
+
 
 		</script>
 		
