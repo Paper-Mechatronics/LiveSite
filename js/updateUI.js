@@ -1,5 +1,5 @@
 function updateUI(){
-  if(radius == 80){
+  if(radius == 80 || radius == 100){
     $('#setLargeGear').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
     $('#setMedGear').css("background-image", "none") 
     $('#setSmallGear').css("background-image", "none") 
@@ -7,7 +7,7 @@ function updateUI(){
     $('#setMedGear').css("color", "#000") 
     $('#setSmallGear').css("color", "#000") 
   }
-  else if(radius == 64){
+  else if(radius == 64 || radius == 84){
     $('#setMedGear').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
     $('#setLargeGear').css("background-image", "none") 
     $('#setSmallGear').css("background-image", "none") 
@@ -15,7 +15,7 @@ function updateUI(){
     $('#setMedGear').css("color", "#fff") 
     $('#setSmallGear').css("color", "#000") 
   }
-  else if(radius == 48){
+  else if(radius == 48 || radius == 68){
     $('#setSmallGear').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
     $('#setMedGear').css("background-image", "none") 
     $('#setLargeGear').css("background-image", "none") 
@@ -110,5 +110,13 @@ function sliderDisplay(){
   else{
     $('.hideThis').show()
     $('.hideThis2').hide()
+  }
+}
+function UDSliderDisplay(){
+  if(rackPinionMod){
+    $('.controls').hide()
+  }
+  else{
+    $('.controls').show()
   }
 }

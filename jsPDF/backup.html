@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title id = "pageTitle">Show Parts</title>
+		<title>Show Parts</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="">
 		<meta name="author" content="">
@@ -21,6 +21,7 @@
 	</head>
 
 	<body>
+		<script src="examples/js/landscape.js"></script>
 		
 		<div class="container">
 
@@ -43,13 +44,13 @@
 				</div>
 
 				<div id="editor" class="bypass"></div>
+
 			   <div class="controls">
-			   		<button class = "gear-size object btn btn-primary" type="button" id="setSmallWidth" onclick="updatePage()">1</button>
-   	                <button class = "gear-size object btn btn-primary" type="button" id="setMediumWidth" onclick="updatePage()">2</button>
-	                <button class = "gear-size object btn btn-primary" type="button" id="setLargeWidth" onclick="updatePage()">3</button>
-	                
-	                <br>
-	                <br>
+			   		<button class = "gear-size object btn btn-primary" type="button" id="setLargeGear" onclick="showAll()">All</button>
+   	                <button class = "gear-size object btn btn-primary" type="button" id="setSmallGear" onclick="showGears()">Gears</button>
+	                <button class = "gear-size object btn btn-primary" type="button" id="setMedGear" onclick="showLinkages()">Linkages</button>
+	                <button class = "gear-size object btn btn-primary" type="button" id="setLargeGear" onclick="showFrame()">Frame</button>
+
 					<div class="pull-right">
 						<!--<a href="#" class="btn btn-primary">Download Your Code</a>-->
 						<a href="#" class="btn btn-primary download-pdf">Download PDF</a>
@@ -79,7 +80,7 @@
 
 		<!-- Scripts in development mode -->
 		<script type="text/javascript" src="dist/jspdf.debug.js"></script>
-		<script type="text/javascript" src="./examples/js/partsVariables.js"></script>
+		
 		<script type="text/javascript" src="./examples/js/editor.js"></script>
 
 		<!-- Analytics -->

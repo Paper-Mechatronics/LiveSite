@@ -49,7 +49,7 @@ else{
             <div id = "vertical-slider" class = "slider-div hideThis2">
                 <label>Vertical Spacing: <span id = "pivot2PointValue"></span></label>
                 <br>
-                <input type="range" id="pivot2Point" value="0" min="0" max="100" oninput = "pivot2Input(this.value)" onchange = "pivot3Height(this.value)">
+                <input type="range" id="pivot2Point" value="0" min="0" max="100" oninput = "pivot2Input(this.value)" onchange = "pivotHeight(this.value)">
             </div>
             <br>
         </div>
@@ -72,16 +72,17 @@ else{
             <div id = "a-slider" class = "slider-div">
                 <label>Motor Speed: <span id = "motorSpeedValue"></span> (<span id = "motorAngleValue"></span>&deg;)</label>
                 <br>
-                <input type="range" id="motorSpeed" value="40" min="0" max="50" oninput = "speedInput(this.value)" onchange = "changeMotorSpeed(this.value)">
+                <button class = "object btn btn-primary simulation glyphicon glyphicon-pause" type="button" onclick="pause()"><!-- <span class="glyphicon glyphicon-pause" aria-hidden="true"></span> --></button>
+                <input class = "simulation" type="range" id="motorSpeed" value="40" min="0" max="50" oninput = "speedInput(this.value)" onchange = "changeMotorSpeed(this.value)">
+                <br>
             </div>
             <br>
-            <!--<div>
-            <p>Simulation:</p>
+            <div>
+            <p></p>
             <br>
-                <button class = "object btn btn-primary" type="button" id="alternate" onclick="startRunner()">Start</button>
-                <button class = "object btn btn-primary" type="button" id="continuous" onclick="stopRunner()">Stop</button>
+                <p><span id = "y-distance"></span></p>
             
-            </div>-->
+            </div>
         </div>
         <div class = "footer">
             <a href = "http://www.papermech.net/open-close.php">

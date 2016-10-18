@@ -168,11 +168,7 @@
  * jsPDFEditor
  * @return {[type]} [description]
  */
-var linkageSpacing = 30
-var linkageHeight = 30
-var linkageHeightPlus = linkageHeight + linkageSpacing
-var xMargin = 30
-var yMargin = 35
+
 var jsPDFEditor = function() {
 
 	var editor,demos = {

@@ -42,8 +42,8 @@ var render = Render.create({
     engine: engine,
     options:{
       wireframes: false,
-      height: window.innerHeight,
-      width: window.innerWidth*0.75
+      height: screen.height-63,
+      width: (screen.width-56)*0.75
     }
 });
 var runner = Runner.create();
@@ -127,7 +127,7 @@ var mirrored = false;
 var paired = false;
 var shared = false;
 var flipY = false;
-var screenScale = window.innerHeight/1011
+var screenScale = (screen.height-63)/1011
 var basePoint = (450*(screenScale - 0.7))
 var rackPinBase = 300 * (1 - screenScale);
 
@@ -209,7 +209,7 @@ function drawCam(){
   verts2 = [];
   for (var i = 0; i < steps; i++) {
     // console.log(radius)
-    xValues[i] = ((radius+40) * Math.cos(2 * Math.PI * i / steps));
+    xValues[i] = ((radius+50) * Math.cos(2 * Math.PI * i / steps));
     yValues[i] = ((radius) * Math.sin(2 * Math.PI * i / steps));
   }
   for (var i = 0; i < steps; i++) {
@@ -359,7 +359,7 @@ function addRectComposite(width, height, centerX, centerY){
   Composite.create({
         options:{
           render:{
-            fillStyle: "#333333"
+            fillStyle: "#cccccc"
           }
         },
         bodies:[Bodies.rectangle(centerX, centerY, width, height)],
@@ -368,13 +368,14 @@ function addRectComposite(width, height, centerX, centerY){
         width: width,
         height: height,
         lock: false
-
       })
   )
   constraintArray.push(
     // create joint constraint and place it at end of beam or center - width/2
     Constraint.create({pointA: { x: centerX+width/2, y: centerY },bodyB: compositeArray[totalComposites-1].bodies[0] ,pointB: { x: width/2, y: 0 }, stiffness: 1})
   )
+  compositeArray[compositeArray.length-1].bodies[0].render.fillStyle = "#cccccc"
+  compositeArray[compositeArray.length-1].bodies[0].render.strokeStyle = "#000"
   Composite.add(compositeArray[totalComposites-1], constraintArray[totalConstraints-1]);
   World.add(engine.world,[compositeArray[totalComposites-1]] );
 }
@@ -909,10 +910,10 @@ function createConstraintFake(constraintStart, constraintDestination){
       else if(compositeArray[i].shape == "rect"){
         if(startShape == "linGear" || startShape == "linRect" || startShape == "circle"){
           if(compositeArray[i].width>0){
-            startOffset = -spaceValue
+            startOffset = -module.horizontalSpace
           }
           else{
-            startOffset = spaceValue
+            startOffset = module.horizontalSpace
           }
         }
         destOffset = compositeArray[i].width*-0.5;;
@@ -1040,10 +1041,10 @@ function createConstraintFake2(constraintStart, constraintDestination, length, o
       else if(compositeArray[i].shape == "rect"){
         if(startShape == "linGear" || startShape == "linRect"){
           if(compositeArray[i].width>0){
-            startOffset = -spaceValue
+            startOffset = -module.horizontalSpace
           }
           else{
-            startOffset = spaceValue
+            startOffset = module.horizontalSpace
           }
         }
         destOffset = (originalWidth*-0.5)- length;
@@ -1512,7 +1513,7 @@ function createUIConstraints(composite, initialXSpace, initialYSpace, radius){
     composite.bodies[1].render.strokeStyle = "#000"
     composite.bodies[2].render.strokeStyle = "#000"
     Composite.add(composite, Constraint.create({bodyA: composite.bodies[1], bodyB: composite.bodies[2], stiffness: 0.00001}))
-    Composite.add(composite, Constraint.create({pointA: {x:composite.bodies[0].position.x, y: composite.bodies[0].position.y-(composite.height/2) - initialYSpace}, pointB: {x:0, y:-(composite.height/2)}, bodyB: composite.bodies[0], stiffness: 0.00001}))
+    Composite.add(composite, Constraint.create({pointA: {x:composite.bodies[0].position.x, y: composite.bodies[0].position.y - initialYSpace}, pointB: {x:0, y:0}, bodyB: composite.bodies[0], stiffness: 0.00001}))
     // UIJointComposites.push(Composite.create({
     //     constraints: [Constraint.create({pointA: { x: startOffset*Math.cos(constraintStart.angle), y: startOffset*Math.sin(constraintStart.angle) + startOffset2*Math.cos(constraintStart.angle) },
     //     bodyA: constraintStart ,
@@ -1581,6 +1582,7 @@ function createUIConstraintsMirrorSingle(composite, initialXSpace, initialYSpace
   tickFunction()
 }
 function createUIConstraintsSingle(composite, initialXSpace, initialYSpace, radius){
+  console.log(composite.shape)
   if(composite.shape == "linGear"){
     Composite.add(composite, Bodies.circle(composite.bodies[0].position.x, composite.bodies[0].position.y - 200 - initialYSpace, radius))
     composite.bodies[1].render.fillStyle = "#bc98f9"
@@ -1588,10 +1590,20 @@ function createUIConstraintsSingle(composite, initialXSpace, initialYSpace, radi
     Composite.add(composite, Constraint.create({pointA: {x:composite.bodies[0].position.x, y: composite.bodies[0].position.y-200 - initialYSpace}, pointB: {x:0, y:-200}, bodyB: composite.bodies[0], stiffness: 0.00001}))
   }
   if(composite.shape == "linRect"){
-    Composite.add(composite, Bodies.circle(composite.bodies[0].position.x, composite.bodies[0].position.y - (composite.height/2) - initialYSpace, radius))
-    composite.bodies[1].render.fillStyle = "#bc98f9"
-    composite.bodies[1].render.strokeStyle = "#000"
-    Composite.add(composite, Constraint.create({pointA: {x:composite.bodies[0].position.x, y: composite.bodies[0].position.y-(composite.height/2) - initialYSpace}, pointB: {x:0, y:-(composite.height/2)}, bodyB: composite.bodies[0], stiffness: 0.00001}))
+    if(!openCloseModule){
+      Composite.add(composite, Bodies.circle(composite.bodies[0].position.x, composite.bodies[0].position.y - initialYSpace, radius))
+      composite.bodies[1].render.fillStyle = "#bc98f9"
+      composite.bodies[1].render.strokeStyle = "#000"
+      Composite.add(composite, Constraint.create({pointA: {x:composite.bodies[0].position.x, y: composite.bodies[0].position.y - initialYSpace}, pointB: {x:0, y:0}, bodyB: composite.bodies[0], stiffness: 0.00001}))
+
+    }
+    else{
+      Composite.add(composite, Bodies.circle(composite.bodies[0].position.x, composite.bodies[0].position.y - (composite.height/2) - initialYSpace, radius))
+      composite.bodies[1].render.fillStyle = "#bc98f9"
+      composite.bodies[1].render.strokeStyle = "#000"
+      Composite.add(composite, Constraint.create({pointA: {x:composite.bodies[0].position.x, y: composite.bodies[0].position.y-(composite.height/2) - initialYSpace}, pointB: {x:0, y:-(composite.height/2)}, bodyB: composite.bodies[0], stiffness: 0.00001}))
+    }
+    console.log("hello")
   }
   if(composite.shape == "circle"){
     Composite.add(composite, Bodies.circle(composite.bodies[0].position.x, composite.bodies[0].position.y - initialYSpace, radius))
@@ -1685,17 +1697,18 @@ function changeBody2(index){
     Composite.remove(compositeArray[index], compositeArray[index].bodies[0]);
     var tmpConstraintXPoint
     if(index == 0){
-      tmpConstraintXPoint = compositeArray[index].constraints[0].pointA.x
+      tmpConstraintXPoint = compositeArray[index].constraints[0].pointA.x-75
     }
     else{
-      tmpConstraintXPoint = compositeArray[index].constraints[0].pointA.x
+      tmpConstraintXPoint = compositeArray[index].constraints[0].pointA.x-75
     }
     var tmpConstraintYPoint = compositeArray[index].constraints[0].pointA.y
     Composite.remove(compositeArray[index], compositeArray[index].constraints[0]);
     verts2 = [];
     drawCam();
     Composite.add(compositeArray[index], Bodies.fromVertices(tmpConstraintXPoint, tmpConstraintYPoint, [verts2]))
-    Composite.add(compositeArray[index], Constraint.create({pointA: { x: tmpConstraintXPoint, y: tmpConstraintYPoint },
+    Composite.add(compositeArray[index], Constraint.create({pointA: { x: tmpConstraintXPoint+75, y: tmpConstraintYPoint },
+        pointB: { x: 75, y: 0 },
         bodyB: compositeArray[index].bodies[0], 
         stiffness: 1
       })
@@ -1774,8 +1787,14 @@ function changeBody5(index, height){
     var tmpConstraintYPoint = compositeArray[index].constraints[0].pointA.y;
     Composite.remove(compositeArray[index], compositeArray[index].constraints[0]);
     linGearVerts = [];
-    drawRect(height);
-    Composite.add(compositeArray[index], Bodies.fromVertices(tmpConstraintXPoint, tmpConstraintYPoint, [linGearVerts]))
+    // drawRect(height);
+    if(upDownModule){
+      Composite.add(compositeArray[index], Bodies.circle(tmpConstraintXPoint, tmpConstraintYPoint, 15))
+    }
+    else{
+      // Composite.add(compositeArray[index], Bodies.fromVertices(tmpConstraintXPoint, tmpConstraintYPoint, [linGearVerts]))
+      Composite.add(compositeArray[index], Bodies.circle(tmpConstraintXPoint, tmpConstraintYPoint, 15))
+    }
     Composite.add(compositeArray[index], Constraint.create({pointA: { x: tmpConstraintXPoint, y: tmpConstraintYPoint },
         bodyB: compositeArray[index].bodies[0], 
         stiffness: 1
@@ -1871,7 +1890,7 @@ function updateSliders(){
   }
   if(document.getElementById("pivot2Point")){
     document.getElementById("pivot2PointValue").innerHTML = module.pivot2Point
-    document.getElementById("pivot2Point").value = Math.round(module.pivot2Point)-50
+    document.getElementById("pivot2Point").value = Math.round(module.pivot2Point)
   }
   if(document.getElementById("motorSpeed")){
     document.getElementById("motorSpeedValue").innerHTML = module.motorSpeed
@@ -1965,12 +1984,18 @@ function pivotInput(value){
 }function pivot2Input(value){
   if(document.getElementById("pivot2Point")){
     if(!openCloseMod){
-      module.pivot2Point = 50 + Math.round(value)
-      compositeArray[0].constraints[1].render.lineWidth = redLineWidth
-      compositeArray[0].constraints[1].render.strokeStyle = "#FF3318"
+      module.pivot2Point = Math.round(value)
+      if(crankMod){
+        jointComposites[jointComposites.length-1].constraints[0].render.lineWidth = redLineWidth
+        jointComposites[jointComposites.length-1].constraints[0].render.strokeStyle = "#FF3318"
+      }
+      else{
+        compositeArray[0].constraints[1].render.lineWidth = redLineWidth
+        compositeArray[0].constraints[1].render.strokeStyle = "#FF3318"
+      }
     }
     else{
-      module.pivot2Point = 50 + Math.round(value)
+      module.pivot2Point =Math.round(value)
       compositeArray[0].constraints[2].render.lineWidth = redLineWidth
       compositeArray[0].constraints[2].render.strokeStyle = "#FF3318"
     }
@@ -1984,6 +2009,10 @@ function speedInput(value){
 function beamWidthInput(value){
   if(document.getElementById("beamWidth")){
     module.beamWidth = value
+    compositeArray[2].bodies[0].render.lineWidth = 3
+    compositeArray[2].bodies[0].render.strokeStyle = "#FF3318"
+    compositeArray[3].bodies[0].render.lineWidth = 3
+    compositeArray[3].bodies[0].render.strokeStyle = "#FF3318"
   }
 }
 
@@ -2060,8 +2089,14 @@ function beamWidth(value){
     compositeArray[3].width = originalWidth2 + (-parseInt(value))
     newWidth1 = compositeArray[2].width
     newWidth2 = compositeArray[3].width
-    console.log(compositeArray[2].width)
+    // console.log(compositeArray[2].width)
     beamWidthChange = parseInt(value)
+    compositeArray[2].bodies[0].render.fillStyle = "#cccccc"
+    compositeArray[2].bodies[0].render.strokeStyle = "#000"
+    compositeArray[2].bodies[0].render.lineWidth = 2
+    compositeArray[3].bodies[0].render.fillStyle = "#cccccc"
+    compositeArray[3].bodies[0].render.strokeStyle = "#000"
+    compositeArray[3].bodies[0].render.lineWidth = 2
   }
   tickFunction()
 }
@@ -2127,6 +2162,7 @@ function pause(){
 }
 //////////////////// FRAME UPDATE /////////////////////////////////////
 Events.on(engine, 'beforeUpdate', function(event) {
+  // console.log("screen = " + screen.height + "  window = " + window.innerHeight )
   updateSliders()
   // console.log(jointComposites[jointComposites.length-2].constraints[0].pointA.x)
   // console.log(compositeArray[0].bodies[0].position.y)
@@ -2138,6 +2174,9 @@ Events.on(engine, 'beforeUpdate', function(event) {
     for(var i = 0; i<compositeArray.length;i++){
       if(compositeArray[i].bodies[1]){
         compositeArray[i].bodies[1].collisionFilter.mask = otherCategory
+        if(compositeArray[i].bodies[2]){
+          compositeArray[i].bodies[2].collisionFilter.mask = otherCategory
+        }
         if(compositeArray[i].shape == "linGear"){
           if(i == 0){
             // console.log(jointComposites[jointComposites.length-2])
@@ -2361,13 +2400,13 @@ Events.on(engine, 'beforeUpdate', function(event) {
     for(var i = 0; i<compositeArray.length; i++){
       if(compositeArray[i].radius != 0){
         for(var j=0; j<compositeArray[i].bodies[0].parts.length;j++){
-          if(compositeArray[i].shape != "linGear"){
+          if(compositeArray[i].shape == "gear"){
             compositeArray[i].bodies[0].parts[j].render.strokeStyle = "#000000";
           }
           if(compositeArray[i].shape == "rect" || compositeArray[i].shape == "poly"){
             compositeArray[i].bodies[0].parts[j].render.fillStyle = "#cccccc";
           }
-          if(compositeArray[i].radius == 48){
+          if(compositeArray[i].radius == 48 || compositeArray[i].radius == 88){
             compositeArray[i].bodies[0].parts[j].render.fillStyle = "#FF6B6B";
             for(var k = 0; k<compositeArray.length; k++){
               if(compositeArray[k].bodies[1]){
@@ -2387,10 +2426,14 @@ Events.on(engine, 'beforeUpdate', function(event) {
               }
               if(compositeArray[k].shape == "circleCrank"){
                 compositeArray[k].bodies[0].render.sprite.texture = "./img/crank96px.png"
+                if(upDownModule || openCloseModule){ 
+                  compositeArray[k].bodies[0].render.sprite.xScale = 88/48
+                  compositeArray[k].bodies[0].render.sprite.yScale = 88/48
+                }
               }
             }            
           }
-          else if(compositeArray[i].radius == 64){
+          else if(compositeArray[i].radius == 64 || compositeArray[i].radius == 104){
             compositeArray[i].bodies[0].parts[j].render.fillStyle = "#4ECDC4";
             for(var k = 0; k<compositeArray.length; k++){
               if(compositeArray[k].bodies[1]){
@@ -2410,10 +2453,14 @@ Events.on(engine, 'beforeUpdate', function(event) {
               }
               if(compositeArray[k].shape == "circleCrank"){
                 compositeArray[k].bodies[0].render.sprite.texture = "./img/crank128px.png"
+                if(upDownModule || openCloseModule){
+                  compositeArray[k].bodies[0].render.sprite.xScale = 104/64
+                  compositeArray[k].bodies[0].render.sprite.yScale = 104/64
+                }
               }
             }
           }
-          else if(compositeArray[i].radius == 80){
+          else if(compositeArray[i].radius == 80 || compositeArray[i].radius == 120){
             compositeArray[i].bodies[0].parts[j].render.fillStyle = "#bc98f9";
             for(var k = 0; k<compositeArray.length; k++){
               if(compositeArray[k].bodies[1]){
@@ -2433,6 +2480,11 @@ Events.on(engine, 'beforeUpdate', function(event) {
               }
               if(compositeArray[k].shape == "circleCrank"){
                 compositeArray[k].bodies[0].render.sprite.texture = "./img/crank160px.png"
+                if(upDownModule || openCloseModule){
+                  compositeArray[k].bodies[0].render.sprite.xScale = 120/80
+                  compositeArray[k].bodies[0].render.sprite.yScale = 120/80
+                }
+
               }
               if(compositeArray[k].shape == "gear"){
                 compositeArray[k].bodies[0].parts[0].render.sprite.texture = "./img/crank160px.png"
@@ -2457,6 +2509,9 @@ Events.on(engine, 'beforeUpdate', function(event) {
     rotationUI()
     if(rackPinionModule || crankModule || camModule){
       sliderDisplay()
+    }
+    if(upDownModule){
+      UDSliderDisplay()
     }
 })
 // called every frame after physics is applied
