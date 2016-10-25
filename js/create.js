@@ -2,7 +2,7 @@ function changeMods(){
             if(document.getElementById("dropdown").value == "mechanism"){
                 document.getElementById('one').innerHTML = "Rack & Pinion";
                 document.getElementById('one-href').href = "#";
-                document.getElementById('one-img').src = "img/front_mech_rackpinion.png";
+                document.getElementById('one-img').src = "img/RackPinion2.gif";
                 document.getElementById('two').innerHTML = "Crank";
                 document.getElementById('two-href').href = "#";
                 document.getElementById('two-img').src = "img/front_mech_crank.png";
@@ -22,10 +22,10 @@ function changeMods(){
             else{
                 document.getElementById('one').innerHTML = "Open-Close";
                 document.getElementById('one-href').href = "open-close.php";
-                document.getElementById('one-img').src = "img/front_motion_openclose.png";
+                document.getElementById('one-img').src = "img/OpenClose2.gif";
                 document.getElementById('two').innerHTML = "Up-Down";
                 document.getElementById('two-href').href = "up-down.php";
-                document.getElementById('two-img').src = "img/front_motion_updown.png";
+                document.getElementById('two-img').src = "img/UpDown2.gif";
                 document.getElementById('three').innerHTML = "Flap";
                 document.getElementById('three-href').href = "#";
                 document.getElementById('three-img').src = "img/front_motion_flap.png";

@@ -36,8 +36,8 @@
           </select>
     </div>
     <div id="container">
-        <a id = "one-href" href = "open-close.php"><div class="box"><div><p id = "one">Open-Close</p></div><img id = "one-img" src="img/front_motion_openclose.png"></div></a>
-        <a id = "two-href" href = "up-down.php"><div class="box"><div><p id = "two">Up-Down</p></div><img id = "two-img" src="img/front_motion_updown.png"></div></a>
+        <a id = "one-href" href = "open-close.php"><div class="box"><div><p id = "one">Open-Close</p></div><img id = "one-img" src="img/OpenClose2.gif"></div></a>
+        <a id = "two-href" href = "up-down.php"><div class="box"><div><p id = "two">Up-Down</p></div><img id = "two-img" src="img/UpDown2.gif"></div></a>
         <a id = "three-href" href = "#"><div class="box"><div><p id = "three">Flap</p></div><img id = "three-img" src="img/front_motion_flap.png"></div></a>
         <span class="stretch"></span>
         <br>

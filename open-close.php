@@ -120,7 +120,7 @@ else{
                     <p>Reset</p>
                 </div>
             </a>
-            <a id = "showParts" href = "#" onclick = "showParts()">
+            <a id = "showParts" onclick = "showParts()">
                 <div class = "footer-btn-div">
                     <button href = "" class = "footer-btn object btn btn-primary" type="button" ><img class = "btn-icon" src="img/show_parts.png"></button>
                     <br>

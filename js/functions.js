@@ -42,8 +42,8 @@ var render = Render.create({
     engine: engine,
     options:{
       wireframes: false,
-      height: screen.height-63,
-      width: (screen.width-56)*0.75
+      height: window.innerHeight,
+      width: (window.innerWidth)*0.75
     }
 });
 var runner = Runner.create();
@@ -127,7 +127,7 @@ var mirrored = false;
 var paired = false;
 var shared = false;
 var flipY = false;
-var screenScale = (screen.height-63)/1011
+var screenScale = (window.innerHeight)/1011
 var basePoint = (450*(screenScale - 0.7))
 var rackPinBase = 300 * (1 - screenScale);
 
@@ -2406,7 +2406,7 @@ Events.on(engine, 'beforeUpdate', function(event) {
           if(compositeArray[i].shape == "rect" || compositeArray[i].shape == "poly"){
             compositeArray[i].bodies[0].parts[j].render.fillStyle = "#cccccc";
           }
-          if(compositeArray[i].radius == 48 || compositeArray[i].radius == 88){
+          if(compositeArray[i].radius == 48 || compositeArray[i].radius == 100){
             compositeArray[i].bodies[0].parts[j].render.fillStyle = "#FF6B6B";
             for(var k = 0; k<compositeArray.length; k++){
               if(compositeArray[k].bodies[1]){
@@ -2427,13 +2427,13 @@ Events.on(engine, 'beforeUpdate', function(event) {
               if(compositeArray[k].shape == "circleCrank"){
                 compositeArray[k].bodies[0].render.sprite.texture = "./img/crank96px.png"
                 if(upDownModule || openCloseModule){ 
-                  compositeArray[k].bodies[0].render.sprite.xScale = 88/48
-                  compositeArray[k].bodies[0].render.sprite.yScale = 88/48
+                  compositeArray[k].bodies[0].render.sprite.xScale = 100/48
+                  compositeArray[k].bodies[0].render.sprite.yScale = 100/48
                 }
               }
             }            
           }
-          else if(compositeArray[i].radius == 64 || compositeArray[i].radius == 104){
+          else if(compositeArray[i].radius == 64 || compositeArray[i].radius == 116){
             compositeArray[i].bodies[0].parts[j].render.fillStyle = "#4ECDC4";
             for(var k = 0; k<compositeArray.length; k++){
               if(compositeArray[k].bodies[1]){
@@ -2454,13 +2454,13 @@ Events.on(engine, 'beforeUpdate', function(event) {
               if(compositeArray[k].shape == "circleCrank"){
                 compositeArray[k].bodies[0].render.sprite.texture = "./img/crank128px.png"
                 if(upDownModule || openCloseModule){
-                  compositeArray[k].bodies[0].render.sprite.xScale = 104/64
-                  compositeArray[k].bodies[0].render.sprite.yScale = 104/64
+                  compositeArray[k].bodies[0].render.sprite.xScale = 116/64
+                  compositeArray[k].bodies[0].render.sprite.yScale = 116/64
                 }
               }
             }
           }
-          else if(compositeArray[i].radius == 80 || compositeArray[i].radius == 120){
+          else if(compositeArray[i].radius == 80 || compositeArray[i].radius == 132){
             compositeArray[i].bodies[0].parts[j].render.fillStyle = "#bc98f9";
             for(var k = 0; k<compositeArray.length; k++){
               if(compositeArray[k].bodies[1]){
@@ -2481,8 +2481,8 @@ Events.on(engine, 'beforeUpdate', function(event) {
               if(compositeArray[k].shape == "circleCrank"){
                 compositeArray[k].bodies[0].render.sprite.texture = "./img/crank160px.png"
                 if(upDownModule || openCloseModule){
-                  compositeArray[k].bodies[0].render.sprite.xScale = 120/80
-                  compositeArray[k].bodies[0].render.sprite.yScale = 120/80
+                  compositeArray[k].bodies[0].render.sprite.xScale = 132/80
+                  compositeArray[k].bodies[0].render.sprite.yScale = 132/80
                 }
 
               }

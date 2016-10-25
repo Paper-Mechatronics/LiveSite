@@ -49,7 +49,7 @@ else{
             <div id = "vertical-slider" class = "slider-div hideThis2">
                 <label>Vertical Spacing: <span id = "pivot2PointValue"></span></label>
                 <br>
-                <input type="range" id="pivot2Point" value="0" min="0" max="100" oninput = "pivot2Input(this.value)" onchange = "pivotHeight(this.value)">
+                <input type="range" id="pivot2Point" value="0" min="0" max="250" oninput = "pivot2Input(this.value)" onchange = "pivotHeight(this.value)">
             </div>
             <br>
         </div>
@@ -92,7 +92,7 @@ else{
                     <p>Reset</p>
                 </div>
             </a>
-            <a id = "showParts" href = "#" onclick = "showParts()">
+            <a id = "showParts" onclick = "showParts()">
                 <div class = "footer-btn-div">
                     <button href = "http://www.papermech.net/jsPDF/parts.html" class = "footer-btn object btn btn-primary" type="button" ><img class = "btn-icon" src="img/show_parts.png"></button>
                     <br>

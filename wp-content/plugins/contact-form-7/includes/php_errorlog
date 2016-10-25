@@ -2,3 +2,6 @@
 [03-Aug-2016 04:09:40 CST6CDT] PHP Fatal error:  Call to undefined function add_action() in /home/papermec/public_html/wp-content/plugins/contact-form-7/includes/mail.php on line 171
 [03-Aug-2016 04:09:42 CST6CDT] PHP Fatal error:  Call to undefined function add_action() in /home/papermec/public_html/wp-content/plugins/contact-form-7/includes/controller.php on line 3
 [03-Aug-2016 04:10:04 CST6CDT] PHP Fatal error:  Call to undefined function add_filter() in /home/papermec/public_html/wp-content/plugins/contact-form-7/includes/capabilities.php on line 3
+[10-Oct-2016 17:40:17 CST6CDT] PHP Fatal error:  Call to undefined function add_action() in /home/papermec/public_html/wp-content/plugins/contact-form-7/includes/upgrade.php on line 3
+[10-Oct-2016 17:40:23 CST6CDT] PHP Fatal error:  Call to undefined function add_action() in /home/papermec/public_html/wp-content/plugins/contact-form-7/includes/mail.php on line 171
+[10-Oct-2016 17:40:25 CST6CDT] PHP Fatal error:  Call to undefined function add_action() in /home/papermec/public_html/wp-content/plugins/contact-form-7/includes/controller.php on line 3

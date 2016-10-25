@@ -1,11 +1,11 @@
-var scale = (screen.height - 63)/1011;
+var scale = window.innerHeight/1011;
 var world = engine.world
 
 // make the world bounds a little bigger than the render bounds
 world.bounds.min.x = 300;
 world.bounds.min.y = 300;
-world.bounds.max.x = (screen.width - 56)*0.75;
-world.bounds.max.y = (screen.height - 63);
+world.bounds.max.x = window.innerWidth*0.75;
+world.bounds.max.y = window.innerHeight;
 
 // keep track of current bounds scale (view zoom)
 var boundsScaleTarget = 1,

@@ -1,5 +1,5 @@
 function updateUI(){
-  if(radius == 80 || radius == 100){
+  if(radius == 80 || radius == 132){
     $('#setLargeGear').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
     $('#setMedGear').css("background-image", "none") 
     $('#setSmallGear').css("background-image", "none") 
@@ -7,7 +7,7 @@ function updateUI(){
     $('#setMedGear').css("color", "#000") 
     $('#setSmallGear').css("color", "#000") 
   }
-  else if(radius == 64 || radius == 84){
+  else if(radius == 64 || radius == 116){
     $('#setMedGear').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
     $('#setLargeGear').css("background-image", "none") 
     $('#setSmallGear').css("background-image", "none") 
@@ -15,7 +15,7 @@ function updateUI(){
     $('#setMedGear').css("color", "#fff") 
     $('#setSmallGear').css("color", "#000") 
   }
-  else if(radius == 48 || radius == 68){
+  else if(radius == 48 || radius == 100){
     $('#setSmallGear').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
     $('#setMedGear').css("background-image", "none") 
     $('#setLargeGear').css("background-image", "none") 

@@ -39,14 +39,14 @@ function showParts(){
     }
     console.log(compositeArray[i].radius)
     if(compositeArray[i].shape == "circleCrank"){
-      crankLength = 300 + parseInt(module.pivot2Point)
-      if(compositeArray[i].radius == 120){ 
+      crankLength = 350 + parseInt(module.pivot2Point)
+      if(compositeArray[i].radius == 132){ 
         numLargeCrank++
       }
-      else if(compositeArray[i].radius ==104){
+      else if(compositeArray[i].radius ==1116){
         numMediumCrank++
       }
-      else if(compositeArray[i].radius == 88){
+      else if(compositeArray[i].radius == 100){
         numSmallCrank++
       }
     }

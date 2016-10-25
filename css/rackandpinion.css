@@ -11,7 +11,8 @@ body {
         right: 0;
         vertical-align: top;
         border-left: 2px solid black;
-        
+        width: 75%;
+        height: 100%;
 
     } 
     #content{
@@ -102,6 +103,7 @@ body {
         margin: 0 auto;
         margin-top: 20px;
         margin-bottom: 20px;
+        display: none;
     }
     p {
         display: inline-block;

@@ -65,27 +65,55 @@ function arrange(){
   }
 }
 function square(yOffset){
-  doc.line((15+510.2+5)*frameScale,(yOffset + 15)*frameScale,(15+510.2+5)*frameScale,(yOffset + 15+227.8)*frameScale)
-  doc.line((15+510.2+5)*frameScale,(yOffset + 15+227.8)*frameScale,(15+510.2+5+137.5)*frameScale,(yOffset + 15+227.8)*frameScale)
-  doc.line((15+510.2+5+137.5)*frameScale,(yOffset + 15+227.8)*frameScale,(15+510.2+5+137.5)*frameScale,(yOffset + 15+227.8-85)*frameScale)
-  doc.line((15+510.2+5+137.5)*frameScale,(yOffset + 15+227.8-85)*frameScale,(15+510.2+5+137.5+8.5)*frameScale,(yOffset + 15+227.8-85)*frameScale)
-  doc.line((15+510.2+5+137.5+8.5)*frameScale,(yOffset + 15+227.8-85)*frameScale,(15+510.2+5+137.5+8.5)*frameScale,(yOffset + 15+227.8)*frameScale)
-  doc.line((15+510.2+5+137.5+8.5)*frameScale,(yOffset + 15+227.8)*frameScale,(15+510.2+5+137.5+8.5+137.5)*frameScale,(yOffset + 15+227.8)*frameScale)
-  doc.line((15+510.2+5+137.5+8.5+137.5)*frameScale,(yOffset + 15+227.8)*frameScale,(15+510.2+5+137.5+8.5+137.5)*frameScale,(yOffset + 15)*frameScale)
-  doc.line((15+510.2+5+137.5+8.5+137.5)*frameScale,(yOffset + 15)*frameScale,(15+510.2+5)*frameScale,(yOffset + 15)*frameScale)
+  doc.line((25+510.2+5)*frameScale,(yOffset + 15)*frameScale,(25+510.2+5)*frameScale,(yOffset + 15+227.8)*frameScale)
+  doc.line((25+510.2+5)*frameScale,(yOffset + 15+227.8)*frameScale,(25+510.2+5+137.5)*frameScale,(yOffset + 15+227.8)*frameScale)
+  doc.line((25+510.2+5+137.5)*frameScale,(yOffset + 15+227.8)*frameScale,(25+510.2+5+137.5)*frameScale,(yOffset + 15+227.8-85)*frameScale)
+  doc.line((25+510.2+5+137.5)*frameScale,(yOffset + 15+227.8-85)*frameScale,(25+510.2+5+137.5+8.5)*frameScale,(yOffset + 15+227.8-85)*frameScale)
+  doc.line((25+510.2+5+137.5+8.5)*frameScale,(yOffset + 15+227.8-85)*frameScale,(25+510.2+5+137.5+8.5)*frameScale,(yOffset + 15+227.8)*frameScale)
+  doc.line((25+510.2+5+137.5+8.5)*frameScale,(yOffset + 15+227.8)*frameScale,(25+510.2+5+137.5+8.5+137.5)*frameScale,(yOffset + 15+227.8)*frameScale)
+  doc.line((25+510.2+5+137.5+8.5+137.5)*frameScale,(yOffset + 15+227.8)*frameScale,(25+510.2+5+137.5+8.5+137.5)*frameScale,(yOffset + 15)*frameScale)
+  doc.line((25+510.2+5+137.5+8.5+137.5)*frameScale,(yOffset + 15)*frameScale,(25+510.2+5)*frameScale,(yOffset + 15)*frameScale)
 }
-function roundedRect(length){
-  length = length+16
-  doc.roundedRect(125, (15*frameScale), 16, length, 8, 8)
+function roundedRect(length,crankSize){
   console.log(length)
-  if(length<123.47){
-    doc.roundedRect(125+8-3.36, (15*frameScale)+16, 6.72, length-16-16, 3.36, 3.36)
+  // if(length<123.47){
+  //   doc.roundedRect(125+8-3.36, (15*frameScale)+16, 6.72, length-16-16, 3.36, 3.36)
+  // }
+  // else{
+  //   doc.roundedRect(125+8-3.36, (15*frameScale)+16, 6.72, 80, 3.36, 3.36)
+  // }
+  // doc.roundedRect(125, (15*frameScale), 20, length+16, 10, 10)
+  // doc.roundedRect(125+10-3.36, (15*frameScale)+20, 6.72, 132*scale2*size*2, 3.36, 3.36)
+  // doc.circle(125+10,(15*frameScale)+8,2.5)
+  // doc.circle(125+10,(15*frameScale)+(length+8),2.5)
+  doc.roundedRect((15*frameScale), 175, length+16, 20, 10, 10)
+  doc.roundedRect((15*frameScale)+20, 175+10-3.36, crankSize*scale2*size*2, 6.72, 3.36, 3.36)
+  doc.circle((15*frameScale)+8,175+10,2.5)
+  doc.circle((15*frameScale)+(length+8),175+10,2.5)
+}
+function crankCase(crankSize){
+  if(numOfMediumCranks || numOfSmallCranks || numOfLargeCranks){
+    frameLength = 10+crankLength-(crankSize*scale2*size*0.8)-12-3+40
+    doc.rect(15*frameScale,(15)*frameScale,frameLength,3*(crankSize*scale2*size))
+    doc.rect((15*frameScale)+frameLength-30,(15*frameScale)+(3*(crankSize*scale2*size)/2)-10,-40,20)
+    doc.circle((15*frameScale)+10, (15*frameScale)+(3*(crankSize*scale2*size)/2), 1.5);
+    // doc.circle((15*frameScale)+10, (15*frameScale)+60, 1.5);
+    doc.circle((15*frameScale)+10+crankLength-(crankSize*scale2*size*0.8)-12-3, (15*frameScale)+(3*(crankSize*scale2*size)/2), 1.5);
+    square(0)
+    square(232.8)
   }
-  else{
-    doc.roundedRect(125+8-3.36, (15*frameScale)+16, 6.72, 80, 3.36, 3.36)
+}
+function RPCase(crankSize){
+  if(numOfLinGears){
+    frameLength = 10+crankLength-(crankSize*scale2*size*0.8)-12-3+40
+    doc.rect(15*frameScale,(15)*frameScale,frameLength,3*(crankSize*scale2*size))
+    doc.rect((15*frameScale)+frameLength-30,(15*frameScale)+(3*(crankSize*scale2*size)/2)-10,-40,20)
+    doc.circle((15*frameScale)+10, (15*frameScale)+(3*(crankSize*scale2*size)/2), 1.5);
+    // doc.circle((15*frameScale)+10, (15*frameScale)+60, 1.5);
+    doc.circle((15*frameScale)+10+crankLength-(crankSize*scale2*size*0.8)-12-3, (15*frameScale)+(3*(crankSize*scale2*size)/2), 1.5);
+    square(0)
+    square(232.8)
   }
-  doc.circle(125+8,(15*frameScale)+8,3)
-  doc.circle(125+8,(15*frameScale)+(length-8),3)
 }
 function crankParts(){
   for(var x = 0; x<8;x++){
@@ -104,6 +132,41 @@ function buttonDisplay(){
   $("#setMediumWidth").show()
   $("#setLargeWidth").show()
 }
+function showGear(){
+  if(continuous==1){
+    drawContinuousGear()
+  }
+  else{
+    drawGear();
+    console.log(centerY)
+  }
+  doc.circle(centerX, centerY, (2));
+  centerX = centerX + (196*scale*size);
+  for (var i = 0; i<verts2.length; i++){
+    if(i+1 == verts2.length){
+      doc.line(verts2[i].x, verts2[i].y, verts2[0].x, verts2[0].y); // horizontal line
+    }
+    else{
+      doc.line(verts2[i].x, verts2[i].y, verts2[i+1].x, verts2[i+1].y);
+    }
+  }
+  if(continuous==1){
+    drawContinuousGear()
+  }
+  else{
+    drawGear();
+    console.log(centerY)
+  }
+  doc.circle(centerX, centerY, (2));
+  for (var i = 0; i<verts2.length; i++){
+    if(i+1 == verts2.length){
+      doc.line(verts2[i].x, verts2[i].y, verts2[0].x, verts2[0].y); // horizontal line
+    }
+    else{
+      doc.line(verts2[i].x, verts2[i].y, verts2[i+1].x, verts2[i+1].y);
+    }
+  }
+}
 var doc = new jsPDF("landscape");
 function showAll(){
   // console.log(numOfMediumCranks)
@@ -120,26 +183,8 @@ function showAll(){
     toothWidthDegree = 1;
     toothWidth = (toothWidthDegree/conversionFactor);
     radius = 80 *scale*size
-    if(continuous==1){
-      drawContinuousGear()
-    }
-    else{
-      drawGear();
-      console.log(centerY)
-    }
-    doc.circle(centerX, centerY, (2));
-    centerY = centerY + (196*scale*size);
-    for (var i = 0; i<verts2.length; i++){
-      if(i+1 == verts2.length){
-        doc.line(verts2[i].x, verts2[i].y, verts2[0].x, verts2[0].y); // horizontal line
-      }
-      else{
-        doc.line(verts2[i].x, verts2[i].y, verts2[i+1].x, verts2[i+1].y);
-      }
-    }
+    showGear()
   }
-  //centerX = centerX + (200*scale*size);
-  //centerY = 100*scale*size
   for(var x = 0; x<numOfMediumGears; x++){
     arrange()
     radius = 64
@@ -147,22 +192,7 @@ function showAll(){
     toothWidthDegree = 2;
     toothWidth = (toothWidthDegree/conversionFactor);
     radius = 64 *scale*size
-    if(continuous==1){
-      drawContinuousGear()
-    }
-    else{
-      drawGear();
-    }
-    doc.circle(centerX, centerY, (2));
-    centerY = centerY + (168*scale*size);
-    for (var i = 0; i<verts2.length; i++){
-      if(i+1 == verts2.length){
-        doc.line(verts2[i].x, verts2[i].y, verts2[0].x, verts2[0].y); // horizontal line
-      }
-      else{
-        doc.line(verts2[i].x, verts2[i].y, verts2[i+1].x, verts2[i+1].y);
-      }
-    }
+    showGear()
   }
   for(var x = 0; x<numOfSmallGears; x++){
     arrange()
@@ -171,22 +201,7 @@ function showAll(){
     toothWidthDegree = 3;
     toothWidth = (toothWidthDegree/conversionFactor);
     radius = 48 *scale*size
-    if(continuous==1){
-      drawContinuousGear()
-    }
-    else{
-      drawGear();
-    }
-    doc.circle(centerX, centerY, (2));
-    centerY = centerY + (136*scale*size);
-    for (var i = 0; i<verts2.length; i++){
-      if(i+1 == verts2.length){
-        doc.line(verts2[i].x, verts2[i].y, verts2[0].x, verts2[0].y); // horizontal line
-      }
-      else{
-        doc.line(verts2[i].x, verts2[i].y, verts2[i+1].x, verts2[i+1].y);
-      }
-    }
+    showGear()
   }
   if(numOfLinGears){
     centerX = 200*scale*size;
@@ -208,12 +223,12 @@ function showAll(){
   }
   if(numOfLargeCranks){
     for(var x = 0; x<numOfLargeCranks; x++){
-      doc.circle(centerXCircle,centerYCircle,120*scale2*size)
+      doc.circle(centerXCircle,centerYCircle,132*scale2*size)
     }
     doc.circle(centerXCircle,centerYCircle,5*scale)
-    doc.circle(centerXCircle+((120*scale2*size)*0.8),centerYCircle,3*scale)
+    doc.circle(centerXCircle+((132*scale2*size)*0.8),centerYCircle,3*scale)
     crankParts()
-    roundedRect(crankLength)
+    roundedRect(crankLength,132)
   }
   if(numOfMediumCranks){
     for(var x = 0; x<numOfMediumCranks; x++){
@@ -222,7 +237,7 @@ function showAll(){
     doc.circle(centerXCircle,centerYCircle,5*scale)
     doc.circle(centerXCircle+((104*scale2*size)*0.8),centerYCircle,3*scale)
     crankParts()
-    roundedRect(crankLength)
+    roundedRect(crankLength,114.4)
   }
   if(numOfSmallCranks){
     for(var x = 0; x<numOfSmallCranks; x++){
@@ -231,7 +246,7 @@ function showAll(){
     doc.circle(centerXCircle,centerYCircle,5*scale)
     doc.circle(centerXCircle+((88*scale2*size)*0.8),centerYCircle,3*scale)
     crankParts()
-    roundedRect(crankLength)
+    roundedRect(crankLength,96.8)
   }
   if(constraintLength){
     buttonDisplay()
@@ -270,10 +285,22 @@ function showAll(){
   }
   doc.addPage();
   doc.text(260.3,208.2,pageLabelArray[3])
+  var crankSize
+  if(numOfLargeCranks){
+    crankSize = 132
+  }
+  else if(numOfMediumCranks){
+    crankSize = 114.4
+  }
+  else if(numOfSmallCranks){
+    crankSize = 96.8
+  }
   if(numOfLinGears){
-    doc.rect(15*frameScale,(15)*frameScale,510.2*frameScale,283.4646*frameScale)
+    var caseLength = 180
+    var caseWidth = 100
+    doc.rect(15*frameScale,(15)*frameScale,caseLength,caseWidth)
     doc.text(15*frameScale+5,(15)*frameScale+10,frameLabelArray[0])
-    doc.rect((15*frameScale)+95.21,(15*frameScale)+26.35,113.4*frameScale,56.69292*frameScale)
+    doc.rect((15*frameScale)+caseLength-(caseLength*0.2467),(caseWidth*0.2635),-40,20)
     doc.rect(15*frameScale,(15+5)*frameScale+100,180,6.42)
     doc.text(15*frameScale+5,(15)*frameScale+100+7,frameLabelArray[1])
     doc.rect(15*frameScale,15*frameScale+110,510.2*frameScale,113.4*frameScale)
@@ -286,13 +313,8 @@ function showAll(){
     doc.text((15+510.2+5)*frameScale+5,(15+232.8)*frameScale+10,frameLabelArray[5])
     // doc.circle((15+250)*frameScale, (15+112)*frameScale, (5*frameScale));
   }
-  if(numOfMediumCranks || numOfSmallCranks || numOfLargeCranks){
-    doc.rect(15*frameScale,(15)*frameScale,180,120)
-    doc.rect((15*frameScale)+110.31,(15*frameScale)+50,40,20)
-    doc.circle((15*frameScale) + 16.63, (15*frameScale)+60, 1.5);
-    square(0)
-    square(232.8)
-  }
+  
+  crankCase(crankSize)
   if(numOfLinGears){
     doc.addPage();
     doc.text(260.3,208.2,pageLabelArray[4])
@@ -310,3 +332,5 @@ function showAll(){
   
 }
 showAll()
+console.log(crankLength)
+console.log(132*scale2*size)
