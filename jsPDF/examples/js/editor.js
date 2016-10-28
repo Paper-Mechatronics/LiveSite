@@ -176,7 +176,7 @@ var jsPDFEditor = function() {
 		'all.js': 'All',
 		'gears.js': 'Gears',
 		'linkages.js': 'Linkages',
-		'frame.js': 'Frame',
+		'frame.js': 'Case',
 		// 'lines.js': 'Lines',
 		// 'rectangles.js': 'Rectangles',
 		// 'string-splitting.js': 'String Splitting',

@@ -1,11 +1,11 @@
 function changeMods(){
             if(document.getElementById("dropdown").value == "mechanism"){
                 document.getElementById('one').innerHTML = "Rack & Pinion";
-                document.getElementById('one-href').href = "#";
+                document.getElementById('one-href').href = "rackandpinion.php";
                 document.getElementById('one-img').src = "img/RackPinion2.gif";
                 document.getElementById('two').innerHTML = "Crank";
-                document.getElementById('two-href').href = "#";
-                document.getElementById('two-img').src = "img/front_mech_crank.png";
+                document.getElementById('two-href').href = "crank.php";
+                document.getElementById('two-img').src = "img/crank.gif";
                 document.getElementById('three').innerHTML = "Cam";
                 document.getElementById('three-href').href = "#";
                 document.getElementById('three-img').src = "img/front_mech_cam.png";

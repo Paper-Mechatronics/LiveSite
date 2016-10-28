@@ -120,3 +120,21 @@ function UDSliderDisplay(){
     $('.controls').show()
   }
 }
+function buttonDisable(){
+  if(mirrored){
+    document.getElementById("mirror").disabled = true;
+    document.getElementById("continuous").disabled = true;
+    document.getElementById("alternate").disabled = true;
+  }
+  else{
+    document.getElementById("mirror").disabled = false;
+    document.getElementById("continuous").disabled = false;
+    document.getElementById("alternate").disabled = false;
+  }
+  if(compositeArray[1].alternate == false){
+    document.getElementById("mirror").disabled = true;
+  }
+  else{
+    document.getElementById("mirror").disabled = false;
+  }
+}

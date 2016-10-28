@@ -43,7 +43,7 @@ function showParts(){
       if(compositeArray[i].radius == 132){ 
         numLargeCrank++
       }
-      else if(compositeArray[i].radius ==1116){
+      else if(compositeArray[i].radius ==116){
         numMediumCrank++
       }
       else if(compositeArray[i].radius == 100){
@@ -61,6 +61,9 @@ function showParts(){
   var largeCranks = numLargeCrank.toString(); 
   var mediumCranks = numMediumCrank.toString(); 
   var smallCranks = numSmallCrank.toString(); 
+  var largeCam = numLargeCam.toString(); 
+  var mediumCam = numMediumCam.toString(); 
+  var smallCam = numSmallCam.toString(); 
   var linGears = numLinearGear.toString();
   continuous = continuous.toString()
   crankLength = crankLength.toString()
@@ -75,6 +78,9 @@ function showParts(){
   localStorage.setItem("mediumCranks", mediumCranks);
   localStorage.setItem("smallCranks", smallCranks);
   localStorage.setItem("linGears", linGears);
+  localStorage.setItem("largeCam", largeCam);
+  localStorage.setItem("mediumCam", mediumCam);
+  localStorage.setItem("smallCam", smallCam);
   localStorage.setItem("constraintLength", constraintLength);
   localStorage.setItem("connectorLength", connectorLength);
   localStorage.setItem("beamLength", beamLength);

@@ -54,12 +54,12 @@ else{
                 <br>
                 <input type="range" id="verticalSpace" value="0" min="0" max="100" oninput = "verticalInput(this.value)" onchange = "pivotHeight(this.value)">
             </div>
-            <br class = "hideThis2">
+            <!-- <br class = "hideThis2">
             <div id = "vertical-slider" class = "slider-div hideThis2">
                 <label>Vertical Spacing 2: <span id = "pivot2PointValue"></span></label>
                 <br>
                 <input type="range" id="pivot2Point" value="0" min="0" max="100" oninput = "pivot2Input(this.value)" onchange = "pivot3Height(this.value)">
-            </div>
+            </div> -->
             <br class = "hideThis">
             <div id = "connector-slider" class = "slider-div hideThis">
                 <label>Connector Length: <span id = "connectorLengthValue"></span></label>
@@ -113,7 +113,7 @@ else{
         <div class = "controls">
             <div class = "checkboxes">
                 <button class = "object btn btn-primary" type="button" id="mirror" onclick="mirrorModal()">Mirror</button>
-                <button class = "object btn btn-primary" type="button" id="mirror" onclick="reset()">Reset</button>
+                <button class = "object btn btn-primary" type="button" id="mirror" onclick="resetModule()">Reset</button>
             </div>
         </div>
         <div class = "footer">

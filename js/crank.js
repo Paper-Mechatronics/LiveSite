@@ -14,7 +14,7 @@ function smallGear(){
   deleteConstraint(compositeArray[0].bodies[0], compositeArray[1].bodies[0])
   // Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
-  radius = 48;
+  radius = 100;
   compositeArray[1].radius = radius
   steps = (0.25 * radius)*2;
   //toothHeight = 20;
@@ -24,13 +24,13 @@ function smallGear(){
   Body.setPosition(compositeArray[0].bodies[0], {x:compositeArray[0].constraints[0].pointA.x, y:compositeArray[0].constraints[0].pointA.y})
   Body.setPosition(compositeArray[1].bodies[0], {x:(window.innerWidth)*(0.75*0.5), y:compositeArray[1].constraints[0].pointA.y})
   createConstraint2(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
-  tickFunction()
+  
 }
 function mediumGear(){
   deleteConstraint(compositeArray[0].bodies[0], compositeArray[1].bodies[0])
   // Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
-  radius = 64;
+  radius = 116;
   compositeArray[1].radius = radius
   steps = (0.25 * radius)*2;
   //toothHeight = 20;
@@ -40,13 +40,13 @@ function mediumGear(){
   Body.setPosition(compositeArray[0].bodies[0], {x:compositeArray[0].constraints[0].pointA.x, y:compositeArray[0].constraints[0].pointA.y})
   Body.setPosition(compositeArray[1].bodies[0], {x:(window.innerWidth)*(0.75*0.5), y:compositeArray[1].constraints[0].pointA.y})
   createConstraint2(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
-  tickFunction()
+  
 }
 function largeGear(){
   deleteConstraint(compositeArray[0].bodies[0], compositeArray[1].bodies[0])
   // Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
-  radius = 80;
+  radius = 132;
   compositeArray[1].radius = radius;
   steps = (0.25 * radius)*2;
   //toothHeight = 20;
@@ -56,12 +56,12 @@ function largeGear(){
   Body.setPosition(compositeArray[0].bodies[0], {x:compositeArray[0].constraints[0].pointA.x, y:compositeArray[0].constraints[0].pointA.y})
   Body.setPosition(compositeArray[1].bodies[0], {x:(window.innerWidth)*(0.75*0.5), y:compositeArray[1].constraints[0].pointA.y})
   createConstraint2(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
-  tickFunction()
+  
 }
 
 function openClose(){
   pivot2Value = 50
-  removeUIConstraintsSingle(compositeArray[0])
+  // removeUIConstraintsSingle(compositeArray[0])
   // deleteConstraint(compositeArray[2].bodies[0], compositeArray[0].bodies[0])
   // deleteConstraint(compositeArray[3].bodies[0], compositeArray[0].bodies[0])
   Body.setPosition(compositeArray[0].bodies[0], {x:(window.innerWidth)*(0.75*0.5), y:(window.innerHeight)*(0.5)})
@@ -80,7 +80,7 @@ function openClose(){
   originalWidth1 = compositeArray[2].width
   originalWidth2 = compositeArray[3].width
   constraintPosition(150)
-  tickFunction()
+  
 }
 function upDown(){
   pivot2Value = 50
@@ -95,8 +95,8 @@ function upDown(){
   compositeArray[0].constraints[0].pointA.y = (window.innerHeight)*(0.4)
   removeComposite(compositeArray[3].bodies[0])
   removeComposite(compositeArray[2].bodies[0])
-  createUIConstraintsSingle(compositeArray[0], 50, 0,10)
-  tickFunction()
+  // createUIConstraintsSingle(compositeArray[0], 50, 0,10)
+  
 }
 function changeMotion(){
   var string = document.getElementById("changeMotion").value;
@@ -133,7 +133,7 @@ function beamSpacing(value){
     compositeArray[0].constraints[1].render.lineWidth = 2
     compositeArray[0].constraints[1].render.strokeStyle = "#666"
   }
-  tickFunction()
+  
 }
 var prevPivotValue = 100;
 var initialPivotValue = 100;
@@ -141,7 +141,7 @@ var pivotValue = 100;
 var changePivotHeight;
 function pivotHeight(value){
   circleJointHeight(value)
-  tickFunction()
+  
 }
 
 // function pivot2Height(value){
@@ -150,7 +150,7 @@ function pivotHeight(value){
   // }
 //   // compositeArray[0].constraints[2].render.lineWidth = 2
 //   // compositeArray[0].constraints[2].render.strokeStyle = "#666"
-//   tickFunction()
+//   
 // }
 function constraintPosition(value){
   if (openCloseMod){
@@ -166,7 +166,7 @@ function constraintPosition(value){
     jointComposites[jointComposites.length-2].constraints[0].pointB.x = jointComposites[jointComposites.length-2].constraints[0].pointB.x - ((-newWidth2/2)-150)
 
   }
-  tickFunction()
+  
 }
 var prevHeightValue = 50;
 var changeHeightValue;
@@ -185,7 +185,7 @@ function circleJointHeight(value){
       jointComposites[i].constraints[0].render.strokeStyle = "#666"
     }
   }
-  tickFunction()
+  
 }
 
 ///////////////// Animation /////////////////////////////////////
@@ -234,8 +234,9 @@ Events.on(engine, 'afterUpdate', function(event) {
 addLinGearComposite((window.innerWidth)*(0.75*0.5),(window.innerHeight)*(0.4))
 addGearComposite((window.innerWidth)*(0.75*0.5) ,(window.innerHeight)*(0.7))
 changeBody3(0)
+radius = 132
 changeBodyCircle(1)
-createUIConstraintsSingle(compositeArray[0], 50, 0,10)
+// createUIConstraintsSingle(compositeArray[0], 50, 0,10)
 compositeArray[0].constraints[0].stiffness = 0.0001;
 createConstraint2(compositeArray[0].bodies[0],compositeArray[1].bodies[0])
 compositeArray[1].isMotor = true;

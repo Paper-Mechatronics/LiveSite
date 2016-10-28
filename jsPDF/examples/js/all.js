@@ -1,11 +1,15 @@
-
-// numOfLargeGears = 0
-// numOfMediumGears = 0
-// numOfSmallGears = 0
-// numOfLinGears = 0
 centerX = 100*scale *size;
 centerY = 100*scale*size
-
+var adjust = 0
+if(numOfLargeCranks){
+  adjust = (132 * scale2 *size) + 10
+}
+else if(numOfMediumCranks){
+  adjust = (116 * scale2 *size) + 10
+}
+else if(numOfSmallCranks){
+  adjust = (100 * scale2 *size) + 10
+}
 
 function drawGear(){
   // draw circle
@@ -43,19 +47,50 @@ function drawLinGear(){
   // new vertex array
   linGearVerts = [];
   // create rectangle shape
-  linGearVerts.push({x: centerX, y: centerY})
-  linGearVerts.push({x: centerX, y: centerY + height})
-  linGearVerts.push({x: centerX + width, y: centerY + height})
+  linGearVerts.push({x: centerX, y: (centerY + 30)})
+  linGearVerts.push({x: centerX, y: (centerY + 30) + height + 25.4})
+  linGearVerts.push({x: centerX + width + toothHeight, y: (centerY + 30) + height + 25.4})
+  linGearVerts.push({x: centerX + width + toothHeight, y: (centerY + 30) + height})
   // add teeth
   for (var i = 0; i < linSteps; i++) {
-    linGearVerts.push({ x: centerX + width, y: (centerY + height) - ((height/linSteps)*i)});
-    if(i > 0 && i%2 == 0){
-       linGearVerts.push({ x: (centerX +width) + linToothHeight, y: (centerY + height)- ((height/linSteps)*i)-offset1});
-       linGearVerts.push({ x: (centerX +width) + linToothHeight, y: (centerY + height) - ((height/linSteps)*i) - offset2});
+    linGearVerts.push({ x: centerX + width, y: ((centerY + 30) + height) - ((height/linSteps)*i)});
+    if(i > 0 && i%2 == 0 && i < linSteps-1){
+       linGearVerts.push({ x: (centerX +width) + linToothHeight, y: ((centerY + 30) + height)- ((height/linSteps)*i)-offset1});
+       linGearVerts.push({ x: (centerX +width) + linToothHeight, y: ((centerY + 30) + height) - ((height/linSteps)*i) - offset2});
     }
   }
   // add last corner
-  linGearVerts.push({ x: (centerX +width), y: (centerY + height) - height});
+  linGearVerts.push({ x: (centerX +width), y: ((centerY + 30) + height) - height});
+  linGearVerts.push({ x: (centerX +width+toothHeight), y: ((centerY + 30) + height) - height});
+  linGearVerts.push({ x: (centerX +width+toothHeight), y: ((centerY + 30) + height -24.4) - height});
+  linGearVerts.push({ x: (centerX), y: ((centerY + 30) + height -24.4) - height});
+}
+function drawCam(){
+  var ovalRad = 0
+  if(numOfLargeCam){
+    ovalRad = 125*scale2*size
+    radius = 80 *scale2*size
+  }
+  if(numOfMediumCam){
+    ovalRad = 100*scale2*size
+    radius = 64*scale2*size
+  }
+  if(numOfSmallCam){
+    ovalRad = 75*scale2*size
+    radius = 48*scale2*size
+  }
+  verts2 = []
+  for (var i = 0; i < (steps/2)+1; i++) {
+    xValues[i] = (centerX + radius * Math.cos(2 * Math.PI * i / steps));
+    yValues[i] = ((centerY+radius+5) + radius * Math.sin(2 * Math.PI * i / steps));
+  }
+  for (var i = (steps/2)+1; i < steps; i++) {
+    xValues[i] = (centerX + radius * Math.cos(2 * Math.PI * i / steps));
+    yValues[i] = ((centerY+radius+5) + (radius+ovalRad) * Math.sin(2 * Math.PI * i / steps));
+  }
+  for (var i = 0; i < steps; i++) {
+    verts2.push({ x: xValues[i], y: yValues[i]});
+  }
 }
 
 function arrange(){
@@ -75,25 +110,26 @@ function square(yOffset){
   doc.line((25+510.2+5+137.5+8.5+137.5)*frameScale,(yOffset + 15)*frameScale,(25+510.2+5)*frameScale,(yOffset + 15)*frameScale)
 }
 function roundedRect(length,crankSize){
-  console.log(length)
-  // if(length<123.47){
-  //   doc.roundedRect(125+8-3.36, (15*frameScale)+16, 6.72, length-16-16, 3.36, 3.36)
-  // }
-  // else{
-  //   doc.roundedRect(125+8-3.36, (15*frameScale)+16, 6.72, 80, 3.36, 3.36)
-  // }
-  // doc.roundedRect(125, (15*frameScale), 20, length+16, 10, 10)
-  // doc.roundedRect(125+10-3.36, (15*frameScale)+20, 6.72, 132*scale2*size*2, 3.36, 3.36)
-  // doc.circle(125+10,(15*frameScale)+8,2.5)
-  // doc.circle(125+10,(15*frameScale)+(length+8),2.5)
-  doc.roundedRect((15*frameScale), 175, length+16, 20, 10, 10)
-  doc.roundedRect((15*frameScale)+20, 175+10-3.36, crankSize*scale2*size*2, 6.72, 3.36, 3.36)
-  doc.circle((15*frameScale)+8,175+10,2.5)
-  doc.circle((15*frameScale)+(length+8),175+10,2.5)
+  doc.roundedRect((15*frameScale), 15*frameScale, length+16, 20, 10, 10)
+  doc.roundedRect((15*frameScale)+20, (15*frameScale)+10-3.36, crankSize*scale2*size*2, 6.72, 3.36, 3.36)
+  doc.circle((15*frameScale)+8,(15*frameScale)+10,2.5)
+  doc.circle((15*frameScale)+(length+8),(15*frameScale)+10,2.5)
 }
 function crankCase(crankSize){
   if(numOfMediumCranks || numOfSmallCranks || numOfLargeCranks){
     frameLength = 10+crankLength-(crankSize*scale2*size*0.8)-12-3+40
+    doc.rect(15*frameScale,(15)*frameScale,frameLength,3*(crankSize*scale2*size))
+    doc.rect((15*frameScale)+frameLength-30,(15*frameScale)+(3*(crankSize*scale2*size)/2)-10,-40,20)
+    doc.circle((15*frameScale)+10, (15*frameScale)+(3*(crankSize*scale2*size)/2), 1.5);
+    // doc.circle((15*frameScale)+10, (15*frameScale)+60, 1.5);
+    doc.circle((15*frameScale)+10+crankLength-(crankSize*scale2*size*0.8)-12-3, (15*frameScale)+(3*(crankSize*scale2*size)/2), 1.5);
+    square(0)
+    square(232.8)
+  }
+}
+function camCase(crankSize){
+  if(numOfCams){
+    frameLength = 150
     doc.rect(15*frameScale,(15)*frameScale,frameLength,3*(crankSize*scale2*size))
     doc.rect((15*frameScale)+frameLength-30,(15*frameScale)+(3*(crankSize*scale2*size)/2)-10,-40,20)
     doc.circle((15*frameScale)+10, (15*frameScale)+(3*(crankSize*scale2*size)/2), 1.5);
@@ -118,12 +154,12 @@ function RPCase(crankSize){
 function crankParts(){
   for(var x = 0; x<8;x++){
     if(x>3){
-      doc.circle(25 + (20*(x-4)), 150, 6)
-      doc.circle(25 + (20*(x-4)), 150, 1.5)
+      doc.circle(15 + (20*(x-4)), centerYCircle + adjust, 7.5)
+      doc.circle(15 + (20*(x-4)), centerYCircle + adjust, 1.5)
     }
     else{
-      doc.circle(25 + (20*x), 130, 6)
-      doc.circle(25 + (20*x), 130, 1.5)
+      doc.circle(15 + (20*x), centerYCircle + 20 + adjust, 7.5)
+      doc.circle(15 + (20*x), centerYCircle + 20 + adjust, 1.5)
     }
   }
 }
@@ -169,7 +205,7 @@ function showGear(){
 }
 var doc = new jsPDF("landscape");
 function showAll(){
-  // console.log(numOfMediumCranks)
+  console.log(numOfMediumCranks)
   if(numOfLargeGears || numOfMediumGears || numOfSmallGears){
     doc.text(275.3,208.2,pageLabelArray[0])
   }
@@ -183,6 +219,7 @@ function showAll(){
     toothWidthDegree = 1;
     toothWidth = (toothWidthDegree/conversionFactor);
     radius = 80 *scale*size
+    // doc.setLineWidth(0.01);
     showGear()
   }
   for(var x = 0; x<numOfMediumGears; x++){
@@ -214,14 +251,31 @@ function showAll(){
       for (var i = 0; i<linGearVerts.length; i++){
         if(i+1 == linGearVerts.length){
           doc.line(linGearVerts[i].y, linGearVerts[i].x, linGearVerts[0].y, linGearVerts[0].x); // horizontal line
+          doc.line(linGearVerts[i].y, linGearVerts[i].x+30, linGearVerts[0].y, linGearVerts[0].x+30); // horizontal line
         }
         else{
           doc.line(linGearVerts[i].y, linGearVerts[i].x, linGearVerts[i+1].y, linGearVerts[i+1].x);
+          doc.line(linGearVerts[i].y, linGearVerts[i].x+30, linGearVerts[i+1].y, linGearVerts[i+1].x+30);
         }
       }
     }
   }
+  if(numOfCams){
+    drawCam()
+    // console.log(constraintLength)
+    for (var i = 0; i<verts2.length; i++){
+      if(i+1 == verts2.length){
+        doc.line(verts2[i].x, verts2[i].y, verts2[0].x, verts2[0].y); // horizontal line
+      }
+      else{
+        doc.line(verts2[i].x, verts2[i].y, verts2[i+1].x, verts2[i+1].y);
+      }
+    }
+    doc.circle(centerX,(centerY+radius+5),5*scale)
+    // doc.rect(centerX,centerY,constraintLength*scale2*size,5)
+  }
   if(numOfLargeCranks){
+    centerYCircle = centerYCircle + 15
     for(var x = 0; x<numOfLargeCranks; x++){
       doc.circle(centerXCircle,centerYCircle,132*scale2*size)
     }
@@ -231,6 +285,7 @@ function showAll(){
     roundedRect(crankLength,132)
   }
   if(numOfMediumCranks){
+    centerYCircle = centerYCircle + 7.5
     for(var x = 0; x<numOfMediumCranks; x++){
       doc.circle(centerXCircle,centerYCircle,104*scale2*size)
     }
@@ -297,16 +352,13 @@ function showAll(){
   }
   if(numOfLinGears){
     var caseLength = 180
-    var caseWidth = 100
+    var caseWidth = (radius*3)+ width + toothHeight
+    // console.log(linToothHeight)
     doc.rect(15*frameScale,(15)*frameScale,caseLength,caseWidth)
     doc.text(15*frameScale+5,(15)*frameScale+10,frameLabelArray[0])
-    doc.rect((15*frameScale)+caseLength-(caseLength*0.2467),(caseWidth*0.2635),-40,20)
-    doc.rect(15*frameScale,(15+5)*frameScale+100,180,6.42)
-    doc.text(15*frameScale+5,(15)*frameScale+100+7,frameLabelArray[1])
-    doc.rect(15*frameScale,15*frameScale+110,510.2*frameScale,113.4*frameScale)
-    doc.text(15*frameScale+5,(15)*frameScale+110+10,frameLabelArray[2])
-    doc.rect(15*frameScale,(15+113.4+5)*frameScale+110,510.2*frameScale,113.4*frameScale)
-    doc.text(15*frameScale+5,(15+113.4+5)*frameScale+110+10,frameLabelArray[3])
+    doc.rect((15*frameScale)+caseLength-((2*radius)-(40/3)),((15)*frameScale)+((1.5*radius)-10),-40,20)
+    doc.rect(15*frameScale,(15)*frameScale+caseWidth+5,177-30,6.42)
+    doc.text(15*frameScale+5,(15)*frameScale+caseWidth+5+5,frameLabelArray[1])
     square(0)
     doc.text((15+510.2+5)*frameScale+5,(15)*frameScale+10,frameLabelArray[4])
     square(232.8)
@@ -315,8 +367,13 @@ function showAll(){
   }
   
   crankCase(crankSize)
+  camCase(radius/(scale2*size))
   if(numOfLinGears){
     doc.addPage();
+    doc.rect(15*frameScale,15*frameScale+45+15,177-30,113.4*frameScale)
+    doc.text(15*frameScale+5,(15)*frameScale+45+10+15,frameLabelArray[2])
+    doc.rect(15*frameScale,(15+113.4+5)*frameScale+45+15,177-30,113.4*frameScale)
+    doc.text(15*frameScale+5,(15+113.4+5)*frameScale+45+10+15,frameLabelArray[3])
     doc.text(260.3,208.2,pageLabelArray[4])
     doc.rect(15*frameScale,(15)*frameScale,269.3*frameScale,113.4*frameScale)
     doc.text(15*frameScale+5,(15)*frameScale+10,frameLabelArray[6])

@@ -36,7 +36,7 @@ function smallGear(){
     compositeArray[1].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.5)+(radius+(toothHeight*1.8))
   }
   // document.getElementById("")
-  tickFunction()
+  
   pivotHeight(constraintLength)
 }
 function mediumGear(){
@@ -70,7 +70,7 @@ function mediumGear(){
   if(rackPinionMod == true){
     compositeArray[1].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.5)+(radius+(toothHeight*1.8))
   }
-  tickFunction()
+  
   pivotHeight(constraintLength)
 }
 function largeGear(){
@@ -103,7 +103,7 @@ function largeGear(){
   if(rackPinionMod == true){
     compositeArray[1].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.5)+(radius+(toothHeight*1.8))
   }
-  tickFunction()
+  
   pivotHeight(constraintLength)
 }
 function rackPinion(){
@@ -144,7 +144,7 @@ function cam(){
   createUIConstraintsSingle(compositeArray[0], 50, 0,10)
   // compositeArray[0].constraints[1].length = compositeArray[0].constraints[0].pointA.y - compositeArray[0].constraints[1].pointA.y
   // console.log(compositeArray[0].constraints[1].length)
-  tickFunction()
+  
 }
 function crank(){
   removeUIConstraintsSingle(compositeArray[0])
@@ -167,7 +167,7 @@ function crank(){
   pivotHeight(constraintLength)
   // console.log(jointComposites[jointComposites.length-1].constraints[0].length)
   compositeArray[1].alternate = false;
-  tickFunction()
+  
 }
 function changeMech(){
   var string = document.getElementById("changeMech").value;
@@ -240,7 +240,7 @@ function circleJointHeight(value){
     }
     constraintLength = parseInt(value)
   }
-  tickFunction()
+  
 }
 
 var prevSpaceValue = 50;
@@ -254,7 +254,7 @@ function beamSpacing(value){
   document.getElementById("horizontalSpaceValue").innerHTML = value
   compositeArray[0].constraints[1].render.lineWidth = 2
   compositeArray[0].constraints[1].render.strokeStyle = "#666"
-  tickFunction()
+  
 }
 
 var prevPivotValue = 100;
@@ -282,7 +282,6 @@ function pivotHeight(value){
     // jointComposites[totalJointComposites-2].constraints[0].pointA.y = jointComposites[totalJointComposites-2].constraints[0].pointA.y - changePivotHeight
     prevPivotValue = value
     pivotValue = value
-    // rotationPoint = value/150
     console.log("Pivot Value = " + value)
   }
   if(jointComposites[jointComposites.length-1]){
@@ -290,7 +289,7 @@ function pivotHeight(value){
     jointComposites[jointComposites.length-1].constraints[0].render.strokeStyle = "#666"
   }
   constraintLength = parseInt(value)
-  tickFunction()
+  
 }
 function yDistance(){
   var distance = Math.round(compositeArray[0].bodies[0].position.y-200)
