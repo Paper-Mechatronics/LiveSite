@@ -11,6 +11,7 @@ function showParts(){
   numSmallCam = 0
   var continuous = 0
   var crankLength = 0
+  var mirror = 0
   for(var i = 0; i<compositeArray.length; i++){
     if(compositeArray[i].shape == "gear"){
       if(compositeArray[i].alternate == false){
@@ -51,7 +52,22 @@ function showParts(){
       }
     }
     if(compositeArray[i].shape == "linGear"){
+      if(mirrored == true){
+        mirror = 1
+      }
       numLinearGear++
+    }
+  }
+  var flappingModule = 0;
+  var motor = 0
+  if(flapModule){
+    flappingModule = 1;
+    console.log(flapConnector)
+    if(compositeArray[0].isMotor){
+      motor = 0
+    }
+    else{
+      motor = 1
     }
   }
   var largeGears = numLargeGear.toString(); 
@@ -67,10 +83,15 @@ function showParts(){
   var linGears = numLinearGear.toString();
   continuous = continuous.toString()
   crankLength = crankLength.toString()
-  var constraintLength = parseInt(module.connectorLength) + parseInt(newWidth1) + parseInt(2*module.horizontalSpace)
+  mirror = mirror.toString()
   var connectorLength = module.connectorLength
   var beamLength = newWidth1
   var horizontalSpace = module.horizontalSpace*2
+  var constraintLength = parseInt(module.connectorLength) + parseInt(300+module.beamWidth) + parseInt(4*module.horizontalSpace)
+  // console.log(beamLength)
+  if(!compositeArray[2] || !compositeArray[3]){
+    constraintLength = 0;
+  }
   localStorage.setItem("largeGears", largeGears);
   localStorage.setItem("mediumGears", mediumGears);
   localStorage.setItem("smallGears", smallGears);
@@ -87,6 +108,19 @@ function showParts(){
   localStorage.setItem("horizontalSpace", horizontalSpace);
   localStorage.setItem("continuous", continuous);
   localStorage.setItem("crankLength", crankLength);
+  localStorage.setItem("mirror", mirror);
+  localStorage.setItem("flappingModule", flappingModule);
+  localStorage.setItem("gear1Spacing", gear1Spacing);
+  localStorage.setItem("gear2Spacing", gear2Spacing);
+  localStorage.setItem("beamSpace", beamSpace);
+  localStorage.setItem("verticalSpacing", verticalSpacing);
+  localStorage.setItem("flapBeamHeight", (module.flapBeamHeight+150))
+  localStorage.setItem("flapBeamOffset", (module.flapBeamOffset+50))
+  localStorage.setItem("flapBeamWidth", (module.beamWidth+300))
+  localStorage.setItem("flapVerticalSpace", (module.verticalSpace+300));
+  localStorage.setItem("flapHorizontalSpace", (module.horizontalSpace+100));
+  localStorage.setItem("flapConnectorLength", flapConnector);
+  localStorage.setItem("motor", motor);
   // window.location.href="./jsPDF/parts.html"
   window.open("./jsPDF/parts.html", '_blank');
 }

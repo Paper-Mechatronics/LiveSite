@@ -1,7 +1,6 @@
 // generate small gear
 openCloseMod = false
 camModule = true
-
 var rectBase = 600
 var pivotValue = 0
 var c = 432
@@ -20,7 +19,6 @@ function smallGear(){
   if(camMod == true){
     changeBody2(1)
   }
-  tickFunction()
 }
 function mediumGear(){
   deleteConstraint(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
@@ -34,7 +32,7 @@ function mediumGear(){
   if(camMod == true){
     changeBody2(1)
   }
-  tickFunction()
+  
 }
 function largeGear(){
   deleteConstraint(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
@@ -48,25 +46,24 @@ function largeGear(){
   if(camMod == true){
     changeBody2(1)
   }
-  tickFunction()
+  
 }
 function cam(){
   //deleteConstraint(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
   steps = 40;
   camWidth = 40;
-  changeBody5(0);
+  changeBody5(0,200);
   changeBody2(1);
-  Body.setPosition(compositeArray[0].bodies[0], {x:(window.innerWidth)*(0.75*0.45), y:(window.innerHeight)*(0.6)})
-  Body.setPosition(compositeArray[1].bodies[0], {x:(window.innerWidth)*(0.75*0.45), y:(window.innerHeight)- basePoint})
-  compositeArray[1].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)
-  compositeArray[1].constraints[0].pointA.y = (window.innerHeight)- basePoint
-  compositeArray[0].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)
-  compositeArray[0].constraints[0].pointA.y = (window.innerHeight)- basePoint - 240
-  // compositeArray[2].constraints[0].pointA.y = compositeArray[0].constraints[0].pointA.y-400
-  // compositeArray[3].constraints[0].pointA.y = compositeArray[0].constraints[0].pointA.y-400
+  Body.setPosition(compositeArray[0].bodies[0], {x:(window.innerWidth)*(0.75*0.5), y:compositeArray[1].constraints[0].pointA.y - 200})
+  Body.setPosition(compositeArray[1].bodies[0], {x:(window.innerWidth)*(0.75*0.5), y:(window.innerHeight)*(0.75)})
+  compositeArray[1].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.5)
+  compositeArray[1].constraints[0].pointA.y = (window.innerHeight)*(0.75)
+  compositeArray[0].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.5)
+  compositeArray[0].constraints[0].pointA.y = compositeArray[1].constraints[0].pointA.y - 60
   compositeArray[1].alternate = false;
-  Body.setAngle(compositeArray[1].bodies[0], 0)
-  tickFunction()
+  createUIConstraintsSingle(compositeArray[0], 50, 100,10)
+  // Body.setPosition(compositeArray[0].bodies[0],{x:(window.innerWidth)*(0.75*0.5), y:compositeArray[0].constraints[0].pointA.y - 100})
+  
 }
 function changeMotion(){
   var string = document.getElementById("changeMotion").value;
@@ -76,7 +73,9 @@ function changeMotion(){
     prevPivotValue = 100;
     openCloseMod = false;
     removeUIConstraints(compositeArray[0])
-    createUIConstraintsSingle(compositeArray[0], 50, 0,6)
+    if(!compositeArray[0].bodies[1]){
+      createUIConstraintsSingle(compositeArray[0], 50, 0,10)
+    }
     deleteConstraint(compositeArray[3].bodies[0], compositeArray[0].bodies[0])
     deleteConstraint(compositeArray[2].bodies[0], compositeArray[0].bodies[0])
     removeComposite(compositeArray[3].bodies[0])
@@ -89,18 +88,18 @@ function changeMotion(){
     prevPivotValue = 0;
     removeUIConstraintsSingle(compositeArray[0])
     openCloseMod = true;
-    addRectComposite(300, 5,(window.innerWidth)*(0.75*0.45)-200,compositeArray[0].constraints[0].pointA.y-400)
-    addRectComposite(-300, 5,(window.innerWidth)*(0.75*0.45)+200,compositeArray[0].constraints[0].pointA.y-400)
+    addRectComposite(300, 5,(window.innerWidth)*(0.75*0.5)-200,compositeArray[0].constraints[0].pointA.y-400)
+    addRectComposite(-300, 5,(window.innerWidth)*(0.75*0.5)+200,compositeArray[0].constraints[0].pointA.y-400)
     createUIConstraints(compositeArray[0], 50, 0,6)
     originalWidth1 = compositeArray[2].width
     originalWidth2 = compositeArray[3].width
     createConstraintFake(compositeArray[0].bodies[0], compositeArray[2].bodies[0])
     createConstraintFake(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
-    constraintPosition(113)
+    // constraintPosition(113)
     pivotHeight(0)
     //cam()
   }
-  tickFunction()
+  
 }
 
 var prevSpaceValue = 50;
@@ -123,7 +122,7 @@ function beamSpacing(value){
   beamSpace = parseInt(value);
   compositeArray[0].constraints[1].render.lineWidth = 2
   compositeArray[0].constraints[1].render.strokeStyle = "#666"
-  tickFunction()
+  
 }
 var prevPivotValue = 100;
 var initialPivotValue = 100;
@@ -161,7 +160,7 @@ function pivotHeight(value){
   }
   compositeArray[0].constraints[2].render.lineWidth = 2
   compositeArray[0].constraints[2].render.strokeStyle = "#666"
-  tickFunction()
+  
 }
 function constraintPosition(value){
   if (openCloseMod){
@@ -177,7 +176,7 @@ function constraintPosition(value){
     // console.log(jointComposites[jointComposites.length-1].constraints[0].pointA.x)
     // console.log(changeSpaceWidth)
   }
-  tickFunction()
+  
 }
 
 Events.on(engine, 'afterUpdate', function(event) {
@@ -234,10 +233,7 @@ compositeArray[1].isMotor = true;
 compositeArray[1].alternate = true;
 cam();
 compositeArray[0].constraints[0].stiffness = 0.01
-createUIConstraintsSingle(compositeArray[0], 50, 0,10)
-// if(scale != 1){
-//   scaleComposites();
-// }
+// createUIConstraintsSingle(compositeArray[0], 50, 0,10)
 // Engine.run(engine);
 Render.run(render);
 // Runner.run(engine);

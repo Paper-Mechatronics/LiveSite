@@ -3,6 +3,8 @@ var c = 369
 var rectBase = 600
 var originalWidth1
 var originalWidth2
+var newWidth1
+var newWidth2
 module.verticalSpace = 0
 // generate small gear
 function smallGear(){
@@ -203,6 +205,8 @@ function changeMotion(){
     addRectComposite((-300), 5,(window.innerWidth)*(0.75*0.45)+200,compositeArray[0].constraints[0].pointA.y-rectBase)
     originalWidth1 = compositeArray[2].width
     originalWidth2 = compositeArray[3].width
+    newWidth1 = originalWidth1
+    newWidth2 = originalWidth2
     createConstraintFake(compositeArray[0].bodies[0], compositeArray[2].bodies[0])
     createConstraintFake(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
   }

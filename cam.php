@@ -16,7 +16,7 @@ else{
     <meta charset="UTF-8">
     <title>Cam</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <link rel="shortcut icon" type="image/png" href="wp-content/uploads/2016/06/cropped-noun_221895_cc-32x32.png"/>
+    <link rel="shortcut icon" type="image/png" href="img/logo_webTab.png"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
@@ -33,6 +33,7 @@ else{
     <script src="js/cam.js" type="text/javascript"></script>
     <script src="js/updateUI.js" type="text/javascript"></script>
     <script src="js/scaling.js" type="text/javascript"></script>
+    <script src="js/showParts.js" type="text/javascript"></script>
     <div class = "container">
         <div class = "module-name">
             <p>Cam +</p>
@@ -120,7 +121,7 @@ else{
                     <p>Reset</p>
                 </div>
             </a>
-            <a href = "http://www.papermech.net/jsPDF/parts.html">
+            <a id = "showParts" href = "#" onclick = "showParts()">
                 <div class = "footer-btn-div">
                     <button href = "http://www.papermech.net/jsPDF/parts.html" class = "footer-btn object btn btn-primary" type="button" ><img class = "btn-icon" src="img/show_parts.png"></button>
                     <br>

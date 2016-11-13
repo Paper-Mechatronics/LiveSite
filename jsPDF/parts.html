@@ -30,42 +30,44 @@
 				<div class="span6" style="float: right">
 					<iframe class="preview-pane" type="application/pdf" width="100%" height="650" frameborder="0" style="position:relative;z-index:999"></iframe>
 				</div>
-				<div class="span5 no-gutter">
+				<div class = "options">
+					<div class="span5 no-gutter">
 
-					
+						
 
-					<div class="template-picker">
-						<label for="template">Choose example</label>
-						<select id="template" name="template">
-							<option>Hold your horses...</option>
-						</select>
+						<div class="template-picker">
+							<label for="template">Choose example</label>
+							<select id="template" name="template">
+								<option>Hold your horses...</option>
+							</select>
+						</div>
 					</div>
+
+					<div id="editor" class="bypass"></div>
+				   <div class="controls">
+				   		<!-- <button class = "gear-size object btn btn-primary" type="button" id="setSmallWidth" onclick="updatePage()">1</button>
+	   	                <button class = "gear-size object btn btn-primary" type="button" id="setMediumWidth" onclick="updatePage()">2</button>
+		                <button class = "gear-size object btn btn-primary" type="button" id="setLargeWidth" onclick="updatePage()">3</button>
+		                 
+		                <br>
+		                <br>
+		                -->
+						<div class="pull-right">
+							<!--<a href="#" class="btn btn-primary">Download Your Code</a>-->
+							<a href="#" class="btn btn-primary download-pdf">Download PDF</a>
+						</div>
+
+						<label class="checkbox">
+							<input type="checkbox" id="auto-refresh" checked="checked"> Auto refresh on changes?
+						</label>
+						<a href="#" class="run-code hide btn btn-success">Run Code</a>
+
+						<div class="alert hide">
+							Auto refresh disabled for this
+						</div>
+
+				   </div>
 				</div>
-
-				<div id="editor" class="bypass"></div>
-			   <div class="controls">
-			   		<button class = "gear-size object btn btn-primary" type="button" id="setSmallWidth" onclick="updatePage()">1</button>
-   	                <button class = "gear-size object btn btn-primary" type="button" id="setMediumWidth" onclick="updatePage()">2</button>
-	                <button class = "gear-size object btn btn-primary" type="button" id="setLargeWidth" onclick="updatePage()">3</button>
-	                
-	                <br>
-	                <br>
-					<div class="pull-right">
-						<!--<a href="#" class="btn btn-primary">Download Your Code</a>-->
-						<a href="#" class="btn btn-primary download-pdf">Download PDF</a>
-					</div>
-
-					<label class="checkbox">
-						<input type="checkbox" id="auto-refresh" checked="checked"> Auto refresh on changes?
-					</label>
-					<a href="#" class="run-code hide btn btn-success">Run Code</a>
-
-					<div class="alert hide">
-						Auto refresh disabled for this
-					</div>
-
-			   </div>
-
 			</div>
 			
 

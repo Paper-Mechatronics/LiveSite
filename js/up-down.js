@@ -141,7 +141,8 @@ function cam(){
   compositeArray[0].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.5)
   compositeArray[0].constraints[0].pointA.y = compositeArray[1].constraints[0].pointA.y - 60
   compositeArray[1].alternate = false;
-  createUIConstraintsSingle(compositeArray[0], 50, 0,10)
+  createUIConstraintsSingle(compositeArray[0], 50, 100,10)
+  // console.log(compositeArray[0].shape)
   // compositeArray[0].constraints[1].length = compositeArray[0].constraints[0].pointA.y - compositeArray[0].constraints[1].pointA.y
   // console.log(compositeArray[0].constraints[1].length)
   
@@ -295,18 +296,6 @@ function yDistance(){
   var distance = Math.round(compositeArray[0].bodies[0].position.y-200)
   document.getElementById("y-distance").innerHTML = distance
 }
-// Events.on(engine, 'beforeUpdate', function(event){
-//   yDistance()
-//   })
-// RP
-// min 177
-// max 443
-// cam
-// min 191
-// max 318.6
-// crank
-// min 190
-// max 318
 function resetRadius(){
   if(!crankMod){
     if(compositeArray[1].radius != 80 && compositeArray[1].radius != 64 && compositeArray[1].radius != 48){

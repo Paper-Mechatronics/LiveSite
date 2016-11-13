@@ -7,10 +7,10 @@ function changeMods(){
                 document.getElementById('two-href').href = "crank.php";
                 document.getElementById('two-img').src = "img/crank.gif";
                 document.getElementById('three').innerHTML = "Cam";
-                document.getElementById('three-href').href = "#";
-                document.getElementById('three-img').src = "img/front_mech_cam.png";
+                document.getElementById('three-href').href = "cam.php";
+                document.getElementById('three-img').src = "img/cam.gif";
                 document.getElementById('four').innerHTML = "Spur Gears";
-                document.getElementById('four-href').href = "#";
+                document.getElementById('four-href').href = "spur.php";
                 document.getElementById('four-img').src = "img/front_mech_spur.png";
                 document.getElementById('five').innerHTML = "Planetary Gears";
                 document.getElementById('five-href').href = "#";
@@ -27,8 +27,8 @@ function changeMods(){
                 document.getElementById('two-href').href = "up-down.php";
                 document.getElementById('two-img').src = "img/UpDown2.gif";
                 document.getElementById('three').innerHTML = "Flap";
-                document.getElementById('three-href').href = "#";
-                document.getElementById('three-img').src = "img/front_motion_flap.png";
+                document.getElementById('three-href').href = "flapping.php";
+                document.getElementById('three-img').src = "img/flapping.gif";
                 document.getElementById('four').innerHTML = "Rotate";
                 document.getElementById('four-href').href = "#";
                 document.getElementById('four-img').src = "img/front_motion_rotate.png";

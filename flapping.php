@@ -16,7 +16,7 @@ else{
     <meta charset="UTF-8">
     <title>Flapping</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <link rel="shortcut icon" type="image/png" href="wp-content/uploads/2016/06/cropped-noun_221895_cc-32x32.png"/>
+    <link rel="shortcut icon" type="image/png" href="img/logo_webTab.png"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
@@ -45,7 +45,13 @@ else{
             </div>
             <div id = "a-slider" class = "slider-div">
                 <label>Horizontal Spacing: <span id = "horizontalSpaceValue"></span></label>
-                <input type="range" id="horizontalSpace" value="40" min="0" max="100" oninput = "horizontalInput(this.value)" onchange = "beamSpacing(this.value)">
+                <input type="range" id="horizontalSpace" value="40" min="0" max="100" oninput = "horizontalInput(this.value)" onchange = "flapBeamSpaceUpdate()">
+            </div>
+            <br class = "">
+            <div id = "a-slider" class = "slider-div">
+                <label>Vertical Spacing: <span id = "verticalSpaceValue"></span></label>
+                <br>
+                <input type="range" id="verticalSpace" value="0" min="0" max="250" oninput = "verticalInput(this.value)" onchange = "flapVerticalSpace(this.value)">
             </div>
             <br>
             <div id = "a-slider" class = "slider-div">
@@ -57,9 +63,21 @@ else{
             <div id = "a-slider" class = "slider-div">
                 <label>Beam Length: <span id = "beamWidthValue"></span></label>
                 <br>
-                <input type="range" id="beamWidth" value="0" min="0" max="150" oninput = "beamWidthInput(this.value)" onchange = "beamWidth(this.value)">
+                <input type="range" id="beamWidth" value="0" min="0" max="150" oninput = "beamWidthInput(this.value)" onchange = "flapBeamWidth(this.value)">
             </div>
             <br>
+            <div id = "a-slider" class = "slider-div">
+                <label>Beam Height: <span id = "flapBeamHeightValue"></span></label>
+                <br>
+                <input type="range" id="flapBeamHeight" value="0" min="0" max="150" oninput = "flapHeightInput(this.value)" onchange = "flapBeamHeight(this.value)">
+            </div>
+            <br>
+            <!-- <div id = "a-slider" class = "slider-div">
+                <label>Beam Offset: <span id = "flapBeamOffsetValue"></span></label>
+                <br>
+                <input type="range" id="flapBeamOffset" value="0" min="0" max="150" oninput = "flapOffsetInput(this.value)" onchange = "flapBeamOffset(this.value)">
+            </div>
+            <br> -->
         </div>
         <div class = "controls-dark">
             <div>
@@ -95,8 +113,11 @@ else{
             <div id = "a-slider" class = "slider-div">
                 <label>Motor Speed: <span id = "motorSpeedValue"></span> (<span id = "motorAngleValue"></span>&deg;)</label>
                 <br>
-                <input type="range" id="motorSpeed" value="40" min="0" max="50" oninput = "speedInput(this.value)" onchange = "changeMotorSpeed(this.value)">
+                <button class = "object btn btn-primary simulation glyphicon glyphicon-pause" type="button" onclick="pause()"><!-- <span class="glyphicon glyphicon-pause" aria-hidden="true"></span> --></button>
+                <input class = "simulation" type="range" id="motorSpeed" value="40" min="0" max="50" oninput = "speedInput(this.value)" onchange = "changeMotorSpeed(this.value)">
+                <br>
             </div>
+            <br>
             <br>
             <!--<div>
             <p>Simulation:</p>
