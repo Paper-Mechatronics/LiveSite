@@ -28,7 +28,7 @@
 
 				
 			</div><!-- .entry-content -->
-			<div class="read-more"><?php tortuga_entry_meta(); ?><?php tortuga_more_link(); ?><?php if(function_exists('the_views')) { the_views(); }?></div>
+			<div class="read-more"><?php /*tortuga_entry_meta();*/ ?><?php tortuga_more_link(); ?><?php /*if(function_exists('the_views')) { the_views(); }*/?></div>
 			
 			
 		
