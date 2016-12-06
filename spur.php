@@ -3,10 +3,10 @@ include('wp-blog-header.php');
 
 global $user_identity;
 if($user_identity){
-	echo $user_identity;
+    echo $user_identity;
 }
 else{
-	//die('Sorry, you must be <a href="'. get_bloginfo('home') . '/wp-login.php?redirect_to=' . $_SERVER['PHP_SELF'] . '">logged in</a> to view this page.');
+    //die('Sorry, you must be <a href="'. get_bloginfo('home') . '/wp-login.php?redirect_to=' . $_SERVER['PHP_SELF'] . '">logged in</a> to view this page.');
 }
 //echo do_shortcode( '[contact-form-7 id="1234" title="Contact form 1"]' );
 ?>
@@ -14,7 +14,7 @@ else{
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Spur Gear</title>
+    <title>Flapping</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <link rel="shortcut icon" type="image/png" href="img/logo_webTab.png"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -29,7 +29,7 @@ else{
   </head>
   <body>
     <script src="js/functions.js" type="text/javascript"></script>
-    <script src="js/flapping2.js" type="text/javascript"></script>
+    <script src="js/spur.js" type="text/javascript"></script>
     <script src="js/showParts.js" type="text/javascript"></script>
     <script src="js/updateUI.js" type="text/javascript"></script>
     <script src="js/scaling.js" type="text/javascript"></script>
@@ -38,6 +38,7 @@ else{
             <p>Spur Gear +</p>
             <select class = "rendering">
                 <option value="link_gear">Flapping</option>
+                <option value="link_gear">Rotate</option>
             </select> 
         </div>
         <div class = "controls">
@@ -128,7 +129,7 @@ else{
             </div>-->
         </div>
         <div class = "footer">
-            <a href = "http://www.papermech.net/open-close.php">
+            <a href = "http://www.papermech.net/flapping.php">
                 <div class = "footer-btn-div">
                     <button class = "footer-btn object btn btn-primary" type="button" ><img class = "btn-icon" src="img/reset.png"></button>
                     <br>

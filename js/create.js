@@ -11,9 +11,9 @@ function changeMods(){
                 document.getElementById('three-img').src = "img/cam.gif";
                 document.getElementById('four').innerHTML = "Spur Gears";
                 document.getElementById('four-href').href = "spur.php";
-                document.getElementById('four-img').src = "img/front_mech_spur.png";
+                document.getElementById('four-img').src = "img/spur.gif";
                 document.getElementById('five').innerHTML = "Planetary Gears";
-                document.getElementById('five-href').href = "#";
+                document.getElementById('five-href').href = "planetary2.php";
                 document.getElementById('five-img').src = "img/front_mech_planetary.png";
                 document.getElementById("six-href").style.visibility = "";
                 document.getElementById('six-img').src = "img/front_mech_rackpinion.png";
@@ -28,9 +28,9 @@ function changeMods(){
                 document.getElementById('two-img').src = "img/UpDown2.gif";
                 document.getElementById('three').innerHTML = "Flap";
                 document.getElementById('three-href').href = "flapping.php";
-                document.getElementById('three-img').src = "img/flapping.gif";
+                document.getElementById('three-img').src = "img/flapping2.gif";
                 document.getElementById('four').innerHTML = "Rotate";
-                document.getElementById('four-href').href = "#";
+                document.getElementById('four-href').href = "rotate.php";
                 document.getElementById('four-img').src = "img/front_motion_rotate.png";
                 document.getElementById('five').innerHTML = "Walking";
                 document.getElementById('five-href').href = "#";

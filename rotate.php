@@ -14,9 +14,8 @@ else{
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Up-Down</title>
+    <title>Rotate</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <!-- <script type="text/javascript" src = "js/jquery-1.7.1.min.js"></script> -->
     <link rel="shortcut icon" type="image/png" href="img/logo_webTab.png"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <!-- Optional theme -->
@@ -30,53 +29,60 @@ else{
   </head>
   <body>
     <script src="js/functions.js" type="text/javascript"></script>
-    <script src="js/up-down.js" type="text/javascript"></script>
-    <script src="js/updateUI.js" type="text/javascript"></script>
+    <script src="js/rotate.js" type="text/javascript"></script>
     <script src="js/showParts.js" type="text/javascript"></script>
+    <script src="js/updateUI.js" type="text/javascript"></script>
     <script src="js/scaling.js" type="text/javascript"></script>
     <div class = "container">
         <div class = "module-name">
-            <p>Up and Down +</p>
-            <select id = "changeMech" class = "rendering" onchange = "changeMech()">
-                <option value="rack-pinion">Rack and Pinion</option>
-                <option value="cam">Cam</option>
-                <option value="crank">Crank</option>
+            <p>Rotate +</p>
+            <select class = "rendering">
+                <option value="link_gear">Spur Gear</option>
             </select> 
         </div>
         <div class = "controls">
             <div id = "preview">
             </div>
-            <div id = "vertical-slider" class = "slider-div hideThis2">
-                <label>Vertical Spacing: <span id = "pivot2PointValue"></span></label>
-                <br>
-                <input type="range" id="pivot2Point" value="0" min="0" max="250" oninput = "pivot2Input(this.value)" onchange = "pivotHeight(this.value)">
-            </div>
-            <br>
         </div>
         <div class = "controls-dark">
             <div>
-                <p>Gear Size:</p>
+                <p>Gear 1 Size:</p>
                 <br>
-                <button class = "gear-size object btn btn-primary" type="button" id="setSmallGear" onclick="smallGear()">1</button>
-                <button class = "gear-size object btn btn-primary" type="button" id="setMedGear" onclick="mediumGear()">2</button>
-                <button class = "gear-size object btn btn-primary" type="button" id="setLargeGear" onclick="largeGear()">3</button>
+                <button class = "gear-size object btn btn-primary" type="button" id="setSmallGear1" onclick="smallGear1()">1</button>
+                <button class = "gear-size object btn btn-primary" type="button" id="setMedGear1" onclick="mediumGear1()">2</button>
+                <button class = "gear-size object btn btn-primary" type="button" id="setLargeGear1" onclick="largeGear1()">3</button>
             </div>
             <br>
             <div>
+                <p>Gear 2 Size:</p>
+                <br>
+                <button class = "gear-size object btn btn-primary" type="button" id="setSmallGear2" onclick="smallGear2()">1</button>
+                <button class = "gear-size object btn btn-primary" type="button" id="setMedGear2" onclick="mediumGear2()">2</button>
+                <button class = "gear-size object btn btn-primary" type="button" id="setLargeGear2" onclick="largeGear2()">3</button>
+            </div>
+            <br>
+            <div>
+                <p>Gear 3 Size:</p>
+                <br>
+                <button class = "gear-size object btn btn-primary" type="button" id="setSmallGear3" onclick="smallGear3()">1</button>
+                <button class = "gear-size object btn btn-primary" type="button" id="setMedGear3" onclick="mediumGear3()">2</button>
+                <button class = "gear-size object btn btn-primary" type="button" id="setLargeGear3" onclick="largeGear3()">3</button>
+            </div>
+            <br>
+            <div>
+                <p>Driver Gear:</p>
+                <br>
+                <button class = "object btn btn-primary" type="button" id="setDriveGearL" onclick="motorL()">Left</button>
+                <button class = "object btn btn-primary" type="button" id="setDriveGearR" onclick="motorR()">Right</button>
+            </div>
+            <br>
+            <!-- <div>
             <p>Motor Rotation:</p>
             <br>
-                <button class = "object btn btn-primary" type="button" id="alternate" onclick="alternatingGear()">180</button>
-                <button class = "object btn btn-primary" type="button" id="continuous" onclick="continuous()">Continuous</button>
+                <button class = "object btn btn-primary" type="button" id="alternate" onclick="alternateMotor()">180</button>
+                <button class = "object btn btn-primary" type="button" id="continuous" onclick="continuousMotor()">Continuous</button>
             </div>
-            <br>
-            <div class = "cam-type">
-                <p>Cam Type:</p>
-                <br>
-                <button class = "cam-type object btn btn-primary" type="button" id="" onclick="changeEgg()">Egg</button>
-                <button class = "cam-type object btn btn-primary" type="button" id="" onclick="changeShell()">Shell</button>
-                
-            </div>
-            <br class = "cam-type">
+            <br> -->
             <div id = "a-slider" class = "slider-div">
                 <label>Motor Speed: <span id = "motorSpeedValue"></span> (<span id = "motorAngleValue"></span>&deg;)</label>
                 <br>
@@ -85,22 +91,24 @@ else{
                 <br>
             </div>
             <br>
-            <div>
-            <p></p>
             <br>
-                <p><span id = "y-distance"></span></p>
+            <!--<div>
+            <p>Simulation:</p>
+            <br>
+                <button class = "object btn btn-primary" type="button" id="alternate" onclick="startRunner()">Start</button>
+                <button class = "object btn btn-primary" type="button" id="continuous" onclick="stopRunner()">Stop</button>
             
-            </div>
+            </div>-->
         </div>
         <div class = "footer">
-            <a href = "http://www.papermech.net/up-down.php">
+            <a href = "http://www.papermech.net/rotate.php">
                 <div class = "footer-btn-div">
                     <button class = "footer-btn object btn btn-primary" type="button" ><img class = "btn-icon" src="img/reset.png"></button>
                     <br>
                     <p>Reset</p>
                 </div>
             </a>
-            <a id = "showParts" onclick = "showParts()">
+            <a id = "showParts" href = "#" onclick = "showParts()">
                 <div class = "footer-btn-div">
                     <button href = "http://www.papermech.net/jsPDF/parts.html" class = "footer-btn object btn btn-primary" type="button" ><img class = "btn-icon" src="img/show_parts.png"></button>
                     <br>

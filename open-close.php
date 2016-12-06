@@ -87,6 +87,14 @@ else{
                 <button class = "gear-size object btn btn-primary" type="button" id="setLargeGear" onclick="largeGear()">3</button>
             </div>
             <br>
+            <div class = "cam-type">
+                <p>Cam Type:</p>
+                <br>
+                <button class = "cam-type object btn btn-primary" type="button" id="" onclick="changeEgg()">Egg</button>
+                <button class = "cam-type object btn btn-primary" type="button" id="" onclick="changeShell()">Shell</button>
+                
+            </div>
+            <br class = "cam-type">
             <div>
             <p>Motor Rotation:</p>
             <br>

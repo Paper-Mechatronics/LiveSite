@@ -93,12 +93,20 @@ else{
             </div>
             <br>
             <div>
-            <p>Motor Rotation:</p>
-            <br>
-                <button class = "object btn btn-primary" type="button" id="alternate" onclick="">180</button>
-                <button class = "object btn btn-primary" type="button" id="continuous" onclick="">Continuous</button>
+                <p>Cam Type:</p>
+                <br>
+                <button class = "cam-type object btn btn-primary" type="button" id="" onclick="changeEgg()">Egg</button>
+                <button class = "cam-type object btn btn-primary" type="button" id="" onclick="changeShell()">Shell</button>
+                
             </div>
             <br>
+            <!-- <div>
+            <p>Motor Rotation:</p>
+            <br>
+                <button class = "object btn btn-primary" type="button" id="alternate" onclick="alternateMotor()">180</button>
+                <button class = "object btn btn-primary" type="button" id="continuous" onclick="continuousMotor()">Continuous</button>
+            </div>
+            <br> -->
             <div id = "a-slider" class = "slider-div">
                 <label>Motor Speed: <span id = "motorSpeedValue"></span> (<span id = "motorAngleValue"></span>&deg;)</label>
                 <br>
@@ -114,7 +122,7 @@ else{
             </div>-->
         </div>
         <div class = "footer">
-            <a href = "http://www.papermech.net/open-close.php">
+            <a href = "http://www.papermech.net/cam.php">
                 <div class = "footer-btn-div">
                     <button class = "footer-btn object btn btn-primary" type="button" ><img class = "btn-icon" src="img/reset.png"></button>
                     <br>

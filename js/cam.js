@@ -17,7 +17,12 @@ function smallGear(){
   toothWidthDegree = 4;
   toothWidth = (toothWidthDegree/conversionFactor);
   if(camMod == true){
-    changeBody2(1)
+    if(compositeArray[1].shape == "cam"){
+      changeBody2(1)
+    }
+    else if(compositeArray[1].shape == "shell"){
+      changeShell()
+    }
   }
 }
 function mediumGear(){
@@ -30,7 +35,12 @@ function mediumGear(){
   toothWidthDegree = 3;
   toothWidth = (toothWidthDegree/conversionFactor);
   if(camMod == true){
-    changeBody2(1)
+    if(compositeArray[1].shape == "cam"){
+      changeBody2(1)
+    }
+    else if(compositeArray[1].shape == "shell"){
+      changeShell()
+    }
   }
   
 }
@@ -44,7 +54,12 @@ function largeGear(){
   toothWidthDegree = 2;
   toothWidth = (toothWidthDegree/conversionFactor);
   if(camMod == true){
-    changeBody2(1)
+    if(compositeArray[1].shape == "cam"){
+      changeBody2(1)
+    }
+    else if(compositeArray[1].shape == "shell"){
+      changeShell()
+    }
   }
   
 }

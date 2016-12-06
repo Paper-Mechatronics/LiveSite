@@ -12,10 +12,14 @@ function showParts(){
   var continuous = 0
   var crankLength = 0
   var mirror = 0
+  var camType
   for(var i = 0; i<compositeArray.length; i++){
     if(compositeArray[i].shape == "gear"){
       if(compositeArray[i].alternate == false){
         continuous = 1;
+        if(rotateModule){
+          continuous = 0;
+        }
       }
       if(compositeArray[i].radius == 80){
         numLargeGear ++
@@ -27,7 +31,13 @@ function showParts(){
         numSmallGear++
       }
     }
-    if(compositeArray[i].shape == "cam"){
+    if(compositeArray[i].shape == "cam" || compositeArray[i].shape == "shell"){
+      if(compositeArray[i].shape == "shell"){
+        camType = 1
+      }
+      if(compositeArray[i].shape == "cam"){
+        camType = 0
+      }
       if(compositeArray[i].radius == 80){
         numLargeCam++
       }
@@ -62,7 +72,6 @@ function showParts(){
   var motor = 0
   if(flapModule){
     flappingModule = 1;
-    console.log(flapConnector)
     if(compositeArray[0].isMotor){
       motor = 0
     }
@@ -89,7 +98,7 @@ function showParts(){
   var horizontalSpace = module.horizontalSpace*2
   var constraintLength = parseInt(module.connectorLength) + parseInt(300+module.beamWidth) + parseInt(4*module.horizontalSpace)
   // console.log(beamLength)
-  if(!compositeArray[2] || !compositeArray[3]){
+  if(!compositeArray[2] || !compositeArray[3] || rotateModule){
     constraintLength = 0;
   }
   localStorage.setItem("largeGears", largeGears);
@@ -121,6 +130,7 @@ function showParts(){
   localStorage.setItem("flapHorizontalSpace", (module.horizontalSpace+100));
   localStorage.setItem("flapConnectorLength", flapConnector);
   localStorage.setItem("motor", motor);
+  localStorage.setItem("camType", camType);
   // window.location.href="./jsPDF/parts.html"
   window.open("./jsPDF/parts.html", '_blank');
 }

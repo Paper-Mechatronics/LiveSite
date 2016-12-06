@@ -46,7 +46,9 @@ var openCloseModule = false,
     flapModule = false,
     rackPinionModule = false,
     camModule = false,
-    crankModule = false
+    crankModule = false,
+    rotateModule = false,
+    planetaryModule = false
 // Collision Groups
 var collisionCategory = 0x0001,
     otherCategory = 0x0002
@@ -207,19 +209,27 @@ function drawCam(){
     verts2.push({ x: xValues[i], y: yValues[i]});
     // console.log(yValues[i] + " " + i)
   }
+}
+function drawShell(){
+  var factor = 1
+  if(radius == 80){
+    factor = 1
+  }
+  if(radius == 64){
+    factor = 0.83
+  }
+  if(radius == 48){
+    factor = 0.68
+  }
 
-
-
-
-  // verts2 = [];
-  // // Draw Circle with 50px wider on one side
-  // for (var i = 0; i < steps; i++) {
-  //   xValues[i] = ((radius+50) * Math.cos(2 * Math.PI * i / steps));
-  //   yValues[i] = ((radius) * Math.sin(2 * Math.PI * i / steps));
-  // }
-  // for (var i = 0; i < steps; i++) {
-  //   verts2.push({ x: xValues[i], y: yValues[i]});
-  // }
+  verts2 = []
+  for (var i = 0; i < (steps)+1; i++) {
+    xValues[i] = (((14*factor)+(i*(1.2*factor))) * Math.cos(2 * Math.PI * i / steps)*3.3333);
+    yValues[i] = (((14*factor)+(i*(1.2*factor))) * Math.sin(2 * Math.PI * i / steps)*3.3333);
+  }
+  for (var i = 0; i < steps; i++) {
+    verts2.push({ x: xValues[i], y: yValues[i]});
+  }
 }
 // Draw Triangles for Walking Module
 function drawTri(width, height){
@@ -1800,9 +1810,84 @@ function changeBodyCircle(index){
   }
   
 }
+function changeShell(){
+  for(var i=0; i<1;i++){
+    if(compositeArray[1].bodies[1]){
+      Composite.remove(compositeArray[1], compositeArray[1].bodies[1]);
+    }
+    Body.setPosition(compositeArray[0].bodies[0],{x:compositeArray[1].constraints[0].pointA.x, y:compositeArray[1].constraints[0].pointA.y-200})
+    Composite.remove(compositeArray[1], compositeArray[1].bodies[0]);
+    var tmpConstraintXPoint
+    if(1 == 0){
+      tmpConstraintXPoint = compositeArray[1].constraints[0].pointA.x
+    }
+    else{
+      tmpConstraintXPoint = compositeArray[1].constraints[0].pointA.x
+    }
+    var tmpConstraintYPoint = compositeArray[1].constraints[0].pointA.y - (40*(radius/64))
+    Composite.remove(compositeArray[1], compositeArray[1].constraints[0]);
+    verts2 = [];
+    drawShell();
+    Composite.add(compositeArray[1], Bodies.fromVertices(tmpConstraintXPoint, tmpConstraintYPoint, [verts2]))
+    Composite.add(compositeArray[1], Constraint.create({pointA: { x: tmpConstraintXPoint, y: tmpConstraintYPoint+(40*(radius/64)) },
+        pointB: { x: 0, y: (40*(radius/64)) },
+        bodyB: compositeArray[1].bodies[0], 
+        stiffness: 1
+      })
+    )
+    compositeArray[1].radius = radius;
+    compositeArray[1].shape = "shell"
+    for(var j=0; j<compositeArray[1].bodies[0].parts.length;j++){
+      compositeArray[1].bodies[0].parts[j].render.strokeStyle = "#000000";
+    }
+  }
+  compositeArray[1].motorDir = -1;
+  compositeArray[1].alternate = false;
+  
+}
+function changeEgg(){
+  for(var i=0; i<1;i++){
+    if(compositeArray[1].bodies[1]){
+      Composite.remove(compositeArray[1], compositeArray[1].bodies[1]);
+    }
+    Body.setPosition(compositeArray[0].bodies[0],{x:compositeArray[1].constraints[0].pointA.x, y:compositeArray[1].constraints[0].pointA.y-300})
+    Composite.remove(compositeArray[1], compositeArray[1].bodies[0]);
+    var tmpConstraintXPoint
+    if(1 == 0){
+      tmpConstraintXPoint = compositeArray[1].constraints[0].pointA.x
+    }
+    else{
+      tmpConstraintXPoint = compositeArray[1].constraints[0].pointA.x
+    }
+    var tmpConstraintYPoint = compositeArray[1].constraints[0].pointA.y - (40*(radius/64))
+    Composite.remove(compositeArray[1], compositeArray[1].constraints[0]);
+    verts2 = [];
+    drawCam();
+    Composite.add(compositeArray[1], Bodies.fromVertices(tmpConstraintXPoint, tmpConstraintYPoint, [verts2]))
+    Composite.add(compositeArray[1], Constraint.create({pointA: { x: tmpConstraintXPoint, y: tmpConstraintYPoint+(40*(radius/64)) },
+        pointB: { x: 0, y: (40*(radius/64)) },
+        bodyB: compositeArray[1].bodies[0], 
+        stiffness: 1
+      })
+    )
+    compositeArray[1].radius = radius;
+    compositeArray[1].shape = "cam"
+    for(var j=0; j<compositeArray[1].bodies[0].parts.length;j++){
+      compositeArray[1].bodies[0].parts[j].render.strokeStyle = "#000000";
+    }
+  }
+  compositeArray[1].motorDir = 1;
+  
+}
 ////////////////// MODIFY BODY FUNCTIONS ///////////////////////
 // set motor as 180
 function alternateMotor(){
+  console.log(camMod)
+  if(camModule || camMod){
+    console.log(compositeArray[0].constraints[0].stiffness)
+    Body.setPosition(compositeArray[0].bodies[0], {x:window.innerWidth*0.45, y: window.innerHeight*0.2})
+    compositeArray[0].constraints[0].stiffness = 1;
+  }
   Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
   for(var i = 0; i<2; i++){
@@ -1813,12 +1898,19 @@ function alternateMotor(){
 }
 // set motor as continuous
 function continuousMotor(){
+  if(camModule){
+    Body.setPosition(compositeArray[0].bodies[0], {x:window.innerWidth*0.45, y: window.innerHeight*0.3})
+    compositeArray[1].motorDir = -1;
+  }
   Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
   for(var i = 0; i<2; i++){
     if(compositeArray[i].isMotor == true){
       compositeArray[i].alternate = false;
     }
+  }
+  if(compositeArray[1].shape == "shell"){
+    compositeArray[1].motorDir = -1;
   }
 }
 // change motor speed
@@ -2045,6 +2137,8 @@ function constraintLength(value){
   // c is used in the beforeUpdate function in the individual module js files
   c = parseInt(value)
   if(flapModule){
+    Body.setAngle(compositeArray[0].bodies[0], 0)
+    Body.setAngle(compositeArray[1].bodies[0], 0)
     c = parseInt(value)
   }
   // change back constraint colors to original gray
@@ -2061,6 +2155,27 @@ function constraintLength(value){
     jointComposites[jointComposites.length-4].constraints[0].render.strokeStyle = "#666"
   }
   
+}
+var c2 = 0;
+function constraintLengthL(value){
+  // change c value so that the distance calculated between beam and object is different
+  // c is used in the beforeUpdate function in the individual module js files
+  c = parseInt(value)
+  if(flapModule){
+    Body.setAngle(compositeArray[0].bodies[0], 0)
+    Body.setAngle(compositeArray[1].bodies[0], 0)
+    c = parseInt(value)
+  }
+}
+function constraintLengthR(value){
+  // change c value so that the distance calculated between beam and object is different
+  // c is used in the beforeUpdate function in the individual module js files
+  c2 = -parseInt(value)
+  if(flapModule){
+    Body.setAngle(compositeArray[0].bodies[0], 0)
+    Body.setAngle(compositeArray[1].bodies[0], 0)
+    c2 = -parseInt(value)
+  }
 }
 var beamWidthChange = 0
 // change beam width
@@ -2129,6 +2244,8 @@ function beamWidth(value){
   }
 }
 function flapBeamWidth(value){
+  Body.setAngle(compositeArray[0].bodies[0], 0)
+  Body.setAngle(compositeArray[1].bodies[0], 0)
   deleteConstraint(compositeArray[2].bodies[0], compositeArray[1].bodies[0])
   deleteConstraint(compositeArray[3].bodies[0], compositeArray[0].bodies[0])
   removeComposite(compositeArray[2].bodies[0])
@@ -2138,14 +2255,45 @@ function flapBeamWidth(value){
   createConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
   createConstraint3(compositeArray[1].bodies[0], compositeArray[2].bodies[0])
   flapBeamSpaceUpdate()
+  flapVerticalSpace()
 }
-function flapBeamHeight(value){
+function flapBeamWidthL(value){
+  Body.setAngle(compositeArray[0].bodies[0], 0)
+  Body.setAngle(compositeArray[1].bodies[0], 0)
   deleteConstraint(compositeArray[2].bodies[0], compositeArray[1].bodies[0])
   deleteConstraint(compositeArray[3].bodies[0], compositeArray[0].bodies[0])
   removeComposite(compositeArray[2].bodies[0])
   removeComposite(compositeArray[2].bodies[0])
-  addFlapRectComposite((window.innerWidth)*(0.75*0.5)+((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,100+module.flapBeamHeight,(module.flapBeamOffset+50),(module.beamWidth + 300))
-  addFlapRectComposite((window.innerWidth)*(0.75*0.5)-((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,100+module.flapBeamHeight,-(module.flapBeamOffset+50),-(module.beamWidth + 300))
+  addFlapRectComposite((window.innerWidth)*(0.75*0.5)+((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeight,(module.flapBeamOffset+50),(module.beamWidth + 300))
+  addFlapRectComposite((window.innerWidth)*(0.75*0.5)-((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeight,-(module.flapBeamOffset+50),-(module.beamWidth + 300))
+  createConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
+  createConstraint3(compositeArray[1].bodies[0], compositeArray[2].bodies[0])
+  flapBeamSpaceUpdate()
+  flapVerticalSpace()
+}
+function flapBeamHeight(value){
+  Body.setAngle(compositeArray[0].bodies[0], 0)
+  Body.setAngle(compositeArray[1].bodies[0], 0)
+  deleteConstraint(compositeArray[2].bodies[0], compositeArray[1].bodies[0])
+  deleteConstraint(compositeArray[3].bodies[0], compositeArray[0].bodies[0])
+  removeComposite(compositeArray[2].bodies[0])
+  removeComposite(compositeArray[2].bodies[0])
+  addFlapRectComposite((window.innerWidth)*(0.75*0.5)+((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeight,(module.flapBeamOffset+50),(module.beamWidth + 300))
+  addFlapRectComposite((window.innerWidth)*(0.75*0.5)-((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeight,-(module.flapBeamOffset+50),-(module.beamWidth + 300))
+  createConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
+  createConstraint3(compositeArray[1].bodies[0], compositeArray[2].bodies[0])
+  flapBeamSpaceUpdate()
+  flapVerticalSpace()
+}
+function flapBeamHeightL(value){
+  Body.setAngle(compositeArray[0].bodies[0], 0)
+  Body.setAngle(compositeArray[1].bodies[0], 0)
+  deleteConstraint(compositeArray[2].bodies[0], compositeArray[1].bodies[0])
+  deleteConstraint(compositeArray[3].bodies[0], compositeArray[0].bodies[0])
+  removeComposite(compositeArray[2].bodies[0])
+  removeComposite(compositeArray[2].bodies[0])
+  addFlapRectComposite((window.innerWidth)*(0.75*0.5)+((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeight,(module.flapBeamOffset+50),(module.beamWidth + 300))
+  addFlapRectComposite((window.innerWidth)*(0.75*0.5)-((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeight,-(module.flapBeamOffset+50),-(module.beamWidth + 300))
   createConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
   createConstraint3(compositeArray[1].bodies[0], compositeArray[2].bodies[0])
   flapBeamSpaceUpdate()
@@ -2156,17 +2304,21 @@ function flapBeamOffset(value){
   deleteConstraint(compositeArray[3].bodies[0], compositeArray[0].bodies[0])
   removeComposite(compositeArray[2].bodies[0])
   removeComposite(compositeArray[2].bodies[0])
-  addFlapRectComposite((window.innerWidth)*(0.75*0.5)+((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,100+module.flapBeamHeight,(module.flapBeamOffset+50),(module.beamWidth + 300))
-  addFlapRectComposite((window.innerWidth)*(0.75*0.5)-((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,100+module.flapBeamHeight,-(module.flapBeamOffset+50),-(module.beamWidth + 300))
+  addFlapRectComposite((window.innerWidth)*(0.75*0.5)+((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeight,(module.flapBeamOffset+50),(module.beamWidth + 300))
+  addFlapRectComposite((window.innerWidth)*(0.75*0.5)-((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeight,-(module.flapBeamOffset+50),-(module.beamWidth + 300))
   createConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
   createConstraint3(compositeArray[1].bodies[0], compositeArray[2].bodies[0])
   flapBeamSpaceUpdate()
 }
 function flapBeamSpaceUpdate(){
+  Body.setAngle(compositeArray[0].bodies[0], 0)
+  Body.setAngle(compositeArray[1].bodies[0], 0)
   compositeArray[2].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.5) + ((module.horizontalSpace+100)/2)
   compositeArray[3].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.5) - ((module.horizontalSpace+100)/2)
 }
 function flapVerticalSpace(value){
+  Body.setAngle(compositeArray[0].bodies[0], 0)
+  Body.setAngle(compositeArray[1].bodies[0], 0)
   var change = (module.verticalSpace+150) - (compositeArray[0].constraints[0].pointA.y - compositeArray[2].constraints[0].pointA.y)
   console.log(change)
   compositeArray[2].constraints[0].pointA.y = compositeArray[0].constraints[0].pointA.y - (module.verticalSpace+150)
@@ -2219,6 +2371,7 @@ function updateToothWidth(){
 //////////////////// FRAME UPDATE /////////////////////////////////////
 // runs every frame updating physics and view before frame is rendered
 Events.on(engine, 'beforeUpdate', function(event) {
+  // console.log(compositeArray[1].bodies[0].angle)
   updateSliders()
   updateToothWidth()
     // functions that need to be called every frame on each body in the world
@@ -2226,6 +2379,12 @@ Events.on(engine, 'beforeUpdate', function(event) {
     // off unique characteristics
     for(var i = 0; i<compositeArray.length;i++){
       // if inside bodies[1] if statement this deals with UI Balls
+      if(flapModule){
+        if(compositeArray[2] && compositeArray[3]){
+          compositeArray[2].bodies[0].collisionFilter.mask = otherCategory
+          compositeArray[3].bodies[0].collisionFilter.mask = otherCategory
+        }
+      }
       if(compositeArray[i].bodies[1]){
         compositeArray[i].bodies[1].collisionFilter.mask = otherCategory
         if(compositeArray[i].bodies[2]){
@@ -2549,6 +2708,15 @@ Events.on(engine, 'beforeUpdate', function(event) {
     }
     if(rackPinionModule){
       buttonDisable()
+    }
+    if(openCloseModule || upDownModule){
+      shellCam()
+    }
+    if(rotateModule){
+      updateRotateUI()
+    }
+    if(planetaryModule){
+      // updateRotateUI()
     }
 })
 // called every frame after physics is applied

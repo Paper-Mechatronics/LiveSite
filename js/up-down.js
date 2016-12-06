@@ -18,7 +18,12 @@ function smallGear(){
   toothWidthDegree = 4;
   toothWidth = (toothWidthDegree/conversionFactor);
   if(camMod == true){
-    changeBody2(1)
+    if(compositeArray[1].shape == "cam"){
+      changeBody2(1)
+    }
+    else if(compositeArray[1].shape == "shell"){
+      changeShell()
+    }
   }
   else if(rackPinionMod == true && compositeArray[1].alternate == false){
     changeBodyContinuous(1)
@@ -36,7 +41,6 @@ function smallGear(){
     compositeArray[1].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.5)+(radius+(toothHeight*1.8))
   }
   // document.getElementById("")
-  
   pivotHeight(constraintLength)
 }
 function mediumGear(){
@@ -52,7 +56,12 @@ function mediumGear(){
   toothWidthDegree = 3;
   toothWidth = (toothWidthDegree/conversionFactor);
   if(camMod == true){
-    changeBody2(1)
+    if(compositeArray[1].shape == "cam"){
+      changeBody2(1)
+    }
+    else if(compositeArray[1].shape == "shell"){
+      changeShell()
+    }
   }
   else if(rackPinionMod == true && compositeArray[1].alternate == false){
     changeBodyContinuous(1)
@@ -86,7 +95,12 @@ function largeGear(){
   toothWidthDegree = 2;
   toothWidth = (toothWidthDegree/conversionFactor);
   if(camMod == true){
-    changeBody2(1)
+    if(compositeArray[1].shape == "cam"){
+      changeBody2(1)
+    }
+    else if(compositeArray[1].shape == "shell"){
+      changeShell()
+    }
   }
   else if(rackPinionMod == true && compositeArray[1].alternate == false){
     changeBodyContinuous(1)
@@ -126,6 +140,7 @@ function rackPinion(){
   // createUIConstraintsSingle(compositeArray[0], 50, 0,10)
 }
 function cam(){
+  // console.log(camMod)
   resetRadius()
   removeUIConstraintsSingle(compositeArray[0])
   deleteConstraint(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
@@ -134,7 +149,7 @@ function cam(){
   camWidth = 40;
   changeBody5(0,200);
   changeBody2(1);
-  Body.setPosition(compositeArray[0].bodies[0], {x:(window.innerWidth)*(0.75*0.5), y:compositeArray[1].constraints[0].pointA.y - 60})
+  Body.setPosition(compositeArray[0].bodies[0], {x:(window.innerWidth)*(0.75*0.5), y:compositeArray[1].constraints[0].pointA.y - 100})
   Body.setPosition(compositeArray[1].bodies[0], {x:(window.innerWidth)*(0.75*0.5), y:(window.innerHeight)*(0.75)})
   compositeArray[1].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.5)
   compositeArray[1].constraints[0].pointA.y = (window.innerHeight)*(0.75)
@@ -207,8 +222,15 @@ function continuous(){
   else{
     compositeArray[1].alternate = false;
   }
+  if(compositeArray[1].shape == "shell"){
+    compositeArray[1].motorDir = -1;
+  }
 }
 function alternatingGear(){
+  if(camMod){
+    Body.setPosition(compositeArray[0].bodies[0], {x:window.innerWidth*0.45, y: window.innerHeight*0.4})
+    // compositeArray[0].constraints[0].stiffness = 1;
+  }
   if(rackPinionMod){
     changeBody(1)
     Body.setPosition(compositeArray[0].bodies[0], {x:compositeArray[0].constraints[0].pointA.x, y:compositeArray[0].constraints[0].pointA.y})

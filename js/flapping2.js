@@ -130,6 +130,8 @@ var changeSpaceWidth = 0;
 var spaceValue = 50
 function beamSpacing(value){
   if(compositeArray[2] && compositeArray[3]){
+    Body.setAngle(compositeArray[0].bodies[0], 0)
+    Body.setAngle(compositeArray[1].bodies[0], 0)
     changeSpaceWidth = value - prevSpaceValue
     compositeArray[2].constraints[0].pointA.x = compositeArray[2].constraints[0].pointA.x + changeSpaceWidth
     compositeArray[3].constraints[0].pointA.x = compositeArray[3].constraints[0].pointA.x + (changeSpaceWidth*-1)
@@ -169,7 +171,7 @@ Events.on(engine, 'afterUpdate', function(event) {
     gear2Spacing = gear2CenterX - ((window.innerWidth)*(0.75*0.5))
     beamSpace = Math.round(compositeArray[2].constraints[0].pointA.x - compositeArray[3].constraints[0].pointA.x)
     verticalSpacing = compositeArray[0].constraints[0].pointA.y - compositeArray[2].constraints[0].pointA.y
-    console.log(verticalSpacing)
+    // console.log(verticalSpacing)
     var gear1ConstraintX = compositeArray[0].constraints[0].pointA.x + gear1CenterChangeX
     var gear1ConstraintY = compositeArray[0].constraints[0].pointA.y + gear1CenterChangeY
     var gear2ConstraintX = compositeArray[1].constraints[0].pointA.x + gear2CenterChangeX
@@ -183,8 +185,8 @@ Events.on(engine, 'afterUpdate', function(event) {
     var y2 = compositeArray[3].bodies[0].vertices[2].y
     var y1 = gear1ConstraintY
     var d = Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
-    // flapConnector = d
-    console.log(flapConnector)
+    flapConnector = d
+    // console.log(flapConnector)
     var b = Math.sqrt((gear1ConstraintX-rect1ConstraintX)*(gear1ConstraintX-rect1ConstraintX) + (gear1ConstraintY-rect1ConstraintY)*(gear1ConstraintY-rect1ConstraintY) );
     var b2 = (Math.sqrt( (gear2ConstraintX-rect2ConstraintX)*(gear2ConstraintX-rect2ConstraintX) + (gear2ConstraintY-rect2ConstraintY)*(gear2ConstraintY-rect2ConstraintY) ))
     var a = 300 + module.beamWidth
