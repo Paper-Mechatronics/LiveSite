@@ -48,7 +48,8 @@ var openCloseModule = false,
     camModule = false,
     crankModule = false,
     rotateModule = false,
-    planetaryModule = false
+    planetaryModule = false,
+    spurModule = false
 // Collision Groups
 var collisionCategory = 0x0001,
     otherCategory = 0x0002
@@ -97,8 +98,14 @@ var module = {
   pivot2Point: 0,
   motorSpeed: 40,
   beamWidth: 0,
-  flapBeamHeight : 0,
-  flapBeamOffset: 0 
+  flapBeamWidthL: 0,
+  flapBeamWidthR: 0,
+  flapBeamHeightL : 0,
+  flapBeamHeightR : 0,
+  flapBeamOffset: 0 ,
+  flapConnectorLengthL: 300,
+  flapConnectorLengthR: 300,
+  spurBeamLength : 0
 }
 // Other
 var newWidth1;
@@ -108,7 +115,8 @@ var pivot2Value
 var mirrored = false;
 var gear1Spacing = 0
 var gear2Spacing = 0
-var flapConnector = 0
+var flapConnectorL = 0
+var flapConnectorR = 0
 
 
 
@@ -463,6 +471,36 @@ function addTriComposite(centerX, centerY, width, height){
   )
   Composite.add(compositeArray[totalComposites-1], constraintArray[totalConstraints-1]);
   World.add(engine.world,[compositeArray[totalComposites-1]] );
+}
+function addRotateRect(width, height, centerX, centerY){
+  // see addGearComposite() comments
+  centerX  = centerX - (width/2)
+  totalComposites++;
+  totalConstraints++;
+  compositeArray.push( 
+  Composite.create({
+        options:{
+          render:{
+            fillStyle: "#cccccc"
+          }
+        },
+        bodies:[Bodies.rectangle(centerX, centerY, width, height)],
+        constraints:[],
+        shape: "rect",
+        width: width,
+        height: height,
+        lock: false
+      })
+  )
+  constraintArray.push(
+    // create joint constraint and place it at end of beam or center - width/2
+    Constraint.create({pointA: { x: centerX+width/2, y: centerY },bodyB: compositeArray[totalComposites-1].bodies[0] ,pointB: { x: width/2, y: 0 }, stiffness: 1})
+  )
+  compositeArray[compositeArray.length-1].bodies[0].render.fillStyle = "#cccccc"
+  compositeArray[compositeArray.length-1].bodies[0].render.strokeStyle = "#000"
+  Composite.add(compositeArray[totalComposites-1], constraintArray[totalConstraints-1]);
+  World.add(engine.world,[compositeArray[totalComposites-1]] );
+  compositeArray[3].bodies[0].collisionFilter.mask = otherCategory
 }
 function removeComposite(composite){
   // Remove a Composite group from the world
@@ -1938,6 +1976,14 @@ function updateSliders(){
     document.getElementById("connectorLengthValue").innerHTML = module.connectorLength
     document.getElementById("connectorLength").value = module.connectorLength
   }
+  if(document.getElementById("flapConnectorLengthL")){
+    document.getElementById("flapConnectorLengthValueL").innerHTML = module.flapConnectorLengthL
+    document.getElementById("flapConnectorLengthL").value = module.flapConnectorLengthL
+  }
+  if(document.getElementById("flapConnectorLengthR")){
+    document.getElementById("flapConnectorLengthValueR").innerHTML = module.flapConnectorLengthR
+    document.getElementById("flapConnectorLengthR").value = module.flapConnectorLengthR
+  }
   if(document.getElementById("pivotPoint")){
     document.getElementById("pivotPointValue").innerHTML = module.pivotPoint
     document.getElementById("pivotPoint").value = Math.round(module.pivotPoint)
@@ -1954,13 +2000,29 @@ function updateSliders(){
     document.getElementById("beamWidthValue").innerHTML = module.beamWidth
     document.getElementById("beamWidth").value = module.beamWidth
   }
-  if(document.getElementById("flapBeamHeight")){
-    document.getElementById("flapBeamHeightValue").innerHTML = module.flapBeamHeight
-    document.getElementById("flapBeamHeight").value = module.flapBeamHeight
+  if(document.getElementById("flapBeamWidthL")){
+    document.getElementById("flapBeamWidthValueL").innerHTML = module.flapBeamWidthL
+    document.getElementById("flapBeamWidthL").value = module.flapBeamWidthL
+  }
+  if(document.getElementById("flapBeamWidthR")){
+    document.getElementById("flapBeamWidthValueR").innerHTML = module.flapBeamWidthR
+    document.getElementById("flapBeamWidthR").value = module.flapBeamWidthR
+  }
+  if(document.getElementById("flapBeamHeightL")){
+    document.getElementById("flapBeamHeightValueL").innerHTML = module.flapBeamHeightL
+    document.getElementById("flapBeamHeightL").value = module.flapBeamHeightL
+  }
+  if(document.getElementById("flapBeamHeightR")){
+    document.getElementById("flapBeamHeightValueR").innerHTML = module.flapBeamHeightR
+    document.getElementById("flapBeamHeightR").value = module.flapBeamHeightR
   }
   if(document.getElementById("flapBeamOffset")){
     document.getElementById("flapBeamOffsetValue").innerHTML = module.flapBeamOffset
     document.getElementById("flapBeamOffset").value = module.flapBeamOffset
+  }
+  if(document.getElementById("spurBeamLength")){
+    document.getElementById("spurBeamLengthValue").innerHTML = module.spurBeamLength
+    document.getElementById("spurBeamLength").value = module.spurBeamLength
   }
 }
 
@@ -2034,6 +2096,20 @@ function connectorInput(value){
     jointComposites[jointComposites.length-4].constraints[0].render.strokeStyle = "#FF3318"
   }
 }
+function flapConnectorInputL(value){
+  if(document.getElementById("flapConnectorLengthL")){
+    module.flapConnectorLengthL = parseInt(value)
+  }
+  jointComposites[jointComposites.length-2].constraints[0].render.lineWidth = redLineWidth
+  jointComposites[jointComposites.length-2].constraints[0].render.strokeStyle = "#FF3318"
+}
+function flapConnectorInputR(value){
+  if(document.getElementById("flapConnectorLengthR")){
+    module.flapConnectorLengthR = parseInt(value)
+  }
+  jointComposites[jointComposites.length-1].constraints[0].render.lineWidth = redLineWidth
+  jointComposites[jointComposites.length-1].constraints[0].render.strokeStyle = "#FF3318"
+}
 // horizontal pivot point on beam
 function pivotInput(value){
   if(document.getElementById("pivotPoint")){
@@ -2096,13 +2172,36 @@ function beamWidthInput(value){
     }
   }
 }
-function flapHeightInput(value){
-  module.flapBeamHeight = parseInt(value)
+function flapBeamWidthInputL(value){
+  if(document.getElementById("flapBeamWidthL")){
+    module.flapBeamWidthL = parseInt(value)
+    for(var j=1; j<2;j++){
+      compositeArray[3].bodies[0].parts[j].render.strokeStyle = "#FF3318";
+      compositeArray[3].bodies[0].parts[j].render.lineWidth = 4;
+    }
+  }
+}
+function flapBeamWidthInputR(value){
+  if(document.getElementById("flapBeamWidthR")){
+    module.flapBeamWidthR = parseInt(value)
+    for(var j=1; j<2;j++){
+      compositeArray[2].bodies[0].parts[j].render.strokeStyle = "#FF3318";
+      compositeArray[2].bodies[0].parts[j].render.lineWidth = 4;
+    }
+  }
+}
+function flapHeightInputL(value){
+  module.flapBeamHeightL = parseInt(value)
+  for(var j=2; j<3;j++){
+    compositeArray[3].bodies[0].parts[j].render.strokeStyle = "#FF3318";
+    compositeArray[3].bodies[0].parts[j].render.lineWidth = 4;
+  }
+}
+function flapHeightInputR(value){
+  module.flapBeamHeightR = parseInt(value)
   for(var j=2; j<3;j++){
     compositeArray[2].bodies[0].parts[j].render.strokeStyle = "#FF3318";
-    compositeArray[3].bodies[0].parts[j].render.strokeStyle = "#FF3318";
     compositeArray[2].bodies[0].parts[j].render.lineWidth = 4;
-    compositeArray[3].bodies[0].parts[j].render.lineWidth = 4;
   }
 }
 function flapOffsetInput(value){
@@ -2114,7 +2213,13 @@ function flapOffsetInput(value){
     compositeArray[3].bodies[0].parts[j].render.lineWidth = 4;
   }
 }
-
+function spurBeamLengthInput(value){
+  module.spurBeamLength = parseInt(value)
+}
+function changeSpurBeamLength(){
+  removeComposite(compositeArray[3].bodies[0])
+  addRotateRect(150 + module.spurBeamLength,10,compositeArray[2].constraints[0].pointA.x,compositeArray[2].constraints[0].pointA.y)
+}
 
 // display motor angle for debugging
 function motorAngle(angle){
@@ -2136,11 +2241,6 @@ function constraintLength(value){
   // change c value so that the distance calculated between beam and object is different
   // c is used in the beforeUpdate function in the individual module js files
   c = parseInt(value)
-  if(flapModule){
-    Body.setAngle(compositeArray[0].bodies[0], 0)
-    Body.setAngle(compositeArray[1].bodies[0], 0)
-    c = parseInt(value)
-  }
   // change back constraint colors to original gray
   if(jointComposites[jointComposites.length-1] && jointComposites[jointComposites.length-2]){
     jointComposites[jointComposites.length-1].constraints[0].render.lineWidth = 2
@@ -2157,25 +2257,19 @@ function constraintLength(value){
   
 }
 var c2 = 0;
-function constraintLengthL(value){
+function flapConstraintLengthL(value){
   // change c value so that the distance calculated between beam and object is different
   // c is used in the beforeUpdate function in the individual module js files
   c = parseInt(value)
-  if(flapModule){
-    Body.setAngle(compositeArray[0].bodies[0], 0)
-    Body.setAngle(compositeArray[1].bodies[0], 0)
-    c = parseInt(value)
-  }
+  jointComposites[jointComposites.length-2].constraints[0].render.lineWidth = 2
+  jointComposites[jointComposites.length-2].constraints[0].render.strokeStyle = "#666"
 }
-function constraintLengthR(value){
+function flapConstraintLengthR(value){
   // change c value so that the distance calculated between beam and object is different
   // c is used in the beforeUpdate function in the individual module js files
   c2 = -parseInt(value)
-  if(flapModule){
-    Body.setAngle(compositeArray[0].bodies[0], 0)
-    Body.setAngle(compositeArray[1].bodies[0], 0)
-    c2 = -parseInt(value)
-  }
+  jointComposites[jointComposites.length-1].constraints[0].render.lineWidth = 2
+  jointComposites[jointComposites.length-1].constraints[0].render.strokeStyle = "#666"
 }
 var beamWidthChange = 0
 // change beam width
@@ -2243,15 +2337,15 @@ function beamWidth(value){
     compositeArray[3].bodies[0].render.lineWidth = 2
   }
 }
-function flapBeamWidth(value){
+function flapBeamWidthR(value){
   Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
   deleteConstraint(compositeArray[2].bodies[0], compositeArray[1].bodies[0])
   deleteConstraint(compositeArray[3].bodies[0], compositeArray[0].bodies[0])
   removeComposite(compositeArray[2].bodies[0])
   removeComposite(compositeArray[2].bodies[0])
-  addFlapRectComposite((window.innerWidth)*(0.75*0.5)+((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeight,(module.flapBeamOffset+50),(module.beamWidth + 300))
-  addFlapRectComposite((window.innerWidth)*(0.75*0.5)-((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeight,-(module.flapBeamOffset+50),-(module.beamWidth + 300))
+  addFlapRectComposite((window.innerWidth)*(0.75*0.5)+((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeightR,(module.flapBeamOffset+50),(module.flapBeamWidthR + 300))
+  addFlapRectComposite((window.innerWidth)*(0.75*0.5)-((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeightL,-(module.flapBeamOffset+50),-(module.flapBeamWidthL + 300))
   createConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
   createConstraint3(compositeArray[1].bodies[0], compositeArray[2].bodies[0])
   flapBeamSpaceUpdate()
@@ -2264,22 +2358,22 @@ function flapBeamWidthL(value){
   deleteConstraint(compositeArray[3].bodies[0], compositeArray[0].bodies[0])
   removeComposite(compositeArray[2].bodies[0])
   removeComposite(compositeArray[2].bodies[0])
-  addFlapRectComposite((window.innerWidth)*(0.75*0.5)+((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeight,(module.flapBeamOffset+50),(module.beamWidth + 300))
-  addFlapRectComposite((window.innerWidth)*(0.75*0.5)-((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeight,-(module.flapBeamOffset+50),-(module.beamWidth + 300))
+  addFlapRectComposite((window.innerWidth)*(0.75*0.5)+((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeightR,(module.flapBeamOffset+50),(module.flapBeamWidthR + 300))
+  addFlapRectComposite((window.innerWidth)*(0.75*0.5)-((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeightL,-(module.flapBeamOffset+50),-(module.flapBeamWidthL + 300))
   createConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
   createConstraint3(compositeArray[1].bodies[0], compositeArray[2].bodies[0])
   flapBeamSpaceUpdate()
   flapVerticalSpace()
 }
-function flapBeamHeight(value){
+function flapBeamHeightR(value){
   Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
   deleteConstraint(compositeArray[2].bodies[0], compositeArray[1].bodies[0])
   deleteConstraint(compositeArray[3].bodies[0], compositeArray[0].bodies[0])
   removeComposite(compositeArray[2].bodies[0])
   removeComposite(compositeArray[2].bodies[0])
-  addFlapRectComposite((window.innerWidth)*(0.75*0.5)+((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeight,(module.flapBeamOffset+50),(module.beamWidth + 300))
-  addFlapRectComposite((window.innerWidth)*(0.75*0.5)-((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeight,-(module.flapBeamOffset+50),-(module.beamWidth + 300))
+  addFlapRectComposite((window.innerWidth)*(0.75*0.5)+((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeightR,(module.flapBeamOffset+50),(module.flapBeamWidthR + 300))
+  addFlapRectComposite((window.innerWidth)*(0.75*0.5)-((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeightL,-(module.flapBeamOffset+50),-(module.flapBeamWidthL + 300))
   createConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
   createConstraint3(compositeArray[1].bodies[0], compositeArray[2].bodies[0])
   flapBeamSpaceUpdate()
@@ -2292,8 +2386,8 @@ function flapBeamHeightL(value){
   deleteConstraint(compositeArray[3].bodies[0], compositeArray[0].bodies[0])
   removeComposite(compositeArray[2].bodies[0])
   removeComposite(compositeArray[2].bodies[0])
-  addFlapRectComposite((window.innerWidth)*(0.75*0.5)+((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeight,(module.flapBeamOffset+50),(module.beamWidth + 300))
-  addFlapRectComposite((window.innerWidth)*(0.75*0.5)-((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeight,-(module.flapBeamOffset+50),-(module.beamWidth + 300))
+  addFlapRectComposite((window.innerWidth)*(0.75*0.5)+((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeightR,(module.flapBeamOffset+50),(module.flapBeamWidthR + 300))
+  addFlapRectComposite((window.innerWidth)*(0.75*0.5)-((300/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87,7,150+module.flapBeamHeightL,-(module.flapBeamOffset+50),-(module.flapBeamWidthL + 300))
   createConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
   createConstraint3(compositeArray[1].bodies[0], compositeArray[2].bodies[0])
   flapBeamSpaceUpdate()
@@ -2713,6 +2807,10 @@ Events.on(engine, 'beforeUpdate', function(event) {
       shellCam()
     }
     if(rotateModule){
+      updateRotateUI()
+    }
+    if(spurModule){
+      updateFlapUI()
       updateRotateUI()
     }
     if(planetaryModule){

@@ -12,6 +12,9 @@ else if(numOfMediumCranks){
 else if(numOfSmallCranks){
   adjust = (100 * scale2 *size) + 10
 }
+if(spurFlap || spurRotate){
+  spurModule = 1
+}
 ///////////// Draw Functions //////////////////////////////
 function drawGear(){
   // draw circle
@@ -219,10 +222,26 @@ function roundedRect(length,crankSize){
 // create rounded rect for flap linkage
 function roundedFlapRect(length,length2){
   for(var i=0;i<2;i++){
-    doc.roundedRect((15*frameScale), centerY + (80*scale*size) + 40+(20*i), length+16, 16, 8, 8)
-    // doc.roundedRect((15*frameScale)+16, centerY + (80*scale*size) + 40+(20*i)+4, radius*2, 8, 4, 4)
-    doc.circle((15*frameScale)+8,centerY + (80*scale*size) + 40+8+(20*i),2.5)
-    doc.circle((15*frameScale)+(length+8),centerY + (80*scale*size) + 40+8+(20*i),2.5)
+    if(i == 0){
+      doc.roundedRect((15*frameScale), centerY + (80*scale*size) + 40+(20*i), length+16, 16, 8, 8)
+      // doc.roundedRect((15*frameScale)+16, centerY + (80*scale*size) + 40+(20*i)+4, radius*2, 8, 4, 4)
+      doc.circle((15*frameScale)+8,centerY + (80*scale*size) + 40+8+(20*i),2.5)
+      doc.circle((15*frameScale)+(length+8),centerY + (80*scale*size) + 40+8+(20*i),2.5)
+    }
+    else{
+      doc.roundedRect((15*frameScale), centerY + (80*scale*size) + 40+(20*i), length2+16, 16, 8, 8)
+      // doc.roundedRect((15*frameScale)+16, centerY + (80*scale*size) + 40+(20*i)+4, radius*2, 8, 4, 4)
+      doc.circle((15*frameScale)+8,centerY + (80*scale*size) + 40+8+(20*i),2.5)
+      doc.circle((15*frameScale)+(length2+8),centerY + (80*scale*size) + 40+8+(20*i),2.5)
+    }
+  }
+}
+function roundedSpurRect(length){
+  for(var i=0;i<1;i++){
+    doc.roundedRect((15*frameScale), centerY + (80*scale*size)+ 10, length+16, 16, 8, 8)
+    doc.circle((15*frameScale)+8,centerY + (80*scale*size)+8 + 10,2.5)
+    doc.circle((15*frameScale)+8+(rotateGear*0.8),centerY + (80*scale*size) +8 + 10,1.5)
+    doc.circle((15*frameScale)+(length+8),centerY + (80*scale*size)+8 + 10,2.5)
   }
 }
 // create case for crank
@@ -437,18 +456,15 @@ function buttonDisplay(){
   $("#setLargeWidth").show()
 }
 // take vertices arrays created from draw functions and create the gears from lines
-function showGear(){
-  var numOfGears;
-  if(numOfLargeGears){
-    numOfGears = numOfLargeGears
-  }
-  if(numOfMediumGears){
-    numOfGears = numOfMediumGears
-  }
-  if(numOfSmallGears){
-    numOfGears = numOfSmallGears
-  }
-  for(var k=0; k<numOfGears*2;k++){
+function showGear(num){
+  
+  // determine number of which sized gears to create
+  for(var k=0; k<num*2;k++){
+    if(centerY > 30 && radius < 15){
+      if(numOfSmallGears > 1 && numOfLargeGears>0){
+        centerY = 80
+      }
+    }
     if(continuous==1 && flappingModule == 0){
       drawContinuousGear()
     }
@@ -466,6 +482,11 @@ function showGear(){
         nonMotorRadius = radius
       }
     }
+    if(spurRotate){
+      if(radius == rotateGear && k <2){
+        doc.circle(centerX+(radius*0.8), centerY, (1.5));
+      }
+    }
     for (var i = 0; i<verts2.length; i++){
       if(i+1 == verts2.length){
         doc.line(verts2[i].x, verts2[i].y, verts2[0].x, verts2[0].y); // horizontal line
@@ -474,25 +495,30 @@ function showGear(){
         doc.line(verts2[i].x, verts2[i].y, verts2[i+1].x, verts2[i+1].y);
       }
     }
-    console.log(centerY)
+    // console.log("radius = " + radius)
     centerX = centerX + ((radius*2)+(36*scale*size));
     if(centerX>215){
       centerX = 30;
       centerY = centerY + ((radius*2)+(36*scale*size));
-
     }
   }
-  centerY = 30
+  if(!spurRotate){
+    centerY = 30
+  }
   //414.5
 }
 var doc = new jsPDF("landscape");
 function showAll(){
+  console.log("largeGears = " + numOfLargeGears)
+  console.log("mediumGears = " + numOfMediumGears)
+  console.log("smallGears = " + numOfSmallGears)
   if(numOfLargeGears || numOfMediumGears || numOfSmallGears){
     doc.text(275.3,208.2,pageLabelArray[0])
   }
   else{
     doc.text(275.3,208.2,pageLabelArray[1])
   }
+
   if(numOfLargeGears){
     // arrange()
     radius = 80
@@ -501,35 +527,38 @@ function showAll(){
     toothWidth = (toothWidthDegree/conversionFactor);
     radius = 80 *scale*size
     // doc.setLineWidth(0.01);
-    showGear()
+    showGear(numOfLargeGears)
     if(flappingModule == 1){
       console.log("hi")
-      roundedFlapRect(flapConnectorLength)
+      roundedFlapRect(flapConnectorLengthL,flapConnectorLengthR)
     }
   }
   if(numOfMediumGears){
-    arrange()
+    // arrange()
     radius = 64
     steps = (0.25 * radius)*2;
     toothWidthDegree = 2;
     toothWidth = (toothWidthDegree/conversionFactor);
     radius = 64 *scale*size
-    showGear()
+    showGear(numOfMediumGears)
     if(flappingModule == 1){
-      roundedFlapRect(flapConnectorLength)
+      roundedFlapRect(flapConnectorLengthL, flapConnectorLengthR)
     }
   }
   if(numOfSmallGears){
-    arrange()
+    // arrange()
     radius = 48
     steps = ((0.25 * radius)*2) +2;
     toothWidthDegree = 2.8;
     toothWidth = (toothWidthDegree/conversionFactor);
     radius = 48 *scale*size
-    showGear()
+    showGear(numOfSmallGears)
     if(flappingModule == 1){
-      roundedFlapRect(flapConnectorLength)
+      roundedFlapRect(flapConnectorLengthL, flapConnectorLengthR)
     }
+  }
+  if(spurRotate){
+    roundedSpurRect(spurBeamLength);
   }
   if(numOfLinGears){
     centerX = 200*scale*size;
@@ -623,7 +652,7 @@ function showAll(){
   if(flappingModule == 1){
     flapParts()
   }
-  if(constraintLength && !flappingModule){
+  if(constraintLength && !flappingModule && !spurModule){
     buttonDisplay()
     doc.addPage();
     doc.text(265.3,208.2,pageLabelArray[2])
@@ -681,55 +710,53 @@ function showAll(){
       }
     }
   }
-  if(flappingModule){
+
+
+  if(flappingModule || spurFlap){
     doc.addPage();
     doc.addImage(imgData2, 'PNG', 15, 160, 70.3125, 45);
     doc.text(265.3,208.2,pageLabelArray[2])
-    var wingLength = flapBeamWidth + (Math.sqrt((flapBeamOffset*flapBeamOffset)+(flapBeamHeight*flapBeamHeight)))+flapHorizontalSpace + 10 +10 + 10 + 20
-    var wingBendLength = (Math.sqrt((flapBeamOffset*flapBeamOffset)+(flapBeamHeight*flapBeamHeight)))
+    var wingLengthL = flapBeamWidthL + (Math.sqrt((flapBeamOffset*flapBeamOffset)+(flapBeamHeightL*flapBeamHeightL)))+flapHorizontalSpace + 10 +10 + 10 + 20
+    var wingBendLengthL = (Math.sqrt((flapBeamOffset*flapBeamOffset)+(flapBeamHeightL*flapBeamHeightL)))
+    var wingLengthR = flapBeamWidthR + (Math.sqrt((flapBeamOffset*flapBeamOffset)+(flapBeamHeightR*flapBeamHeightR)))+flapHorizontalSpace + 10 +10 + 10 + 20
+    var wingBendLengthR = (Math.sqrt((flapBeamOffset*flapBeamOffset)+(flapBeamHeightR*flapBeamHeightR)))
     // console.log(wingLength)
-    for(var i = 0; i<2;i++){
-      doc.rect(xMargin*scale2*size,((yMargin+(linkageHeightPlus*i))*scale2*size),wingLength,linkageHeight*scale2*size)
+    for(var i = 0; i<1;i++){
+      doc.rect(xMargin*scale2*size,((yMargin+(linkageHeightPlus*i))*scale2*size),wingLengthL,linkageHeight*scale2*size)
       var segments = 8
+
       for(var dashed = 0;dashed<segments;dashed++){
-        doc.line((xMargin*scale2*size)+flapHorizontalSpace+wingBendLength,((yMargin+((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*scale2*size),(xMargin*scale2*size)+flapHorizontalSpace+wingBendLength,(((yMargin+((linkageHeight/segments)*(dashed+1)-5))+(linkageHeightPlus*i))*scale2*size))
-        doc.line((xMargin*scale2*size)+flapHorizontalSpace+wingBendLength+flapBeamWidth+10,((yMargin+((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*scale2*size),(xMargin*scale2*size)+flapHorizontalSpace+wingBendLength+flapBeamWidth+10,(((yMargin+((linkageHeight/segments)*(dashed+1)-5))+(linkageHeightPlus*i))*scale2*size))
-        doc.line((xMargin*scale2*size)+flapHorizontalSpace+wingBendLength+flapBeamWidth+10+10,((yMargin+((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*scale2*size),(xMargin*scale2*size)+flapHorizontalSpace+wingBendLength+flapBeamWidth+10+10,(((yMargin+((linkageHeight/segments)*(dashed+1)-5))+(linkageHeightPlus*i))*scale2*size))
+        doc.line((xMargin*scale2*size)+flapHorizontalSpace+wingBendLengthL,((yMargin+((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*scale2*size),(xMargin*scale2*size)+flapHorizontalSpace+wingBendLengthL,(((yMargin+((linkageHeight/segments)*(dashed+1)-5))+(linkageHeightPlus*i))*scale2*size))
+        doc.line((xMargin*scale2*size)+flapHorizontalSpace+wingBendLengthL+flapBeamWidthL+10,((yMargin+((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*scale2*size),(xMargin*scale2*size)+flapHorizontalSpace+wingBendLengthL+flapBeamWidthL+10,(((yMargin+((linkageHeight/segments)*(dashed+1)-5))+(linkageHeightPlus*i))*scale2*size))
+        doc.line((xMargin*scale2*size)+flapHorizontalSpace+wingBendLengthL+flapBeamWidthL+10+10,((yMargin+((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*scale2*size),(xMargin*scale2*size)+flapHorizontalSpace+wingBendLengthL+flapBeamWidthL+10+10,(((yMargin+((linkageHeight/segments)*(dashed+1)-5))+(linkageHeightPlus*i))*scale2*size))
       }
       segments = 15
       for(var dashed = 0;dashed<segments;dashed++){
         doc.line((xMargin*scale2*size)+flapHorizontalSpace,((yMargin+((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*scale2*size),(xMargin*scale2*size)+flapHorizontalSpace,(((yMargin+((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*scale2*size))
-        doc.line((xMargin*scale2*size)+flapHorizontalSpace+wingBendLength+flapBeamWidth,((yMargin+((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*scale2*size),(xMargin*scale2*size)+flapHorizontalSpace+wingBendLength+flapBeamWidth,(((yMargin+((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*scale2*size))
-        doc.line((xMargin*scale2*size)+flapHorizontalSpace+wingBendLength+flapBeamWidth+10+10+10,((yMargin+((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*scale2*size),(xMargin*scale2*size)+flapHorizontalSpace+wingBendLength+flapBeamWidth+10+10+10,(((yMargin+((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*scale2*size))
+        doc.line((xMargin*scale2*size)+flapHorizontalSpace+wingBendLengthL+flapBeamWidthL,((yMargin+((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*scale2*size),(xMargin*scale2*size)+flapHorizontalSpace+wingBendLengthL+flapBeamWidthL,(((yMargin+((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*scale2*size))
+        doc.line((xMargin*scale2*size)+flapHorizontalSpace+wingBendLengthL+flapBeamWidthL+10+10+10,((yMargin+((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*scale2*size),(xMargin*scale2*size)+flapHorizontalSpace+wingBendLengthL+flapBeamWidthL+10+10+10,(((yMargin+((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*scale2*size))
       }
+    }
+    for(var i = 1; i<2;i++){
+      doc.rect(xMargin*scale2*size,((yMargin+(linkageHeightPlus*i))*scale2*size),wingLengthR,linkageHeight*scale2*size)
+      var segments = 8
 
-      // doc.line((xMargin+flapConnectorLength+flapBeamWidth)*scale2*size,((yMargin+(linkageHeightPlus*i))*scale2*size),(xMargin+flapConnectorLength+flapBeamWidth)*scale2*size,(((yMargin+linkageHeight)+(linkageHeightPlus*i))*scale2*size))
-      // doc.line((xMargin+flapConnectorLength+flapBeamWidth + (Math.sqrt((flapBeamOffset*flapBeamOffset)+(flapBeamHeight*flapBeamHeight))))*scale2*size,((yMargin+(linkageHeightPlus*i))*scale2*size),(xMargin+flapConnectorLength+flapBeamWidth+ (Math.sqrt((flapBeamOffset*flapBeamOffset)+(flapBeamHeight*flapBeamHeight))))*scale2*size,(((yMargin+linkageHeight)+(linkageHeightPlus*i))*scale2*size))
-
-      // for(var j = 0; j<3;j++){
-      //   increment += varArray[j]
-      //   if(i == 0){
-      //     doc.line((xMargin+increment)*scale2*size,((yMargin+(linkageHeightPlus*i))*scale2*size)+(75*k),(xMargin+increment)*scale2*size,(((yMargin+linkageHeight)+(linkageHeightPlus*i))*scale2*size)+(75*k))
-      //     // doc.text((xMargin+increment - (varArray[j]/2))*scale2*size, ((yMargin+(linkageHeightPlus*i))*scale2*size)+(75*k), labelArray[j]);
-      //     if(j == 0){
-      //       doc.circle((xMargin+(horizontalSpace*(1/3)))*scale2*size, (((yMargin+linkageHeight/2)+(linkageHeightPlus*i))*scale2*size)+(75*k), (5*scale*size));
-      //       doc.circle((xMargin+(horizontalSpace*(2/3)))*scale2*size, (((yMargin+linkageHeight/2)+(linkageHeightPlus*i))*scale2*size)+(75*k), (3*scale*size));
-      //     }
-      //   }
-      //   else{
-      //     doc.line(((xMargin+constraintLength) - increment)*scale2*size,((yMargin+(linkageHeightPlus*i))*scale2*size)+(75*k),((xMargin+constraintLength) - increment)*scale2*size,(((yMargin+linkageHeight)+(linkageHeightPlus*i))*scale2*size)+(75*k))
-      //     // doc.text(((xMargin+constraintLength) - increment + (varArray[j]/2))*scale2*size, ((yMargin+(linkageHeightPlus*i))*scale2*size)+(75*k), labelArray[j]);
-      //     if(j == 0){
-      //       doc.circle(((xMargin+constraintLength) - increment+(horizontalSpace*(1/3)))*scale2*size, (((yMargin+linkageHeight/2)+(linkageHeightPlus*i))*scale2*size)+(75*k), (5*scale*size));
-      //       doc.circle(((xMargin+constraintLength) - increment+(horizontalSpace*(2/3)))*scale2*size, (((yMargin+linkageHeight/2)+(linkageHeightPlus*i))*scale2*size)+(75*k), (3*scale*size));
-      //     }
-      //   } 
-      // }
+      for(var dashed = 0;dashed<segments;dashed++){
+        doc.line((xMargin*scale2*size)+flapHorizontalSpace+wingBendLengthR,((yMargin+((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*scale2*size),(xMargin*scale2*size)+flapHorizontalSpace+wingBendLengthR,(((yMargin+((linkageHeight/segments)*(dashed+1)-5))+(linkageHeightPlus*i))*scale2*size))
+        doc.line((xMargin*scale2*size)+flapHorizontalSpace+wingBendLengthR+flapBeamWidthR+10,((yMargin+((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*scale2*size),(xMargin*scale2*size)+flapHorizontalSpace+wingBendLengthR+flapBeamWidthR+10,(((yMargin+((linkageHeight/segments)*(dashed+1)-5))+(linkageHeightPlus*i))*scale2*size))
+        doc.line((xMargin*scale2*size)+flapHorizontalSpace+wingBendLengthR+flapBeamWidthR+10+10,((yMargin+((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*scale2*size),(xMargin*scale2*size)+flapHorizontalSpace+wingBendLengthR+flapBeamWidthR+10+10,(((yMargin+((linkageHeight/segments)*(dashed+1)-5))+(linkageHeightPlus*i))*scale2*size))
+      }
+      segments = 15
+      for(var dashed = 0;dashed<segments;dashed++){
+        doc.line((xMargin*scale2*size)+flapHorizontalSpace,((yMargin+((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*scale2*size),(xMargin*scale2*size)+flapHorizontalSpace,(((yMargin+((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*scale2*size))
+        doc.line((xMargin*scale2*size)+flapHorizontalSpace+wingBendLengthR+flapBeamWidthR,((yMargin+((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*scale2*size),(xMargin*scale2*size)+flapHorizontalSpace+wingBendLengthR+flapBeamWidthR,(((yMargin+((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*scale2*size))
+        doc.line((xMargin*scale2*size)+flapHorizontalSpace+wingBendLengthR+flapBeamWidthR+10+10+10,((yMargin+((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*scale2*size),(xMargin*scale2*size)+flapHorizontalSpace+wingBendLengthR+flapBeamWidthR+10+10+10,(((yMargin+((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*scale2*size))
+      }
     }
   }
   doc.addPage();
   doc.text(260.3,208.2,pageLabelArray[3])
-  if(flappingModule == 1){
+  if(flappingModule || spurFlap){
     flapCase(gear1Spacing, gear2Spacing, beamSpace, verticalSpacing,motor)
   }
   var crankSize

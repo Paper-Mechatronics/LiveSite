@@ -236,3 +236,13 @@ function shellCam(){
     document.getElementById("alternate").disabled = false;
   }
 }
+function rotateSliders(){
+  if(flapMode){
+    $('.flapping').show()
+    $('.rotate').hide()
+  }
+  else{
+    $('.flapping').hide()
+    $('.rotate').show()
+  }
+}

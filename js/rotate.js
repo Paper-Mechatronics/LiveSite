@@ -35,36 +35,6 @@ function changeBodyRotate(index){
     }
   }
 }
-function addRotateRect(width, height, centerX, centerY){
-  // see addGearComposite() comments
-  centerX  = centerX - (width/2)
-  totalComposites++;
-  totalConstraints++;
-  compositeArray.push( 
-  Composite.create({
-        options:{
-          render:{
-            fillStyle: "#cccccc"
-          }
-        },
-        bodies:[Bodies.rectangle(centerX, centerY, width, height)],
-        constraints:[],
-        shape: "rect",
-        width: width,
-        height: height,
-        lock: false
-      })
-  )
-  constraintArray.push(
-    // create joint constraint and place it at end of beam or center - width/2
-    Constraint.create({pointA: { x: centerX+width/2, y: centerY },bodyB: compositeArray[totalComposites-1].bodies[0] ,pointB: { x: width/2, y: 0 }, stiffness: 1})
-  )
-  compositeArray[compositeArray.length-1].bodies[0].render.fillStyle = "#cccccc"
-  compositeArray[compositeArray.length-1].bodies[0].render.strokeStyle = "#000"
-  Composite.add(compositeArray[totalComposites-1], constraintArray[totalConstraints-1]);
-  World.add(engine.world,[compositeArray[totalComposites-1]] );
-  compositeArray[3].bodies[0].collisionFilter.mask = otherCategory
-}
 function smallGear1(){
   Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
@@ -105,7 +75,7 @@ function smallGear2(){
   toothWidth = (toothWidthDegree/conversionFactor);
   changeBodyRotate(1);
   removeComposite(compositeArray[3].bodies[0])
-  addRotateRect(150,10,compositeArray[2].constraints[0].pointA.x,compositeArray[2].constraints[0].pointA.y)
+  addRotateRect(module.spurBeamLength+150,10,compositeArray[2].constraints[0].pointA.x,compositeArray[2].constraints[0].pointA.y)
 }
 function mediumGear2(){
   Body.setAngle(compositeArray[0].bodies[0], 0)
@@ -117,7 +87,7 @@ function mediumGear2(){
   toothWidth = (toothWidthDegree/conversionFactor);
   changeBodyRotate(1);
   removeComposite(compositeArray[3].bodies[0])
-  addRotateRect(150,10,compositeArray[2].constraints[0].pointA.x,compositeArray[2].constraints[0].pointA.y)
+  addRotateRect(module.spurBeamLength+150,10,compositeArray[2].constraints[0].pointA.x,compositeArray[2].constraints[0].pointA.y)
 }
 function largeGear2(){
   Body.setAngle(compositeArray[0].bodies[0], 0)
@@ -129,7 +99,7 @@ function largeGear2(){
   toothWidth = (toothWidthDegree/conversionFactor);
   changeBodyRotate(1);
   removeComposite(compositeArray[3].bodies[0])
-  addRotateRect(150,10,compositeArray[2].constraints[0].pointA.x,compositeArray[2].constraints[0].pointA.y)
+  addRotateRect(module.spurBeamLength+150,10,compositeArray[2].constraints[0].pointA.x,compositeArray[2].constraints[0].pointA.y)
 }
 function smallGear3(){
   Body.setAngle(compositeArray[0].bodies[0], 0)
@@ -141,7 +111,7 @@ function smallGear3(){
   toothWidth = (toothWidthDegree/conversionFactor);
   changeBodyRotate(2);
   removeComposite(compositeArray[3].bodies[0])
-  addRotateRect(150,10,compositeArray[2].constraints[0].pointA.x,compositeArray[2].constraints[0].pointA.y)
+  addRotateRect(module.spurBeamLength+150,10,compositeArray[2].constraints[0].pointA.x,compositeArray[2].constraints[0].pointA.y)
 }
 function mediumGear3(){
   Body.setAngle(compositeArray[0].bodies[0], 0)
@@ -153,7 +123,7 @@ function mediumGear3(){
   toothWidth = (toothWidthDegree/conversionFactor);
   changeBodyRotate(2);
   removeComposite(compositeArray[3].bodies[0])
-  addRotateRect(150,10,compositeArray[2].constraints[0].pointA.x,compositeArray[2].constraints[0].pointA.y)
+  addRotateRect(module.spurBeamLength+150,10,compositeArray[2].constraints[0].pointA.x,compositeArray[2].constraints[0].pointA.y)
 }
 function largeGear3(){
   Body.setAngle(compositeArray[0].bodies[0], 0)
@@ -165,7 +135,7 @@ function largeGear3(){
   toothWidth = (toothWidthDegree/conversionFactor);
   changeBodyRotate(2);
   removeComposite(compositeArray[3].bodies[0])
-  addRotateRect(150,10,compositeArray[2].constraints[0].pointA.x,compositeArray[2].constraints[0].pointA.y)
+  addRotateRect(module.spurBeamLength+150,10,compositeArray[2].constraints[0].pointA.x,compositeArray[2].constraints[0].pointA.y)
 }
 
 function motorL(){

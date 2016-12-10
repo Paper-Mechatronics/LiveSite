@@ -43,6 +43,12 @@ else{
         <div class = "controls">
             <div id = "preview">
             </div>
+            <div id = "vertical-slider" class = "slider-div hideThis2">
+                <label>Beam Length: <span id = "spurBeamLengthValue"></span></label>
+                <br>
+                <input type="range" id="spurBeamLength" value="0" min="0" max="250" oninput = "spurBeamLengthInput(this.value)" onchange = "changeSpurBeamLength()">
+            </div>
+            <br>
         </div>
         <div class = "controls-dark">
             <div>

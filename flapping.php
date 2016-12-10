@@ -55,21 +55,39 @@ else{
             </div>
             <br>
             <div id = "a-slider" class = "slider-div">
-                <label>Connector Length: <span id = "connectorLengthValue"></span></label>
+                <label>Connector Length L: <span id = "flapConnectorLengthValueL"></span></label>
                 <br>
-                <input type="range" id="connectorLength" value="320" min="250" max="450" oninput = "connectorInput(this.value)" onchange = "constraintLength(this.value)">
+                <input type="range" id="flapConnectorLengthL" value="320" min="250" max="450" oninput = "flapConnectorInputL(this.value)" onchange = "flapConstraintLengthL(this.value)">
             </div>
             <br>
             <div id = "a-slider" class = "slider-div">
-                <label>Beam Length: <span id = "beamWidthValue"></span></label>
+                <label>Beam Length L: <span id = "flapBeamWidthValueL"></span></label>
                 <br>
-                <input type="range" id="beamWidth" value="0" min="0" max="150" oninput = "beamWidthInput(this.value)" onchange = "flapBeamWidth(this.value)">
+                <input type="range" id="flapBeamWidthL" value="0" min="0" max="150" oninput = "flapBeamWidthInputL(this.value)" onchange = "flapBeamWidthL(this.value)">
             </div>
             <br>
             <div id = "a-slider" class = "slider-div">
-                <label>Beam Height: <span id = "flapBeamHeightValue"></span></label>
+                <label>Beam Height L: <span id = "flapBeamHeightValueL"></span></label>
                 <br>
-                <input type="range" id="flapBeamHeight" value="0" min="0" max="150" oninput = "flapHeightInput(this.value)" onchange = "flapBeamHeight(this.value)">
+                <input type="range" id="flapBeamHeightL" value="0" min="0" max="150" oninput = "flapHeightInputL(this.value)" onchange = "flapBeamHeightL(this.value)">
+            </div>
+            <br>
+            <div id = "a-slider" class = "slider-div">
+                <label>Connector Length R: <span id = "flapConnectorLengthValueR"></span></label>
+                <br>
+                <input type="range" id="flapConnectorLengthR" value="320" min="250" max="450" oninput = "flapConnectorInputR(this.value)" onchange = "flapConstraintLengthR(this.value)">
+            </div>
+            <br>
+            <div id = "a-slider" class = "slider-div">
+                <label>Beam Length R: <span id = "flapBeamWidthValueR"></span></label>
+                <br>
+                <input type="range" id="flapBeamWidthR" value="0" min="0" max="150" oninput = "flapBeamWidthInputR(this.value)" onchange = "flapBeamWidthR(this.value)">
+            </div>
+            <br>
+            <div id = "a-slider" class = "slider-div">
+                <label>Beam Height R: <span id = "flapBeamHeightValueR"></span></label>
+                <br>
+                <input type="range" id="flapBeamHeightR" value="0" min="0" max="150" oninput = "flapHeightInputR(this.value)" onchange = "flapBeamHeightR(this.value)">
             </div>
             <br>
             <!-- <div id = "a-slider" class = "slider-div">

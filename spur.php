@@ -14,7 +14,7 @@ else{
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Flapping</title>
+    <title>Spur</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <link rel="shortcut icon" type="image/png" href="img/logo_webTab.png"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -36,41 +36,59 @@ else{
     <div class = "container">
         <div class = "module-name">
             <p>Spur Gear +</p>
-            <select class = "rendering">
-                <option value="link_gear">Flapping</option>
-                <option value="link_gear">Rotate</option>
+            <select id = "changeMotion" class = "rendering" onchange = "changeMotion()">
+                <option value="flapping">Flapping</option>
+                <option value="rotate">Rotate</option>
             </select> 
         </div>
-        <div class = "controls">
+        <div class = "controls flapping">
             <div id = "preview">
             </div>
-            <div id = "a-slider" class = "slider-div">
+            <div id = "a-slider" class = "slider-div flapping">
                 <label>Horizontal Spacing: <span id = "horizontalSpaceValue"></span></label>
                 <input type="range" id="horizontalSpace" value="40" min="0" max="100" oninput = "horizontalInput(this.value)" onchange = "flapBeamSpaceUpdate()">
             </div>
-            <br class = "">
-            <div id = "a-slider" class = "slider-div">
+            <br class = "flapping">
+            <div id = "a-slider" class = "slider-div flapping">
                 <label>Vertical Spacing: <span id = "verticalSpaceValue"></span></label>
                 <br>
                 <input type="range" id="verticalSpace" value="0" min="0" max="250" oninput = "verticalInput(this.value)" onchange = "flapVerticalSpace(this.value)">
             </div>
-            <br>
-            <div id = "a-slider" class = "slider-div">
-                <label>Connector Length: <span id = "connectorLengthValue"></span></label>
+            <br class = "flapping">
+            <div id = "a-slider" class = "slider-div flapping">
+                <label>Connector Length L: <span id = "flapConnectorLengthValueL"></span></label>
                 <br>
-                <input type="range" id="connectorLength" value="320" min="250" max="450" oninput = "connectorInput(this.value)" onchange = "constraintLength(this.value)">
+                <input type="range" id="flapConnectorLengthL" value="320" min="250" max="450" oninput = "flapConnectorInputL(this.value)" onchange = "flapConstraintLengthL(this.value)">
+            </div>
+            <br class = "flapping">
+            <div id = "a-slider" class = "slider-div flapping">
+                <label>Beam Length L: <span id = "flapBeamWidthValueL"></span></label>
+                <br>
+                <input type="range" id="flapBeamWidthL" value="0" min="0" max="150" oninput = "flapBeamWidthInputL(this.value)" onchange = "flapBeamWidthL(this.value)">
+            </div>
+            <br class = "flapping">
+            <div id = "a-slider" class = "slider-div flapping">
+                <label>Beam Height L: <span id = "flapBeamHeightValueL"></span></label>
+                <br>
+                <input type="range" id="flapBeamHeightL" value="0" min="0" max="150" oninput = "flapHeightInputL(this.value)" onchange = "flapBeamHeightL(this.value)">
             </div>
             <br>
-            <div id = "a-slider" class = "slider-div">
-                <label>Beam Length: <span id = "beamWidthValue"></span></label>
+            <div id = "a-slider" class = "slider-div flapping">
+                <label>Connector Length R: <span id = "flapConnectorLengthValueR"></span></label>
                 <br>
-                <input type="range" id="beamWidth" value="0" min="0" max="150" oninput = "beamWidthInput(this.value)" onchange = "flapBeamWidth(this.value)">
+                <input type="range" id="flapConnectorLengthR" value="320" min="250" max="450" oninput = "flapConnectorInputR(this.value)" onchange = "flapConstraintLengthR(this.value)">
             </div>
             <br>
-            <div id = "a-slider" class = "slider-div">
-                <label>Beam Height: <span id = "flapBeamHeightValue"></span></label>
+            <div id = "a-slider" class = "slider-div flapping">
+                <label>Beam Length R: <span id = "flapBeamWidthValueR"></span></label>
                 <br>
-                <input type="range" id="flapBeamHeight" value="0" min="0" max="150" oninput = "flapHeightInput(this.value)" onchange = "flapBeamHeight(this.value)">
+                <input type="range" id="flapBeamWidthR" value="0" min="0" max="150" oninput = "flapBeamWidthInputR(this.value)" onchange = "flapBeamWidthR(this.value)">
+            </div>
+            <br>
+            <div id = "a-slider" class = "slider-div flapping">
+                <label>Beam Height R: <span id = "flapBeamHeightValueR"></span></label>
+                <br>
+                <input type="range" id="flapBeamHeightR" value="0" min="0" max="150" oninput = "flapHeightInputR(this.value)" onchange = "flapBeamHeightR(this.value)">
             </div>
             <br>
             <!-- <div id = "a-slider" class = "slider-div">
@@ -81,22 +99,47 @@ else{
             <br> -->
         </div>
         <div class = "controls-dark">
-            <div>
+            <div class = "rotate">
+                <p>Gear 1 Size:</p>
+                <br>
+                <button class = "gear-size object btn btn-primary" type="button" id="setSmallGear1" onclick="smallGear1()">1</button>
+                <button class = "gear-size object btn btn-primary" type="button" id="setMedGear1" onclick="mediumGear1()">2</button>
+                <button class = "gear-size object btn btn-primary" type="button" id="setLargeGear1" onclick="largeGear1()">3</button>
+            </div>
+            <br class = "rotate">
+            <div class = "rotate">
+                <p>Gear 2 Size:</p>
+                <br>
+                <button class = "gear-size object btn btn-primary" type="button" id="setSmallGear2" onclick="smallGear2()">1</button>
+                <button class = "gear-size object btn btn-primary" type="button" id="setMedGear2" onclick="mediumGear2()">2</button>
+                <button class = "gear-size object btn btn-primary" type="button" id="setLargeGear2" onclick="largeGear2()">3</button>
+            </div>
+            <br class = "rotate">
+            <div class = "rotate">
+                <p>Gear 3 Size:</p>
+                <br>
+                <button class = "gear-size object btn btn-primary" type="button" id="setSmallGear3" onclick="smallGear3()">1</button>
+                <button class = "gear-size object btn btn-primary" type="button" id="setMedGear3" onclick="mediumGear3()">2</button>
+                <button class = "gear-size object btn btn-primary" type="button" id="setLargeGear3" onclick="largeGear3()">3</button>
+            </div>
+            <br class = "rotate">
+
+            <div class = "flapping">
                 <p>Left Gear Size:</p>
                 <br>
                 <button class = "gear-size object btn btn-primary" type="button" id="setSmallGearL" onclick="smallGearL()">1</button>
                 <button class = "gear-size object btn btn-primary" type="button" id="setMedGearL" onclick="mediumGearL()">2</button>
                 <button class = "gear-size object btn btn-primary" type="button" id="setLargeGearL" onclick="largeGearL()">3</button>
             </div>
-            <br>
-            <div>
+            <br class = "flapping">
+            <div class = "flapping">
                 <p>Right Gear Size:</p>
                 <br>
                 <button class = "gear-size object btn btn-primary" type="button" id="setSmallGearR" onclick="smallGearR()">1</button>
                 <button class = "gear-size object btn btn-primary" type="button" id="setMedGearR" onclick="mediumGearR()">2</button>
                 <button class = "gear-size object btn btn-primary" type="button" id="setLargeGearR" onclick="largeGearR()">3</button>
             </div>
-            <br>
+            <br class = "flapping">
             <div>
                 <p>Driver Gear:</p>
                 <br>
@@ -104,7 +147,7 @@ else{
                 <button class = "object btn btn-primary" type="button" id="setDriveGearR" onclick="motorR()">Right</button>
             </div>
             <br>
-            <div>
+            <div class = "flapping">
             <p>Motor Rotation:</p>
             <br>
                 <button class = "object btn btn-primary" type="button" id="alternate" onclick="alternateMotor()">180</button>

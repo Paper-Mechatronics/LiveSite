@@ -158,6 +158,7 @@ function constraintPosition(value){
   console.log("constraintPosition Value = " + value)
   
 }
+var c2 = -c
 Events.on(engine, 'afterUpdate', function(event) {
     var gear2CenterY = compositeArray[1].bodies[0].position.y
     var gear2CenterX = compositeArray[1].bodies[0].position.x
@@ -184,14 +185,21 @@ Events.on(engine, 'afterUpdate', function(event) {
     var x1 = gear1ConstraintX
     var y2 = compositeArray[3].bodies[0].vertices[2].y
     var y1 = gear1ConstraintY
+    var x4 = compositeArray[2].bodies[0].vertices[0].x
+    var x3 = gear2ConstraintX
+    var y4 = compositeArray[2].bodies[0].vertices[0].y
+    var y3 = gear2ConstraintY
     var d = Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
-    flapConnector = d
-    // console.log(flapConnector)
+    flapConnectorR = Math.sqrt((x3-x4)*(x3-x4) + (y3-y4)*(y3-y4));
+    flapConnectorL = d
+    // console.log(flapConnectorR)
+    // console.log(flapConnectorL)
+    // console.log(c)
+    // console.log(c2)
     var b = Math.sqrt((gear1ConstraintX-rect1ConstraintX)*(gear1ConstraintX-rect1ConstraintX) + (gear1ConstraintY-rect1ConstraintY)*(gear1ConstraintY-rect1ConstraintY) );
     var b2 = (Math.sqrt( (gear2ConstraintX-rect2ConstraintX)*(gear2ConstraintX-rect2ConstraintX) + (gear2ConstraintY-rect2ConstraintY)*(gear2ConstraintY-rect2ConstraintY) ))
-    var a = 300 + module.beamWidth
-    var a2 = -1*(300  + module.beamWidth)
-    var c2 = -c
+    var a = 300 + module.flapBeamWidthL
+    var a2 = -1*(300  + module.flapBeamWidthR)
     var angleC = Math.acos(((a*a)+(b*b)-(c*c))/(2*a*b))
     var angleC2 = Math.acos(((a2*a2)+(b2*b2)-(c2*c2))/(2*a2*b2))
     var degrees = angleC * (180/Math.PI)

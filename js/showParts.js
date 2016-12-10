@@ -17,7 +17,7 @@ function showParts(){
     if(compositeArray[i].shape == "gear"){
       if(compositeArray[i].alternate == false){
         continuous = 1;
-        if(rotateModule){
+        if(rotateModule || spurModule){
           continuous = 0;
         }
       }
@@ -79,6 +79,18 @@ function showParts(){
       motor = 1
     }
   }
+  var spurFlap = 0
+  var spurRotate = 0
+  var rotateGear = 0;
+  if(spurModule || rotateModule){
+    if(compositeArray[2].shape == "gear"){
+      spurRotate = 1
+      rotateGear = compositeArray[2].radius;
+    }
+    else{
+      spurFlap = 1
+    }
+  }
   var largeGears = numLargeGear.toString(); 
   var mediumGears = numMediumGear.toString(); 
   var smallGears = numSmallGear.toString(); 
@@ -123,14 +135,21 @@ function showParts(){
   localStorage.setItem("gear2Spacing", gear2Spacing);
   localStorage.setItem("beamSpace", beamSpace);
   localStorage.setItem("verticalSpacing", verticalSpacing);
-  localStorage.setItem("flapBeamHeight", (module.flapBeamHeight+150))
+  localStorage.setItem("flapBeamHeightL", (module.flapBeamHeightL+150))
+  localStorage.setItem("flapBeamHeightR", (module.flapBeamHeightR+150))
   localStorage.setItem("flapBeamOffset", (module.flapBeamOffset+50))
-  localStorage.setItem("flapBeamWidth", (module.beamWidth+300))
+  localStorage.setItem("flapBeamWidthL", (module.flapBeamWidthL+300))
+  localStorage.setItem("flapBeamWidthR", (module.flapBeamWidthR+300))
   localStorage.setItem("flapVerticalSpace", (module.verticalSpace+300));
   localStorage.setItem("flapHorizontalSpace", (module.horizontalSpace+100));
-  localStorage.setItem("flapConnectorLength", flapConnector);
+  localStorage.setItem("flapConnectorLengthR", flapConnectorR);
+  localStorage.setItem("flapConnectorLengthL", flapConnectorL);
   localStorage.setItem("motor", motor);
   localStorage.setItem("camType", camType);
+  localStorage.setItem("spurFlap", spurFlap);
+  localStorage.setItem("spurRotate", spurRotate);
+  localStorage.setItem("rotateGear", rotateGear);
+  localStorage.setItem("spurBeamLength", module.spurBeamLength + 150);
   // window.location.href="./jsPDF/parts.html"
   window.open("./jsPDF/parts.html", '_blank');
 }
