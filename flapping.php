@@ -45,6 +45,22 @@ else{
             <div id = "preview">
             </div>
             <div id = "a-slider" class = "slider-div">
+                <label>Flapping Parameters:</label>
+                <br>
+                <button class = "object btn btn-primary" type="button" id="symetrical" onclick="changeSymetrical()">Symetrical</button>
+                <button class = "object btn btn-primary" type="button" id="nonSymetrical" onclick="changeNonSymetrical()">Non-symetrical</button>
+            </div>
+            <br>
+            <br>
+            <div id = "a-slider" class = "slider-div nonSym">
+                <label>Display:</label>
+                <br>
+                <button class = "object btn btn-primary" type="button" id="leftWing" onclick="displayLeft()">Left Wing</button>
+                <button class = "object btn btn-primary" type="button" id="rightWing" onclick="displayRight()">Right Wing</button>
+            </div>
+            <br class = "nonSym">
+            <br class = "nonSym">
+            <div id = "a-slider" class = "slider-div">
                 <label>Horizontal Spacing: <span id = "horizontalSpaceValue"></span></label>
                 <input type="range" id="horizontalSpace" value="40" min="0" max="100" oninput = "horizontalInput(this.value)" onchange = "flapBeamSpaceUpdate()">
             </div>
@@ -55,42 +71,60 @@ else{
                 <input type="range" id="verticalSpace" value="0" min="0" max="250" oninput = "verticalInput(this.value)" onchange = "flapVerticalSpace(this.value)">
             </div>
             <br>
-            <div id = "a-slider" class = "slider-div">
+            <div id = "a-slider" class = "slider-div left nonSym">
                 <label>Connector Length L: <span id = "flapConnectorLengthValueL"></span></label>
                 <br>
                 <input type="range" id="flapConnectorLengthL" value="320" min="250" max="450" oninput = "flapConnectorInputL(this.value)" onchange = "flapConstraintLengthL(this.value)">
             </div>
-            <br>
-            <div id = "a-slider" class = "slider-div">
+            <br class = "left nonSym">
+            <div id = "a-slider" class = "slider-div left nonSym">
                 <label>Beam Length L: <span id = "flapBeamWidthValueL"></span></label>
                 <br>
                 <input type="range" id="flapBeamWidthL" value="0" min="0" max="150" oninput = "flapBeamWidthInputL(this.value)" onchange = "flapBeamWidthL(this.value)">
             </div>
-            <br>
-            <div id = "a-slider" class = "slider-div">
+            <br class = "left nonSym">
+            <div id = "a-slider" class = "slider-div left nonSym">
                 <label>Beam Height L: <span id = "flapBeamHeightValueL"></span></label>
                 <br>
                 <input type="range" id="flapBeamHeightL" value="0" min="0" max="150" oninput = "flapHeightInputL(this.value)" onchange = "flapBeamHeightL(this.value)">
             </div>
-            <br>
-            <div id = "a-slider" class = "slider-div">
+            <br class = "left nonSym">
+            <div id = "a-slider" class = "slider-div right nonSym">
                 <label>Connector Length R: <span id = "flapConnectorLengthValueR"></span></label>
                 <br>
                 <input type="range" id="flapConnectorLengthR" value="320" min="250" max="450" oninput = "flapConnectorInputR(this.value)" onchange = "flapConstraintLengthR(this.value)">
             </div>
-            <br>
-            <div id = "a-slider" class = "slider-div">
+            <br class = "right nonSym">
+            <div id = "a-slider" class = "slider-div right nonSym">
                 <label>Beam Length R: <span id = "flapBeamWidthValueR"></span></label>
                 <br>
                 <input type="range" id="flapBeamWidthR" value="0" min="0" max="150" oninput = "flapBeamWidthInputR(this.value)" onchange = "flapBeamWidthR(this.value)">
             </div>
-            <br>
-            <div id = "a-slider" class = "slider-div">
+            <br class = "right nonSym">
+            <div id = "a-slider" class = "slider-div right nonSym">
                 <label>Beam Height R: <span id = "flapBeamHeightValueR"></span></label>
                 <br>
                 <input type="range" id="flapBeamHeightR" value="0" min="0" max="150" oninput = "flapHeightInputR(this.value)" onchange = "flapBeamHeightR(this.value)">
             </div>
-            <br>
+            <br class = "right nonSym">
+            <div id = "a-slider" class = "slider-div Sym">
+                <label>Connector Length: <span id = "flapConnectorLengthValue"></span></label>
+                <br>
+                <input type="range" id="flapConnectorLength" value="320" min="250" max="450" oninput = "flapConnectorInput(this.value)" onchange = "flapConstraintLength(this.value)">
+            </div>
+            <br class = "Sym">
+            <div id = "a-slider" class = "slider-div Sym">
+                <label>Beam Length: <span id = "flapBeamWidthValue"></span></label>
+                <br>
+                <input type="range" id="flapBeamWidth" value="0" min="0" max="150" oninput = "flapBeamWidthInput(this.value)" onchange = "flapBeamWidth(this.value)">
+            </div>
+            <br class = "Sym">
+            <div id = "a-slider" class = "slider-div Sym">
+                <label>Beam Height: <span id = "flapBeamHeightValue"></span></label>
+                <br>
+                <input type="range" id="flapBeamHeight" value="0" min="0" max="150" oninput = "flapHeightInput(this.value)" onchange = "flapBeamHeight(this.value)">
+            </div>
+            <br class = "Sym">
             <!-- <div id = "a-slider" class = "slider-div">
                 <label>Beam Offset: <span id = "flapBeamOffsetValue"></span></label>
                 <br>

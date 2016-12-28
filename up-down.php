@@ -89,7 +89,7 @@ else{
             <div>
             <p></p>
             <br>
-                <p><span id = "y-distance"></span></p>
+                <!-- <p><span id = "y-distance"></span></p> -->
             
             </div>
         </div>

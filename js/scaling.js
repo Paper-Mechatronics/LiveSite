@@ -25,7 +25,7 @@ if (rackPinionModule == true){
 Events.on(engine, 'beforeUpdate', function(event) {
   // console.log("working")
   var world = engine.world,
-      mouse = mouseConstraint.mouse,
+      // mouse = mouseConstraint.mouse,
       translate;
 
   // mouse wheel controls zoom
@@ -56,8 +56,8 @@ Events.on(engine, 'beforeUpdate', function(event) {
       Bounds.translate(render.bounds, translate);
 
       // update mouse
-      Mouse.setScale(mouse, boundsScale);
-      Mouse.setOffset(mouse, render.bounds.min);
+      // Mouse.setScale(mouse, boundsScale);
+      // Mouse.setOffset(mouse, render.bounds.min);
   }
 })
 

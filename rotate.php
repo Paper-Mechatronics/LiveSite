@@ -48,7 +48,7 @@ else{
             <div id = "vertical-slider" class = "slider-div spur">
                 <label>Beam Length: <span id = "spurBeamLengthValue"></span></label>
                 <br>
-                <input type="range" id="spurBeamLength" value="0" min="0" max="250" oninput = "spurBeamLengthInput(this.value)" onchange = "changeSpurBeamLength()">
+                <input type="range" id="spurBeamLength" value="0" min="0" max="215" oninput = "spurBeamLengthInput(this.value)" onchange = "changeSpurBeamLength()">
             </div>
             <br>
         </div>

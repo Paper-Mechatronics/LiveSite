@@ -1,5 +1,5 @@
 function transferType(){
-	console.log("running")
+	console.log(openCloseModule)
 	if(openCloseModule || upDownModule || flapModule || rotateModule){
 		localStorage.setItem("moduleType", "motion");
 	}

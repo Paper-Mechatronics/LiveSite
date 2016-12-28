@@ -86,6 +86,32 @@ function updateFlapUI(){
     $('#setDriveGearL').css("color", "#000")
     $('#setDriveGearR').css("color", "#fff")
   }
+  if(symetrical){
+    $('#symetrical').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+    $('#nonSymetrical').css("background-image", "none") 
+    $('#nonSymetrical').css("color", "#000")
+    $('#symetrical').css("color", "#fff")
+    $('.Sym').show()
+  }
+  else{
+    $('#nonSymetrical').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+    $('#symetrical').css("background-image", "none") 
+    $('#symetrical').css("color", "#000")
+    $('#nonSymetrical').css("color", "#fff")
+    $('.Sym').hide()
+    if(leftWingUI){
+      $('#leftWing').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+      $('#rightWing').css("background-image", "none") 
+      $('#rightWing').css("color", "#000")
+      $('#leftWing').css("color", "#fff")
+    }
+    else{
+      $('#rightWing').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+      $('#leftWing').css("background-image", "none") 
+      $('#leftWing').css("color", "#000")
+      $('#rightWing').css("color", "#fff")
+    }
+  }
 }
 
 function updateRotateUI(){
@@ -306,4 +332,14 @@ function rotateSliders(){
     $('.flapping').hide()
     $('.rotate').show()
   }
+}
+function displayLeft(){
+  leftWingUI = true;
+  $('.left').show()
+  $('.right').hide()
+}
+function displayRight(){
+  leftWingUI = false
+  $('.right').show()
+  $('.left').hide()
 }

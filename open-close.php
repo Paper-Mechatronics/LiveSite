@@ -31,6 +31,7 @@ else{
     <script src="js/functions.js" type="text/javascript"></script>
     <script src="js/open-close.js" type="text/javascript"></script>
     <script src="js/updateUI.js" type="text/javascript"></script>
+    <script src="js/homeType.js" type="text/javascript"></script>
     <script src="js/showParts.js" type="text/javascript"></script>
     <script src="js/scaling.js" type="text/javascript"></script>
     <!--<script src = "js/Demo.js" type="text/javascript"></script>
@@ -113,7 +114,7 @@ else{
                 </div>
                 <br>
                 <br>
-                <p><span id = "y-distance"></span></p>
+                <!-- <p><span id = "y-distance"></span></p> -->
                 <!--<div>
                 <p>Simulation:</p>
                 <br>

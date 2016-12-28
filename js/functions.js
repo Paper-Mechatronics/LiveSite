@@ -32,7 +32,7 @@ var render = Render.create({
 });
 var runner = Runner.create();
 //////// create mouse dragging //////////
-var mouseConstraint = MouseConstraint.create(engine);
+// var mouseConstraint = MouseConstraint.create(engine);
 var world = engine.world
 
 // gravity init
@@ -117,6 +117,8 @@ var gear1Spacing = 0
 var gear2Spacing = 0
 var flapConnectorL = 0
 var flapConnectorR = 0
+var symetrical = true;
+var leftWingUI = true;
 
 
 
@@ -1984,6 +1986,10 @@ function updateSliders(){
     document.getElementById("flapConnectorLengthValueR").innerHTML = module.flapConnectorLengthR
     document.getElementById("flapConnectorLengthR").value = module.flapConnectorLengthR
   }
+  if(document.getElementById("flapConnectorLength")){
+    document.getElementById("flapConnectorLengthValue").innerHTML = module.flapConnectorLengthR
+    document.getElementById("flapConnectorLength").value = module.flapConnectorLengthR
+  }
   if(document.getElementById("pivotPoint")){
     document.getElementById("pivotPointValue").innerHTML = module.pivotPoint
     document.getElementById("pivotPoint").value = Math.round(module.pivotPoint)
@@ -2008,6 +2014,10 @@ function updateSliders(){
     document.getElementById("flapBeamWidthValueR").innerHTML = module.flapBeamWidthR
     document.getElementById("flapBeamWidthR").value = module.flapBeamWidthR
   }
+  if(document.getElementById("flapBeamWidth")){
+    document.getElementById("flapBeamWidthValue").innerHTML = module.flapBeamWidthR
+    document.getElementById("flapBeamWidth").value = module.flapBeamWidthR
+  }
   if(document.getElementById("flapBeamHeightL")){
     document.getElementById("flapBeamHeightValueL").innerHTML = module.flapBeamHeightL
     document.getElementById("flapBeamHeightL").value = module.flapBeamHeightL
@@ -2015,6 +2025,10 @@ function updateSliders(){
   if(document.getElementById("flapBeamHeightR")){
     document.getElementById("flapBeamHeightValueR").innerHTML = module.flapBeamHeightR
     document.getElementById("flapBeamHeightR").value = module.flapBeamHeightR
+  }
+  if(document.getElementById("flapBeamHeight")){
+    document.getElementById("flapBeamHeightValue").innerHTML = module.flapBeamHeightR
+    document.getElementById("flapBeamHeight").value = module.flapBeamHeightR
   }
   if(document.getElementById("flapBeamOffset")){
     document.getElementById("flapBeamOffsetValue").innerHTML = module.flapBeamOffset
@@ -2095,6 +2109,10 @@ function connectorInput(value){
     jointComposites[jointComposites.length-4].constraints[0].render.lineWidth = redLineWidth
     jointComposites[jointComposites.length-4].constraints[0].render.strokeStyle = "#FF3318"
   }
+}
+function flapConnectorInput(value){
+  flapConnectorInputL(value)
+  flapConnectorInputR(value)
 }
 function flapConnectorInputL(value){
   if(document.getElementById("flapConnectorLengthL")){
@@ -2190,6 +2208,10 @@ function flapBeamWidthInputR(value){
     }
   }
 }
+function flapBeamWidthInput(value){
+  flapBeamWidthInputR(value)
+  flapBeamWidthInputL(value)
+}
 function flapHeightInputL(value){
   module.flapBeamHeightL = parseInt(value)
   for(var j=2; j<3;j++){
@@ -2203,6 +2225,10 @@ function flapHeightInputR(value){
     compositeArray[2].bodies[0].parts[j].render.strokeStyle = "#FF3318";
     compositeArray[2].bodies[0].parts[j].render.lineWidth = 4;
   }
+}
+function flapHeightInput(value){
+  flapHeightInputR(value)
+  flapHeightInputL(value)
 }
 function flapOffsetInput(value){
   module.flapBeamOffset = parseInt(value)
@@ -2232,6 +2258,17 @@ function motorAngle(angle){
     degreeAngle = Math.round(rotAngle * (180/Math.PI))
     angleEl.innerHTML = degreeAngle
   }
+}
+function changeSymetrical(){
+  symetrical = true
+  $('.left').hide()
+  $('.right').hide()
+  $('.nonSym').hide()
+}
+function changeNonSymetrical(){
+  symetrical = false
+  $('.nonSym').show()
+  $('.right').hide()
 }
 /////////////// SLIDER FUNCTIONS /////////////////////
 // functions that are called when you release the slider
@@ -2270,6 +2307,10 @@ function flapConstraintLengthR(value){
   c2 = -parseInt(value)
   jointComposites[jointComposites.length-1].constraints[0].render.lineWidth = 2
   jointComposites[jointComposites.length-1].constraints[0].render.strokeStyle = "#666"
+}
+function flapConstraintLength(value){
+  flapConstraintLengthL(value)
+  flapConstraintLengthR(value)
 }
 var beamWidthChange = 0
 // change beam width
@@ -2365,6 +2406,10 @@ function flapBeamWidthL(value){
   flapBeamSpaceUpdate()
   flapVerticalSpace()
 }
+function flapBeamWidth(value){
+  flapBeamWidthR(value)
+  flapBeamWidthL(value)
+}
 function flapBeamHeightR(value){
   Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
@@ -2392,6 +2437,10 @@ function flapBeamHeightL(value){
   createConstraint3(compositeArray[1].bodies[0], compositeArray[2].bodies[0])
   flapBeamSpaceUpdate()
   flapVerticalSpace()
+}
+function flapBeamHeight(value){
+  flapBeamHeightR(value)
+  flapBeamHeightL(value)
 }
 function flapBeamOffset(value){
   deleteConstraint(compositeArray[2].bodies[0], compositeArray[1].bodies[0])
