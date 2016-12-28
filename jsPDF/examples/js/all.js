@@ -320,8 +320,6 @@ function RPCase(crankSize){
 // flap case
 function flapCase(gear1Space,gear2Space,beamSpace,verticalSpace,motor){
     var caseLength = 180
-    doc.circle((15*frameScale) + (caseLength/2) - (gear1Space),20+verticalSpace, 2)
-    doc.circle((15*frameScale) + (caseLength/2) + (gear2Space),20+verticalSpace, 2)
     doc.circle((15*frameScale) + (caseLength/2) - (beamSpace/2),20, 2)
     // doc.circle((15*frameScale) + (caseLength) - (beamSpace/2),20, 2)
     doc.circle((15*frameScale) + (caseLength/2) + (beamSpace/2),20, 2)
@@ -331,10 +329,16 @@ function flapCase(gear1Space,gear2Space,beamSpace,verticalSpace,motor){
     doc.rect(15*frameScale,(15)*frameScale,caseLength,caseWidth)
     // doc.text(15*frameScale+5,(15)*frameScale+10,frameLabelArray[0])
     if(motor ==0){
-      doc.rect((15*frameScale) + (caseLength/2) - (gear1Space)-30,20+verticalSpace-10,40,20)
+      // doc.rect((15*frameScale) + (caseLength/2) - (gear1Space)-30,20+verticalSpace-10,40,20)
+      doc.circle((15*frameScale) + (caseLength/2) - (gear1Space),20+verticalSpace, 5)
+      doc.circle((15*frameScale) + (caseLength/2) + (gear2Space),20+verticalSpace, 2)
+      // doc.circle((15*frameScale) + (caseLength/2) - (gear1Space)-30,20+verticalSpace-10,5)
     }
     else{
-      doc.rect((15*frameScale) + (caseLength/2) + (gear2Space)-10,20+verticalSpace-10,40,20)
+      // doc.rect((15*frameScale) + (caseLength/2) + (gear2Space)-10,20+verticalSpace-10,40,20)
+      doc.circle((15*frameScale) + (caseLength/2) - (gear1Space),20+verticalSpace, 2)
+      doc.circle((15*frameScale) + (caseLength/2) + (gear2Space),20+verticalSpace, 5)
+      // doc.circle((15*frameScale) + (caseLength/2) + (gear2Space)-10,20+verticalSpace-10,5)
     }
     square(0)
     // doc.text((15+510.2+5)*frameScale+5,(15)*frameScale+10,frameLabelArray[4])
@@ -379,20 +383,19 @@ function motorCaseParts(xPos, yPos){
   doc.rect(xPos+30,yPos + 10,8, 60)
   doc.rect(xPos+40,yPos + 10,8, 60)
   for(var i = 0; i<2;i++){
-    doc.line(xPos+50 + (20*i),yPos + 10,xPos+50 + (20*i), yPos + 10 + 40)
-    doc.line(xPos+50 + (20*i),yPos + 10 + 40,xPos+50+17 + (20*i), yPos + 10 + 40)
-    doc.line(xPos+50+17 + (20*i),yPos + 10 + 40,xPos+50+17 + (20*i), yPos + 10 + 40 - 5)
-    doc.line(xPos+50+17 + (20*i),yPos + 10 + 40 - 5,xPos+50+17-7 + (20*i), yPos + 10 + 40 - 5)
-    doc.line(xPos+50+17-7 + (20*i),yPos + 10 + 40 - 5,xPos+50+17-7 + (20*i), yPos + 10 + 40 - 5-3)
-    doc.line(xPos+50+17-7 + (20*i),yPos + 10 + 40 - 5 - 3,xPos+50+17 + (20*i), yPos + 10 + 40 - 5-3)
-    doc.line(xPos+50+17 + (20*i),yPos + 10 + 40 - 5 - 3,xPos+50+17 + (20*i), yPos + 10 + 40 - 5-3-24)
-    doc.line(xPos+50+17 + (20*i),yPos + 10 + 40 - 5 - 3 - 24,xPos+50+17-7 + (20*i), yPos + 10 + 40 - 5-3-24)
-    doc.line(xPos+50+17 - 7 + (20*i),yPos + 10 + 40 - 5 - 3 - 24,xPos+50+17-7 + (20*i), yPos + 10 + 40 - 5-3-24 - 3)
-    doc.line(xPos+50+17 - 7 + (20*i),yPos + 10 + 40 - 5 - 3 - 24 - 3,xPos+50+17 + (20*i), yPos + 10 + 40 - 5-3-24 - 3)
-    doc.line(xPos+50+17 + (20*i),yPos + 10 + 40 - 5 - 3 - 24 - 3,xPos+50+17 + (20*i), yPos + 10 + 40 - 5-3-24 - 3 - 5)
-    doc.line(xPos+50+17 + (20*i),yPos + 10 + 40 - 5 - 3 - 24 - 3 - 5,xPos+50 + (20*i), yPos + 10 + 40 - 5-3-24 - 3 - 5)
+    doc.line(xPos+50 + (20*i),yPos + 10,xPos+50 + (20*i), yPos + 10 + 37)
+    doc.line(xPos+50 + (20*i),yPos + 10 + 37,xPos+50+17 + (20*i), yPos + 10 + 37)
+    doc.line(xPos+50+17 + (20*i),yPos + 10 + 37,xPos+50+17 + (20*i), yPos + 10 + 37 - 5)
+    doc.line(xPos+50+17 + (20*i),yPos + 10 + 37 - 5,xPos+50+17-7 + (20*i), yPos + 10 + 37 - 5)
+    doc.line(xPos+50+17-7 + (20*i),yPos + 10 + 37 - 5,xPos+50+17-7 + (20*i), yPos + 10 + 37 - 5-3)
+    doc.line(xPos+50+17-7 + (20*i),yPos + 10 + 37 - 5 - 3,xPos+50+17 + (20*i), yPos + 10 + 37 - 5-3)
+    doc.line(xPos+50+17 + (20*i),yPos + 10 + 37 - 5 - 3,xPos+50+17 + (20*i), yPos + 10 + 37 - 5-3-21)
+    doc.line(xPos+50+17 + (20*i),yPos + 10 + 37 - 5 - 3 - 21,xPos+50+17-7 + (20*i), yPos + 10 + 37 - 5-3-21)
+    doc.line(xPos+50+17 - 7 + (20*i),yPos + 10 + 37 - 5 - 3 - 21,xPos+50+17-7 + (20*i), yPos + 10 + 37 - 5-3-21 - 3)
+    doc.line(xPos+50+17 - 7 + (20*i),yPos + 10 + 37 - 5 - 3 - 21 - 3,xPos+50+17 + (20*i), yPos + 10 + 37 - 5-3-21 - 3)
+    doc.line(xPos+50+17 + (20*i),yPos + 10 + 37 - 5 - 3 - 21 - 3,xPos+50+17 + (20*i), yPos + 10 + 37 - 5-3-21 - 3 - 5)
+    doc.line(xPos+50+17 + (20*i),yPos + 10 + 37 - 5 - 3 - 21 - 3 - 5,xPos+50 + (20*i), yPos + 10 + 37 - 5-3-21 - 3 - 5)
   }
-  
 }
 // misc. parts for crank module
 function crankParts(){
@@ -545,7 +548,7 @@ function showGear(num){
     }
     doc.circle(centerX, centerY, (2));
     if(flappingModule == 1){
-      doc.circle(centerX+(radius*0.8), centerY, (1.5));
+      doc.circle(centerX+((radius*0.8)*Math.cos(4.5*0.0174533)), centerY+((radius*0.8)*Math.sin(4.5*0.0174533)), (1.5));
       if(centerX<35 && motor == 1){
         nonMotorRadius = radius
       }
@@ -555,7 +558,7 @@ function showGear(num){
     }
     if(spurRotate){
       if(radius == rotateGear && k <2){
-        doc.circle(centerX+(radius*0.8), centerY, (1.5));
+        doc.circle(centerX+((radius*0.8)*Math.cos(4.5*0.0174533)), centerY+((radius*0.8)*Math.sin(4.5*0.0174533)), (1.5));
       }
     }
     for (var i = 0; i<verts2.length; i++){
@@ -857,7 +860,8 @@ function showAll(){
     doc.rect(15*frameScale,(15)*frameScale,caseLength,caseWidth)
     // doc.text(15*frameScale+5,(15)*frameScale+10,frameLabelArray[0])
     if(mirror==0){
-      doc.rect((15*frameScale)+caseLength-46.666666667,((15)*frameScale)+((1.5*radius)-10),-40,20)
+      // doc.rect((15*frameScale)+caseLength-46.666666667,((15)*frameScale)+((1.5*radius)-10),-40,20)
+      doc.circle((15*frameScale)+caseLength-46.666666667 - 10,((15)*frameScale)+((1.5*radius)-10) + 10,5)
     }
     else{
       doc.rect((15*frameScale)+caseLength-((2*radius)-(40/3)),((15)*frameScale)+((caseWidth/2)-10),-40,20)
@@ -869,7 +873,13 @@ function showAll(){
     square(0)
     // doc.text((15+510.2+5)*frameScale+5,(15)*frameScale+10,frameLabelArray[4])
     square(232.8)
-    motorCaseParts(5, caseWidth + 10)
+    if(mirror){
+      motorCaseParts(5, caseWidth + 25)
+    }
+    else{
+      motorCaseParts(5, caseWidth + 10)
+    }
+    
     // doc.text((15+510.2+5)*frameScale+5,(15+232.8)*frameScale+10,frameLabelArray[5])
     // doc.circle((15+250)*frameScale, (15+112)*frameScale, (5*frameScale));
   }
