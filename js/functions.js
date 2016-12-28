@@ -1876,7 +1876,7 @@ function changeShell(){
     compositeArray[1].radius = radius;
     compositeArray[1].shape = "shell"
     for(var j=0; j<compositeArray[1].bodies[0].parts.length;j++){
-      compositeArray[1].bodies[0].parts[j].render.strokeStyle = "#000000";
+      // compositeArray[1].bodies[0].parts[j].render.strokeStyle = "#000000";
     }
   }
   compositeArray[1].motorDir = -1;
@@ -2676,6 +2676,20 @@ Events.on(engine, 'beforeUpdate', function(event) {
     }    
     // loop through all composites in the world and style them accordingly
     for(var i = 0; i<compositeArray.length; i++){
+      if(compositeArray[i].shape == "shell"){
+        console.log(compositeArray[i].radius)
+        for(var j=0; j<compositeArray[i].bodies[0].parts.length;j++){
+          if(compositeArray[i].radius == 80){
+            compositeArray[i].bodies[0].parts[j].render.strokeStyle = "#bc98f9";
+          }
+          else if(compositeArray[i].radius == 64){
+            compositeArray[i].bodies[0].parts[j].render.strokeStyle = "#4ECDC4";
+          }
+          else if(compositeArray[i].radius == 48){
+            compositeArray[i].bodies[0].parts[j].render.strokeStyle = "#FF6B6B";
+          }
+        }
+      }
       if(compositeArray[i].radius != 0){
         for(var j=0; j<compositeArray[i].bodies[0].parts.length;j++){
           // give parts black stroke
@@ -2808,13 +2822,15 @@ Events.on(engine, 'beforeUpdate', function(event) {
     }
     if(rotateModule){
       updateRotateUI()
+      updatePlanetaryUI()
+
     }
     if(spurModule){
       updateFlapUI()
       updateRotateUI()
     }
     if(planetaryModule){
-      // updateRotateUI()
+      updatePlanetaryUI()
     }
 })
 // called every frame after physics is applied

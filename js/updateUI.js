@@ -89,105 +89,166 @@ function updateFlapUI(){
 }
 
 function updateRotateUI(){
-  if(compositeArray[0].radius == 80){
-    $('#setLargeGear1').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
-    $('#setMedGear1').css("background-image", "none") 
-    $('#setSmallGear1').css("background-image", "none") 
-    $('#setLargeGear1').css("color", "#fff")
-    $('#setMedGear1').css("color", "#000") 
-    $('#setSmallGear1').css("color", "#000") 
+  if(compositeArray[0] && compositeArray[1] && compositeArray[2]){
+    $('.planetary').hide()
+    $('.spur').show()
+    if(compositeArray[0].radius == 80){
+      $('#setLargeGear1').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+      $('#setMedGear1').css("background-image", "none") 
+      $('#setSmallGear1').css("background-image", "none") 
+      $('#setLargeGear1').css("color", "#fff")
+      $('#setMedGear1').css("color", "#000") 
+      $('#setSmallGear1').css("color", "#000") 
+    }
+    else if(compositeArray[0].radius == 64){
+      $('#setMedGear1').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+      $('#setLargeGear1').css("background-image", "none") 
+      $('#setSmallGear1').css("background-image", "none") 
+      $('#setLargeGear1').css("color", "#000")
+      $('#setMedGear1').css("color", "#fff") 
+      $('#setSmallGear1').css("color", "#000") 
+    }
+    else if(compositeArray[0].radius == 48){
+      $('#setSmallGear1').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+      $('#setMedGear1').css("background-image", "none") 
+      $('#setLargeGear1').css("background-image", "none") 
+      $('#setLargeGear1').css("color", "#000")
+      $('#setMedGear1').css("color", "#000") 
+      $('#setSmallGear1').css("color", "#fff") 
+    }
+    if(compositeArray[1].radius == 80){
+      $('#setLargeGear2').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+      $('#setMedGear2').css("background-image", "none") 
+      $('#setSmallGear2').css("background-image", "none") 
+      $('#setLargeGear2').css("color", "#fff")
+      $('#setMedGear2').css("color", "#000") 
+      $('#setSmallGear2').css("color", "#000") 
+    }
+    else if(compositeArray[1].radius == 64){
+      $('#setMedGear2').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+      $('#setLargeGear2').css("background-image", "none") 
+      $('#setSmallGear2').css("background-image", "none") 
+      $('#setLargeGear2').css("color", "#000")
+      $('#setMedGear2').css("color", "#fff") 
+      $('#setSmallGear2').css("color", "#000") 
+    }
+    else if(compositeArray[1].radius == 48){
+      $('#setSmallGear2').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+      $('#setMedGear2').css("background-image", "none") 
+      $('#setLargeGear2').css("background-image", "none") 
+      $('#setLargeGear2').css("color", "#000")
+      $('#setMedGear2').css("color", "#000") 
+      $('#setSmallGear2').css("color", "#fff") 
+    }
+    if(compositeArray[2].radius == 80){
+      $('#setLargeGear3').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+      $('#setMedGear3').css("background-image", "none") 
+      $('#setSmallGear3').css("background-image", "none") 
+      $('#setLargeGear3').css("color", "#fff")
+      $('#setMedGear3').css("color", "#000") 
+      $('#setSmallGear3').css("color", "#000") 
+    }
+    else if(compositeArray[2].radius == 64){
+      $('#setMedGear3').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+      $('#setLargeGear3').css("background-image", "none") 
+      $('#setSmallGear3').css("background-image", "none") 
+      $('#setLargeGear3').css("color", "#000")
+      $('#setMedGear3').css("color", "#fff") 
+      $('#setSmallGear3').css("color", "#000") 
+    }
+    else if(compositeArray[2].radius == 48){
+      $('#setSmallGear3').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+      $('#setMedGear3').css("background-image", "none") 
+      $('#setLargeGear3').css("background-image", "none") 
+      $('#setLargeGear3').css("color", "#000")
+      $('#setMedGear3').css("color", "#000") 
+      $('#setSmallGear3').css("color", "#fff") 
+    }
+
+    if(compositeArray[0].isMotor){
+      $('#setDriveGearL').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+      $('#setDriveGearR').css("background-image", "none") 
+      $('#setDriveGearR').css("color", "#000")
+      $('#setDriveGearL').css("color", "#fff")
+    }
+    else if(compositeArray[1].isMotor){
+      $('#setDriveGearR').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+      $('#setDriveGearL').css("background-image", "none") 
+      $('#setDriveGearL').css("color", "#000")
+      $('#setDriveGearR').css("color", "#fff")
+    }
   }
-  else if(compositeArray[0].radius == 64){
-    $('#setMedGear1').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
-    $('#setLargeGear1').css("background-image", "none") 
-    $('#setSmallGear1').css("background-image", "none") 
-    $('#setLargeGear1').css("color", "#000")
-    $('#setMedGear1').css("color", "#fff") 
-    $('#setSmallGear1').css("color", "#000") 
+  else{
+    $('.planetary').show()
+    $('.spur').hide()
   }
-  else if(compositeArray[0].radius == 48){
-    $('#setSmallGear1').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
-    $('#setMedGear1').css("background-image", "none") 
-    $('#setLargeGear1').css("background-image", "none") 
-    $('#setLargeGear1').css("color", "#000")
-    $('#setMedGear1').css("color", "#000") 
-    $('#setSmallGear1').css("color", "#fff") 
-  }
+}
+function updatePlanetaryUI(){
   if(compositeArray[1].radius == 80){
-    $('#setLargeGear2').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
-    $('#setMedGear2').css("background-image", "none") 
-    $('#setSmallGear2').css("background-image", "none") 
-    $('#setLargeGear2').css("color", "#fff")
-    $('#setMedGear2').css("color", "#000") 
-    $('#setSmallGear2').css("color", "#000") 
+    $('#setLargeGear1P').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+    $('#setMedGear1P').css("background-image", "none") 
+    $('#setSmallGear1P').css("background-image", "none") 
+    $('#setLargeGear1P').css("color", "#fff")
+    $('#setMedGear1P').css("color", "#000") 
+    $('#setSmallGear1P').css("color", "#000") 
+    console.log(compositeArray[1].radius)
   }
   else if(compositeArray[1].radius == 64){
-    $('#setMedGear2').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
-    $('#setLargeGear2').css("background-image", "none") 
-    $('#setSmallGear2').css("background-image", "none") 
-    $('#setLargeGear2').css("color", "#000")
-    $('#setMedGear2').css("color", "#fff") 
-    $('#setSmallGear2').css("color", "#000") 
+    $('#setMedGear1P').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+    $('#setLargeGear1P').css("background-image", "none") 
+    $('#setSmallGear1P').css("background-image", "none") 
+    $('#setLargeGear1P').css("color", "#000")
+    $('#setMedGear1P').css("color", "#fff") 
+    $('#setSmallGear1P').css("color", "#000") 
   }
   else if(compositeArray[1].radius == 48){
-    $('#setSmallGear2').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
-    $('#setMedGear2').css("background-image", "none") 
-    $('#setLargeGear2').css("background-image", "none") 
-    $('#setLargeGear2').css("color", "#000")
-    $('#setMedGear2').css("color", "#000") 
-    $('#setSmallGear2').css("color", "#fff") 
+    $('#setSmallGear1P').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+    $('#setMedGear1P').css("background-image", "none") 
+    $('#setLargeGear1P').css("background-image", "none") 
+    $('#setLargeGear1P').css("color", "#000")
+    $('#setMedGear1P').css("color", "#000") 
+    $('#setSmallGear1P').css("color", "#fff") 
   }
-  if(compositeArray[2].radius == 80){
-    $('#setLargeGear3').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
-    $('#setMedGear3').css("background-image", "none") 
-    $('#setSmallGear3').css("background-image", "none") 
-    $('#setLargeGear3').css("color", "#fff")
-    $('#setMedGear3').css("color", "#000") 
-    $('#setSmallGear3').css("color", "#000") 
+  if(compositeArray[0].radius == 80){
+    $('#setLargeGear2P').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+    $('#setMedGear2P').css("background-image", "none") 
+    $('#setSmallGear2P').css("background-image", "none") 
+    $('#setLargeGear2P').css("color", "#fff")
+    $('#setMedGear2P').css("color", "#000") 
+    $('#setSmallGear2P').css("color", "#000") 
   }
-  else if(compositeArray[2].radius == 64){
-    $('#setMedGear3').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
-    $('#setLargeGear3').css("background-image", "none") 
-    $('#setSmallGear3').css("background-image", "none") 
-    $('#setLargeGear3').css("color", "#000")
-    $('#setMedGear3').css("color", "#fff") 
-    $('#setSmallGear3').css("color", "#000") 
+  else if(compositeArray[0].radius == 64){
+    $('#setMedGear2P').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+    $('#setLargeGear2P').css("background-image", "none") 
+    $('#setSmallGear2P').css("background-image", "none") 
+    $('#setLargeGear2P').css("color", "#000")
+    $('#setMedGear2P').css("color", "#fff") 
+    $('#setSmallGear2P').css("color", "#000") 
   }
-  else if(compositeArray[2].radius == 48){
-    $('#setSmallGear3').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
-    $('#setMedGear3').css("background-image", "none") 
-    $('#setLargeGear3').css("background-image", "none") 
-    $('#setLargeGear3').css("color", "#000")
-    $('#setMedGear3').css("color", "#000") 
-    $('#setSmallGear3').css("color", "#fff") 
-  }
-
-  if(compositeArray[0].isMotor){
-    $('#setDriveGearL').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
-    $('#setDriveGearR').css("background-image", "none") 
-    $('#setDriveGearR').css("color", "#000")
-    $('#setDriveGearL').css("color", "#fff")
-  }
-  else if(compositeArray[1].isMotor){
-    $('#setDriveGearR').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
-    $('#setDriveGearL').css("background-image", "none") 
-    $('#setDriveGearL').css("color", "#000")
-    $('#setDriveGearR').css("color", "#fff")
+  else if(compositeArray[0].radius == 48){
+    $('#setSmallGear2P').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+    $('#setMedGear2P').css("background-image", "none") 
+    $('#setLargeGear2P').css("background-image", "none") 
+    $('#setLargeGear2P').css("color", "#000")
+    $('#setMedGear2P').css("color", "#000") 
+    $('#setSmallGear2P').css("color", "#fff") 
   }
 }
 
 function rotationUI(){
-  if(compositeArray[1].alternate){
-    $('#alternate').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
-    $('#continuous').css("background-image", "none") 
-    $('#continuous').css("color", "#000")
-    $('#alternate').css("color", "#fff")
-  }
-  else if(!compositeArray[1].alternate){
-    $('#continuous').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
-    $('#alternate').css("background-image", "none") 
-    $('#alternate').css("color", "#000")
-    $('#continuous').css("color", "#fff")
+  if(compositeArray[1]){
+    if(compositeArray[1].alternate){
+      $('#alternate').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+      $('#continuous').css("background-image", "none") 
+      $('#continuous').css("color", "#000")
+      $('#alternate').css("color", "#fff")
+    }
+    else if(!compositeArray[1].alternate){
+      $('#continuous').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+      $('#alternate').css("background-image", "none") 
+      $('#alternate').css("color", "#000")
+      $('#continuous').css("color", "#fff")
+    }
   }
 }
 function sliderDisplay(){

@@ -17,7 +17,7 @@ function showParts(){
     if(compositeArray[i].shape == "gear"){
       if(compositeArray[i].alternate == false){
         continuous = 1;
-        if(rotateModule || spurModule){
+        if(rotateModule || spurModule || planetaryModule){
           continuous = 0;
         }
       }
@@ -82,13 +82,21 @@ function showParts(){
   var spurFlap = 0
   var spurRotate = 0
   var rotateGear = 0;
+  var spur1Radius = 0
+  var spur2Radius = 0
+  var spur3Radius = 0
   if(spurModule || rotateModule){
-    if(compositeArray[2].shape == "gear"){
-      spurRotate = 1
-      rotateGear = compositeArray[2].radius;
-    }
-    else{
-      spurFlap = 1
+    if(compositeArray[2]){
+      if(compositeArray[2].shape == "gear"){
+        spurRotate = 1
+        rotateGear = compositeArray[2].radius;
+        spur1Radius = compositeArray[0].radius
+        spur2Radius = compositeArray[1].radius
+        spur3Radius = compositeArray[2].radius
+      }
+      else{
+        spurFlap = 1
+      }
     }
   }
   var largeGears = numLargeGear.toString(); 
@@ -149,7 +157,15 @@ function showParts(){
   localStorage.setItem("spurFlap", spurFlap);
   localStorage.setItem("spurRotate", spurRotate);
   localStorage.setItem("rotateGear", rotateGear);
+  localStorage.setItem("spur1Radius", spur1Radius);
+  localStorage.setItem("spur2Radius", spur2Radius);
+  localStorage.setItem("spur3Radius", spur3Radius);
+
   localStorage.setItem("spurBeamLength", module.spurBeamLength + 150);
+  if(planetaryModule){
+    localStorage.setItem("planetaryModule", 1);
+    localStorage.setItem("planetaryBraceLength", planetaryBrace);
+  }
   // window.location.href="./jsPDF/parts.html"
   window.open("./jsPDF/parts.html", '_blank');
 }

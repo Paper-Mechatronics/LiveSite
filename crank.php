@@ -32,6 +32,7 @@ else{
     <script src="js/crank.js" type="text/javascript"></script>
     <script src="js/updateUI.js" type="text/javascript"></script>
     <script src="js/showParts.js" type="text/javascript"></script>
+    <script src="js/homeType.js" type="text/javascript"></script>
     <script src="js/scaling.js" type="text/javascript"></script>
     <!--<script src = "js/Demo.js" type="text/javascript"></script>
     <script src = "js/Example.js" type="text/javascript"></script>
@@ -127,7 +128,7 @@ else{
                     <p>Show Parts</p>
                 </div>
             </a>
-            <a href = "http://www.papermech.net/create.php">
+            <a href = "#" onclick="transferType()" >
                 <div class = "footer-btn-div">
                     <button class = "footer-btn object btn btn-primary" type="button" ><img class = "btn-icon" src="img/home.png"></button>
                     <br>

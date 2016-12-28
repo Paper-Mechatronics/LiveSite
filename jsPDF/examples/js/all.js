@@ -157,11 +157,11 @@ function drawCrankParts(){
   // draw parts for open close anchor
   for (var i = 35; i < steps; i++) {
     xValues[i-35] = ((centerX+30) + (7.5) * Math.cos(2 * Math.PI * i / steps));
-    yValues[i-35] = ((centerYCircle + 70 + adjust) + (7.5) * Math.sin(2 * Math.PI * i / steps));
+    yValues[i-35] = ((centerYCircle + 60 + adjust) + (7.5) * Math.sin(2 * Math.PI * i / steps));
   } 
   for (var i = 0; i < 26; i++) {
     xValues[i+5] = ((centerX+30) + (7.5) * Math.cos(2 * Math.PI * i / steps));
-    yValues[i+5] = ((centerYCircle + 70 + adjust) + (7.5) * Math.sin(2 * Math.PI * i / steps));
+    yValues[i+5] = ((centerYCircle + 60 + adjust) + (7.5) * Math.sin(2 * Math.PI * i / steps));
   } 
   xValues[31] = xValues[30]
   yValues[31] = yValues[30] - 10
@@ -243,6 +243,24 @@ function roundedSpurRect(length){
     doc.circle((15*frameScale)+8+(rotateGear*0.8),centerY + (80*scale*size) +8 + 10,1.5)
     doc.circle((15*frameScale)+(length+8),centerY + (80*scale*size)+8 + 10,2.5)
   }
+  centerY = centerY + (80*scale*size)+ 10 + 16 + 10
+  for(var x = 0; x<16;x++){
+    if(x>3){
+      doc.circle(12 + (12*(x-4)), centerY, 5)
+      doc.circle(12 + (12*(x-4)), centerY, 1.5)
+    }
+    else{
+      doc.circle(20 + (28*x), centerY + 20, 12.5)
+      doc.circle(20 + (28*x), centerY + 20, 1.5)
+    }
+  }
+}
+function roundedPlanetaryRect(length, yCoord){
+  if(planetaryModule){
+    doc.roundedRect(10,yCoord,length+20, 15, 7.5, 7.5)
+    doc.circle(10 + 10,yCoord + 7.5, 2)
+    doc.circle(10 + 10 + length,yCoord + 7.5, 2)
+  }
 }
 // create case for crank
 function crankCase(crankSize){
@@ -322,6 +340,59 @@ function flapCase(gear1Space,gear2Space,beamSpace,verticalSpace,motor){
     // doc.text((15+510.2+5)*frameScale+5,(15)*frameScale+10,frameLabelArray[4])
     square(232.8)
     // doc.text((15+510.2+5)*frameScale+5,(15+232.8)*frameScale+10,frameLabelArray[5])
+}
+function planetaryCase(caseLength,caseWidth){
+  if(planetaryModule){
+    doc.rect(15*frameScale,(15)*frameScale,caseLength, caseWidth)
+    doc.circle((15*frameScale)+(caseLength/2),(15*frameScale)+(caseWidth/2), 2)
+    doc.rect((15*frameScale) + (caseLength/2) - 10,(15*frameScale) + (caseWidth/2) - 10,20,40)
+    square(0)
+    square(232.8)
+  }
+}
+function spurCase(caseHeight, caseWidth){
+  if(spurModule){
+    doc.rect(15*frameScale,(15)*frameScale,caseWidth, caseHeight)
+    doc.circle((15*frameScale)+(40),(15*frameScale)+(caseHeight/2), 6)
+    doc.circle((15*frameScale)+(40)+(spur1Radius + spur2Radius)+(toothHeight*1.2),(15*frameScale)+(caseHeight/2), 2)
+    doc.circle((15*frameScale)+(40)+(spur1Radius + (spur2Radius*2) + spur3Radius)+(toothHeight*2.4),(15*frameScale)+(caseHeight/2), 2)
+    // console.log(spurBeamLength)
+    // doc.rect((15*frameScale) + (40) - 30,(15*frameScale) + (caseHeight/2) - 10,40,20)
+    motorCaseParts((15*frameScale),(15)*frameScale+caseHeight )
+    // doc.rect(15*frameScale,(15)*frameScale+caseHeight + 10,28, 60)
+    // doc.rect((15*frameScale)+4,(15)*frameScale+caseHeight + 20,20, 40)
+    // doc.rect((15*frameScale)+30,(15)*frameScale+caseHeight + 10,8, 60)
+    // doc.rect((15*frameScale)+40,(15)*frameScale+caseHeight + 10,8, 60)
+    // doc.rect((15*frameScale)+50,(15)*frameScale+caseHeight + 10,8, 22)
+    // doc.rect((15*frameScale)+60,(15)*frameScale+caseHeight + 10,8, 22)
+    doc.addPage();
+    doc.text(260.3,208.2,pageLabelArray[4])
+    square(0)
+    square(232.8)
+
+  }
+}
+
+function motorCaseParts(xPos, yPos){
+  doc.rect(xPos,yPos + 10,28, 60)
+  doc.rect(xPos+4,yPos + 20,20, 40)
+  doc.rect(xPos+30,yPos + 10,8, 60)
+  doc.rect(xPos+40,yPos + 10,8, 60)
+  for(var i = 0; i<2;i++){
+    doc.line(xPos+50 + (20*i),yPos + 10,xPos+50 + (20*i), yPos + 10 + 40)
+    doc.line(xPos+50 + (20*i),yPos + 10 + 40,xPos+50+17 + (20*i), yPos + 10 + 40)
+    doc.line(xPos+50+17 + (20*i),yPos + 10 + 40,xPos+50+17 + (20*i), yPos + 10 + 40 - 5)
+    doc.line(xPos+50+17 + (20*i),yPos + 10 + 40 - 5,xPos+50+17-7 + (20*i), yPos + 10 + 40 - 5)
+    doc.line(xPos+50+17-7 + (20*i),yPos + 10 + 40 - 5,xPos+50+17-7 + (20*i), yPos + 10 + 40 - 5-3)
+    doc.line(xPos+50+17-7 + (20*i),yPos + 10 + 40 - 5 - 3,xPos+50+17 + (20*i), yPos + 10 + 40 - 5-3)
+    doc.line(xPos+50+17 + (20*i),yPos + 10 + 40 - 5 - 3,xPos+50+17 + (20*i), yPos + 10 + 40 - 5-3-24)
+    doc.line(xPos+50+17 + (20*i),yPos + 10 + 40 - 5 - 3 - 24,xPos+50+17-7 + (20*i), yPos + 10 + 40 - 5-3-24)
+    doc.line(xPos+50+17 - 7 + (20*i),yPos + 10 + 40 - 5 - 3 - 24,xPos+50+17-7 + (20*i), yPos + 10 + 40 - 5-3-24 - 3)
+    doc.line(xPos+50+17 - 7 + (20*i),yPos + 10 + 40 - 5 - 3 - 24 - 3,xPos+50+17 + (20*i), yPos + 10 + 40 - 5-3-24 - 3)
+    doc.line(xPos+50+17 + (20*i),yPos + 10 + 40 - 5 - 3 - 24 - 3,xPos+50+17 + (20*i), yPos + 10 + 40 - 5-3-24 - 3 - 5)
+    doc.line(xPos+50+17 + (20*i),yPos + 10 + 40 - 5 - 3 - 24 - 3 - 5,xPos+50 + (20*i), yPos + 10 + 40 - 5-3-24 - 3 - 5)
+  }
+  
 }
 // misc. parts for crank module
 function crankParts(){
@@ -497,9 +568,16 @@ function showGear(num){
     }
     // console.log("radius = " + radius)
     centerX = centerX + ((radius*2)+(36*scale*size));
-    if(centerX>215){
+    if((centerX+radius + toothHeight)>300){
       centerX = 30;
-      centerY = centerY + ((radius*2)+(36*scale*size));
+      if(spurRotate){
+        var largestRadius = Math.max(spur1Radius,spur2Radius,spur3Radius)
+        var smallestRadius = Math.min(spur1Radius,spur2Radius,spur3Radius)
+        centerY = centerY + ((largestRadius+smallestRadius)+(36*scale*size));
+      }
+      else{
+        centerY = centerY + ((radius*2)+(36*scale*size));
+      }
     }
   }
   if(!spurRotate){
@@ -559,6 +637,9 @@ function showAll(){
   }
   if(spurRotate){
     roundedSpurRect(spurBeamLength);
+  }
+  if(planetaryModule){
+    roundedPlanetaryRect(planetaryBraceLength, centerY + radius+toothHeight + 10)
   }
   if(numOfLinGears){
     centerX = 200*scale*size;
@@ -711,10 +792,10 @@ function showAll(){
     }
   }
 
-
   if(flappingModule || spurFlap){
     doc.addPage();
     doc.addImage(imgData2, 'PNG', 15, 160, 70.3125, 45);
+    doc.addImage(flapImageData, 'PNG', 100, 160, 137.755, 50);
     doc.text(265.3,208.2,pageLabelArray[2])
     var wingLengthL = flapBeamWidthL + (Math.sqrt((flapBeamOffset*flapBeamOffset)+(flapBeamHeightL*flapBeamHeightL)))+flapHorizontalSpace + 10 +10 + 10 + 20
     var wingBendLengthL = (Math.sqrt((flapBeamOffset*flapBeamOffset)+(flapBeamHeightL*flapBeamHeightL)))
@@ -788,12 +869,17 @@ function showAll(){
     square(0)
     // doc.text((15+510.2+5)*frameScale+5,(15)*frameScale+10,frameLabelArray[4])
     square(232.8)
+    motorCaseParts(5, caseWidth + 10)
     // doc.text((15+510.2+5)*frameScale+5,(15+232.8)*frameScale+10,frameLabelArray[5])
     // doc.circle((15+250)*frameScale, (15+112)*frameScale, (5*frameScale));
   }
   
   crankCase(crankSize)
   camCase()
+  planetaryCase(180,180)
+  if(spurRotate){
+    spurCase(125, spurBeamLength + 165)
+  }
   if(numOfLinGears){
     doc.addPage();
     doc.rect(2.5*frameScale,15*frameScale+45+15,177-30,43)

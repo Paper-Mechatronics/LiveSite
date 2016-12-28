@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="css/create.css">
   </head>
   <body>
+    <script src="js/readType.js" type="text/javascript"></script>
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -30,7 +31,7 @@
     </nav>
     <div id = "design-title">
         <h3>Design Your Own Machine. Select your starting </h3>
-         <select id = "dropdown" name="cars" onchange="changeMods()">
+         <select id = "dropdown" onchange="changeMods()">
             <option value="motion">Motion</option>
             <option value="mechanism">Mechanism</option>
           </select>
@@ -38,10 +39,10 @@
     <div id="container">
         <a id = "one-href" href = "open-close.php"><div class="box"><div><p id = "one">Open-Close</p></div><img id = "one-img" src="img/OpenClose2.gif"></div></a>
         <a id = "two-href" href = "up-down.php"><div class="box"><div><p id = "two">Up-Down</p></div><img id = "two-img" src="img/UpDown2.gif"></div></a>
-        <a id = "three-href" href = "flapping.php"><div class="box"><div><p id = "three">Flap</p></div><img id = "three-img" src="img/flapping2.gif"></div></a>
+        <a id = "three-href" href = "flapping.php"><div class="box"><div><p id = "three">Flapping</p></div><img id = "three-img" src="img/flapping2.gif"></div></a>
         <span class="stretch"></span>
         <br>
-        <a id = "four-href" href = "rotate.php"><div class="box"><div><p id = "four">Rotate</p></div><img id = "four-img" src="img/front_motion_rotate.png"></div></a>
+        <a id = "four-href" href = "rotate.php"><div class="box"><div><p id = "four">Rotate</p></div><img id = "four-img" src="img/rotate3.gif"></div></a>
         <a id = "five-href" href = "#"><div class="box"><div><p id = "five">Walking</p></div><img id = "five-img" src="img/front_motion_walk.png"></div></a>
         <a id = "six-href" style = "visibility:hidden;" href = "#"><div class="box"><div><p id = "six">Jansen Mechanism</p></div><img id = "seven-img" src="img/front_motion_walk.png"></div></a>
         <span class="stretch"></span>

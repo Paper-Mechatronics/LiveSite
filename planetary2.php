@@ -14,7 +14,7 @@ else{
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Rotate</title>
+    <title>Planetary Gear</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <link rel="shortcut icon" type="image/png" href="img/logo_webTab.png"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -31,6 +31,7 @@ else{
     <script src="js/functions.js" type="text/javascript"></script>
     <script src="js/planetaryFinal.js" type="text/javascript"></script>
     <script src="js/showParts.js" type="text/javascript"></script>
+    <script src="js/homeType.js" type="text/javascript"></script>
     <script src="js/updateUI.js" type="text/javascript"></script>
     <script src="js/scaling.js" type="text/javascript"></script>
     <div class = "container">
@@ -40,25 +41,22 @@ else{
                 <option value="link_gear">Rotate</option>
             </select> 
         </div>
-        <div class = "controls">
-            <div id = "preview">
-            </div>
-        </div>
+        
         <div class = "controls-dark">
             <div>
-                <p>Gear 1 Size:</p>
+                <p>Motor Gear Size:</p>
                 <br>
-                <button class = "gear-size object btn btn-primary" type="button" id="setSmallGear1" onclick="smallGear1()">1</button>
-                <button class = "gear-size object btn btn-primary" type="button" id="setMedGear1" onclick="mediumGear1()">2</button>
-                <button class = "gear-size object btn btn-primary" type="button" id="setLargeGear1" onclick="largeGear1()">3</button>
+                <button class = "gear-size object btn btn-primary" type="button" id="setSmallGear1P" onclick="smallGear1()">1</button>
+                <button class = "gear-size object btn btn-primary" type="button" id="setMedGear1P" onclick="mediumGear1()">2</button>
+                <button class = "gear-size object btn btn-primary" type="button" id="setLargeGear1P" onclick="largeGear1()">3</button>
             </div>
             <br>
             <div>
-                <p>Gear 2 Size:</p>
+                <p>Static Gear Size:</p>
                 <br>
-                <button class = "gear-size object btn btn-primary" type="button" id="setSmallGear2" onclick="smallGear2()">1</button>
-                <button class = "gear-size object btn btn-primary" type="button" id="setMedGear2" onclick="mediumGear2()">2</button>
-                <button class = "gear-size object btn btn-primary" type="button" id="setLargeGear2" onclick="largeGear2()">3</button>
+                <button class = "gear-size object btn btn-primary" type="button" id="setSmallGear2P" onclick="smallGear2()">1</button>
+                <button class = "gear-size object btn btn-primary" type="button" id="setMedGear2P" onclick="mediumGear2()">2</button>
+                <button class = "gear-size object btn btn-primary" type="button" id="setLargeGear2P" onclick="largeGear2()">3</button>
             </div>
             <br>
             <!-- <div>
@@ -100,7 +98,7 @@ else{
                     <p>Show Parts</p>
                 </div>
             </a>
-            <a href = "http://www.papermech.net/create.php">
+            <a href = "#" onclick="transferType()" >
                 <div class = "footer-btn-div">
                     <button class = "footer-btn object btn btn-primary" type="button" ><img class = "btn-icon" src="img/home.png"></button>
                     <br>

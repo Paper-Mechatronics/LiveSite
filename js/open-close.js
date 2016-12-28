@@ -487,7 +487,7 @@ Events.on(engine, 'afterUpdate', function(event) {
 
 function yDistance(){
   var distance = Math.round(compositeArray[0].bodies[0].position.y-200)
-  document.getElementById("y-distance").innerHTML = distance
+  // document.getElementById("y-distance").innerHTML = distance
 }
 
 Events.on(engine, 'beforeUpdate', function(event){

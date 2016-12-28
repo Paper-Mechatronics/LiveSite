@@ -59,6 +59,7 @@ function largeGear(){
     }
     else if(compositeArray[1].shape == "shell"){
       changeShell()
+      // console.log(compositeArray[1].bodies[0].parts[0].render.strokeStyle = "#8d2f2f")
     }
   }
   

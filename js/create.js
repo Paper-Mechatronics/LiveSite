@@ -14,9 +14,9 @@ function changeMods(){
                 document.getElementById('four-img').src = "img/spur.gif";
                 document.getElementById('five').innerHTML = "Planetary Gears";
                 document.getElementById('five-href').href = "planetary2.php";
-                document.getElementById('five-img').src = "img/front_mech_planetary.png";
+                document.getElementById('five-img').src = "img/planetary2.gif";
                 document.getElementById("six-href").style.visibility = "";
-                document.getElementById('six-img').src = "img/front_mech_rackpinion.png";
+                // document.getElementById('six-img').src = "img/front_mech_rackpinion.png";
                 document.getElementById('seven-img').src = "img/front_mech_jansen.png";
             }
             else{
@@ -26,16 +26,16 @@ function changeMods(){
                 document.getElementById('two').innerHTML = "Up-Down";
                 document.getElementById('two-href').href = "up-down.php";
                 document.getElementById('two-img').src = "img/UpDown2.gif";
-                document.getElementById('three').innerHTML = "Flap";
+                document.getElementById('three').innerHTML = "Flapping";
                 document.getElementById('three-href').href = "flapping.php";
                 document.getElementById('three-img').src = "img/flapping2.gif";
-                document.getElementById('four').innerHTML = "Rotate";
+                document.getElementById('four').innerHTML = "Rotating";
                 document.getElementById('four-href').href = "rotate.php";
-                document.getElementById('four-img').src = "img/front_motion_rotate.png";
+                document.getElementById('four-img').src = "img/rotate3.gif";
                 document.getElementById('five').innerHTML = "Walking";
                 document.getElementById('five-href').href = "#";
                 document.getElementById('five-img').src = "img/front_motion_walk.png";
                 document.getElementById("six-href").style.visibility = "hidden";
-                document.getElementById('six-img').src = "img/front_motion_flap.png";
+                // document.getElementById('six-img').src = "img/front_motion_flap.png";
             }
         }

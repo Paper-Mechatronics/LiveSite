@@ -336,7 +336,7 @@ function crankRadius(){
 
 Events.on(engine, 'beforeUpdate', function(event){
   resetRadius()
-  yDistance()
+  // yDistance()
 })
 ////////////////////// RUN /////////////////////////////
 
