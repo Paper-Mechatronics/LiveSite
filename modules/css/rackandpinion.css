@@ -90,7 +90,7 @@ input[type="range"]{
     position: relative;
     float: left;
     width: 25%;
-    height: 100%;
+    height: auto;
     padding: 0;
     background-color: #ccc;
     border-right: 2px solid black;

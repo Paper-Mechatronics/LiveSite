@@ -1,4 +1,6 @@
+// changes href, img, and visibility of different module squares in create.php file
 function changeMods(){
+            // check value of dropdown
             if(document.getElementById("dropdown").value == "mechanism"){
                 document.getElementById('one').innerHTML = "Rack & Pinion";
                 document.getElementById('one-href').href = "rackandpinion.php";
@@ -17,7 +19,8 @@ function changeMods(){
                 document.getElementById('five-img').src = "img/planetary2.gif";
                 document.getElementById("six-href").style.visibility = "";
                 // document.getElementById('six-img').src = "img/front_mech_rackpinion.png";
-                document.getElementById('seven-img').src = "img/front_mech_jansen.png";
+                document.getElementById('six-img').src = "img/front_mech_jansen.png";
+                document.getElementById('six-href').href = "walking.php";
             }
             else{
                 document.getElementById('one').innerHTML = "Open-Close";
@@ -33,7 +36,7 @@ function changeMods(){
                 document.getElementById('four-href').href = "rotate.php";
                 document.getElementById('four-img').src = "img/rotate3.gif";
                 document.getElementById('five').innerHTML = "Walking";
-                document.getElementById('five-href').href = "#";
+                document.getElementById('five-href').href = "walking.php";
                 document.getElementById('five-img').src = "img/front_motion_walk.png";
                 document.getElementById("six-href").style.visibility = "hidden";
                 // document.getElementById('six-img').src = "img/front_motion_flap.png";

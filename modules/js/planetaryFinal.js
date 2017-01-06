@@ -1,11 +1,16 @@
+// module indicator
 planetaryModule = true;
 var planetaryBrace = 0
+// planetary change body function
 function changeBodyPlanetary(index){
   for(var i=0; i<1;i++){
+    // remove ui bodies for sprites
     if(compositeArray[index].bodies[1]){
       Composite.remove(compositeArray[index], compositeArray[index].bodies[1]);
     }
+    // remove bodies
     Composite.remove(compositeArray[index], compositeArray[index].bodies[0]);
+    // store x and y constraint values
     var tmpConstraintXPoint
     if(index == 0){
       tmpConstraintXPoint = compositeArray[0].constraints[0].pointA.x
@@ -14,13 +19,19 @@ function changeBodyPlanetary(index){
       tmpConstraintXPoint = compositeArray[0].constraints[0].pointA.x
     }
     var tmpConstraintYPoint = compositeArray[0].constraints[0].pointA.y
+    // remove constraints from composites
     Composite.remove(compositeArray[index], compositeArray[index].constraints[0]);
+    // reset vertex array
     verts2 = [];
+    // draw new gear
     drawGear();
+    // add new gear
     Composite.add(compositeArray[index], Bodies.fromVertices(tmpConstraintXPoint, tmpConstraintYPoint, [verts2]))
+    // add ui body
     if(compositeArray[index].shape == "gear"){
       Composite.add(compositeArray[index], Bodies.circle(tmpConstraintXPoint, tmpConstraintYPoint, 1))
     }
+    // add constraints to composite
     Composite.add(compositeArray[index], Constraint.create({pointA: { x: tmpConstraintXPoint, y: tmpConstraintYPoint },
         bodyB: compositeArray[index].bodies[0], 
         stiffness: 1
@@ -38,8 +49,8 @@ function changeBodyPlanetary(index){
     bodyB: compositeArray[1].bodies[0], 
     stiffness: 1
   }));
-  // compositeArray[1].constraints[0].stiffness = 1;
 }
+// draw and create planetary gear
 function addPlanetaryGearComposite(centerX, centerY, constraintX, constraintY){
   verts2 = [];
   drawGear();
@@ -87,17 +98,23 @@ function addPlanetaryGearComposite(centerX, centerY, constraintX, constraintY){
   compositeArray[1].motorSpeed = 0.051;
   compositeArray[1].motorDir = -1;
 }
+//////////////////////////////////GEAR SIZES/////////////////////////////////////
 function smallGear1(){
+  // reset angles
   Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
+  // define radius
   radius = 48;
   compositeArray[1].radius = radius
   steps = (0.25 * radius)*2;
   toothWidthDegree = 4;
   toothWidth = (toothWidthDegree/conversionFactor);
+  // remove composite
   removeComposite(compositeArray[1].bodies[0])
+  // create new planetary gear composite
   addPlanetaryGearComposite(compositeArray[0].constraints[0].pointA.x - compositeArray[0].radius - radius - ((toothHeight*0.6)*2), (window.innerHeight)*(0.65),compositeArray[0].constraints[0].pointA.x,compositeArray[0].constraints[0].pointA.y);
 }
+// see smallGear1()
 function mediumGear1(){
   Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
@@ -109,6 +126,7 @@ function mediumGear1(){
   removeComposite(compositeArray[1].bodies[0])
   addPlanetaryGearComposite(compositeArray[0].constraints[0].pointA.x - compositeArray[0].radius - radius - ((toothHeight*0.6)*2), (window.innerHeight)*(0.65),compositeArray[0].constraints[0].pointA.x,compositeArray[0].constraints[0].pointA.y);
 }
+// see smallGear1()
 function largeGear1(){
   Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
@@ -120,6 +138,7 @@ function largeGear1(){
   removeComposite(compositeArray[1].bodies[0])
   addPlanetaryGearComposite(compositeArray[0].constraints[0].pointA.x - compositeArray[0].radius - radius - ((toothHeight*0.6)*2), (window.innerHeight)*(0.65),compositeArray[0].constraints[0].pointA.x,compositeArray[0].constraints[0].pointA.y);
 }
+// see smallGear1()
 function smallGear2(){
   Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
@@ -130,6 +149,7 @@ function smallGear2(){
   toothWidth = (toothWidthDegree/conversionFactor);
   changeBodyPlanetary(0);
 }
+// see smallGear1()
 function mediumGear2(){
   Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
@@ -140,6 +160,7 @@ function mediumGear2(){
   toothWidth = (toothWidthDegree/conversionFactor);
   changeBodyPlanetary(0);
 }
+// see smallGear1()
 function largeGear2(){
   Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
@@ -150,6 +171,7 @@ function largeGear2(){
   toothWidth = (toothWidthDegree/conversionFactor);
   changeBodyPlanetary(0);
 }
+////////////////////////////////////////////////////////////////////////////////////////////////
 Events.on(engine, 'beforeUpdate', function(event) {
   Body.setPosition(compositeArray[1].bodies[1],compositeArray[1].bodies[0].position)
   for(var i = 0; i<compositeArray.length; i++){
@@ -157,6 +179,7 @@ Events.on(engine, 'beforeUpdate', function(event) {
       compositeArray[i].constraints[0].render.visible = true;
     }
   }
+  // track brace distance
   var x1 = compositeArray[1].bodies[0].position.x
   var x2 = compositeArray[0].constraints[0].pointA.x
   var y1 = compositeArray[1].bodies[0].position.y
@@ -164,6 +187,7 @@ Events.on(engine, 'beforeUpdate', function(event) {
   planetaryBrace = Math.floor(Math.sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) ))
 })
 ////////////////////// RUN /////////////////////////////
+// add initial parts first time cod runs
 addGearComposite((window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*0.6)), (window.innerHeight)*(0.65));
 addPlanetaryGearComposite((window.innerWidth)*(0.75*0.45)-(radius+(toothHeight*0.6)), (window.innerHeight)*(0.65),(window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*0.6)),(window.innerHeight)*(0.65));
 compositeArray[1].isMotor = true;

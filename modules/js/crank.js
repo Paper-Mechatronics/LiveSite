@@ -1,27 +1,38 @@
-// generate small gear
+// module indicators
 crankModule = true
 crankMod = true;
+openCloseMod = false;
+// initial values
 var c = 369
 var rectBase = 600
 linkageLength = 0;
-openCloseMod = false;
 var originalWidth1
 var originalWidth2
+/////////////////////////// CHANGE GEAR SIZE ///////////////////////////////////////////
 function smallGear(){
+  //remove ui constraints
   removeUIConstraints(compositeArray[0])
+  // delete linkages
   deleteConstraint(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
   if(openCloseMod){
     deleteConstraint(compositeArray[2].bodies[0], compositeArray[0].bodies[0])
     deleteConstraint(compositeArray[3].bodies[0], compositeArray[0].bodies[0])
   }
+  // reset position and angle
   Body.setPosition(compositeArray[0].bodies[0], {x:compositeArray[0].constraints[0].pointA.x, y:compositeArray[0].constraints[0].pointA.y} )
   Body.setAngle(compositeArray[1].bodies[0], 0)
+  // set new radius - 52 larger than normal radius size
   radius = 48+52;
+  // set class parameter value
   compositeArray[1].radius = radius;
+  // set number of steps to make up gear
   steps = (0.25 * radius)*2;
+  // set specific tooth width
   toothWidthDegree = 4;
   toothWidth = (toothWidthDegree/conversionFactor);
+  // redraw circle and shape - functions.js
   changeBodyCircle(1)
+  // create the constraints
   createConstraint2(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
   if(openCloseMod){
     createConstraintFake(compositeArray[0].bodies[0], compositeArray[2].bodies[0])
@@ -30,6 +41,7 @@ function smallGear(){
   }
   pivotHeight(linkageLength)
 }
+// see small gear comments
 function mediumGear(){
   removeUIConstraints(compositeArray[0])
   deleteConstraint(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
@@ -53,6 +65,7 @@ function mediumGear(){
   }
   pivotHeight(linkageLength)
 }
+// see small gear comments
 function largeGear(){
   removeUIConstraints(compositeArray[0])
   deleteConstraint(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
@@ -76,26 +89,38 @@ function largeGear(){
   }
   pivotHeight(linkageLength)
 }
+////////////////////////////////////////////////////////////////////////////////////////
+// module initialization/ reset function
 function crank(){
+  // remove any UI elements
   removeUIConstraints(compositeArray[0])
+  // set radius to +52
   crankRadius()
+  // remove constraint between crank and UI
   deleteConstraint(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
   steps = (0.25 * radius)*2;
   toothWidthDegree = 2;
   toothWidth = (toothWidthDegree/conversionFactor);
+  // change body shapes - functions.js
   changeBodyCircle(1);
   changeBody3(0);
+  // create 2 ui circular orbs
   createUIConstraints(compositeArray[0], beamSpace, 0,6)
+  // set position of new shapes
   Body.setPosition(compositeArray[0].bodies[0], {x:(window.innerWidth)*(0.75*0.45), y:(window.innerHeight)- basePoint-250 + 8.0620080523284 - parseInt(pivotValue)})
   Body.setPosition(compositeArray[1].bodies[0], {x:(window.innerWidth)*(0.75*0.45), y:(window.innerHeight)- basePoint})
+  // set constraint locations 
   compositeArray[1].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)
   compositeArray[1].constraints[0].pointA.y = (window.innerHeight*0.7)
   compositeArray[0].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)
   compositeArray[0].constraints[0].pointA.y = compositeArray[1].constraints[0].pointA.y-250
+  // create linkages
   createConstraint2(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
+  // make 360 rotating gear
   compositeArray[1].alternate = false;
   pivotHeight(linkageLength)
 }
+// run this function when change motion from dropdown
 function changeMotion(){
   var string = document.getElementById("changeMech").value;
   if(string == "upDown"){
@@ -127,14 +152,13 @@ function changeMotion(){
     createConstraintFake(compositeArray[0].bodies[0], compositeArray[2].bodies[0])
     createConstraintFake(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
     compositeArray[1].alternate = false;
-    // constraintPosition(constraintPvalue)
-    // pivotHeight(linkageLength)
   }
 }
-
+// make motor 360
 function continuous(){
   compositeArray[1].alternate = false;
 }
+// make motor 180
 function alternatingGear(){
   compositeArray[1].alternate = true;
 }
@@ -142,6 +166,7 @@ function alternatingGear(){
 var prevSpaceValue = 50;
 var changeSpaceWidth = 0;
 var spaceValue = 50
+// horizontal spacing
 function beamSpacing(value){
   if(compositeArray[2] && compositeArray[3]){
     changeSpaceWidth = value - prevSpaceValue
@@ -159,10 +184,12 @@ var prevPivotValue = 100;
 var initialPivotValue = 100;
 var pivotValue = 100;
 var changePivotHeight;
+// vertical spacing
 function pivotHeight(value){
   circleJointHeight(value)
 }
 var constraintPvalue = 0
+// constraint pivot along beam
 function constraintPosition(value){
   Body.setAngle(compositeArray[2].bodies[0], 0)
   Body.setAngle(compositeArray[3].bodies[0], 0)
@@ -182,6 +209,7 @@ function constraintPosition(value){
 }
 var prevHeightValue = 50;
 var changeHeightValue;
+// 
 function circleJointHeight(value){
   changeHeightValue = parseInt(value)
   Body.setAngle(compositeArray[1].bodies[0], 0)
@@ -197,10 +225,10 @@ function circleJointHeight(value){
       jointComposites[i].constraints[0].render.strokeStyle = "#666"
     }
     module.pivot2Point = parseInt(changeHeightValue)
-    // console.log(module.pivot2Point)
   }
   
 }
+// reset radius to normal module -52
 function resetRadius(){
   if(!crankMod){
     if(compositeArray[1].radius != 80 && compositeArray[1].radius != 64 && compositeArray[1].radius != 48){
@@ -211,12 +239,13 @@ function resetRadius(){
     }
   }
 }
+// set radius to normal +52
 function crankRadius(){
   if(radius == 80 || radius == 64 || radius == 48){
       radius = radius + 52
     }
 }
-
+// constant update - prevent bugs and unnecessary movement
 Events.on(engine, 'beforeUpdate', function(event){
   if(compositeArray[2] && compositeArray[3]){
     if(compositeArray[2].bodies[0].angularVelocity>0.1 || compositeArray[2].bodies[0].angularVelocity<-0.1){
@@ -224,12 +253,10 @@ Events.on(engine, 'beforeUpdate', function(event){
       Body.setAngularVelocity(compositeArray[3].bodies[0], 0)
       Body.setVelocity(compositeArray[2].bodies[0], {x:0, y:0})
       Body.setVelocity(compositeArray[3].bodies[0], {x:0, y:0})
-      // deleteConstraint(compositeArray[2].bodies[0], compositeArray[0].bodies[0])
-      // deleteConstraint(compositeArray[3].bodies[0], compositeArray[0].bodies[0])
-      // removeUIConstraints(compositeArray[0])
     }
   }
 })
+// constant update - set angle of beams based off rotation of crank
 Events.on(engine, 'afterUpdate', function(event) {
   if(openCloseMod){
     jointComposites[jointComposites.length-1].constraints[0].pointA.x = parseInt(prevSpaceValue)
@@ -287,26 +314,17 @@ function yDistance(){
 }
 
 Events.on(engine, 'beforeUpdate', function(event){
-  // yDistance()
 })
 ////////////////////// RUN /////////////////////////////
 
-// run the engine
+// create initial gear parts
 addLinGearComposite((window.innerWidth)*(0.75*0.45),(window.innerHeight)*(0.8) + rackPinBase)
 compositeArray[0].constraints[0].stiffness = 0.0000001;
 createUIConstraints(compositeArray[0], prevSpaceValue, prevPivotValue,6)
 addGearComposite((window.innerWidth)*(0.75*0.45)+((radius)+((toothHeight)*2)) ,(window.innerHeight)*(0.68) + rackPinBase)
-// addRectComposite((300), 5,(window.innerWidth)*(0.75*0.45)-200,compositeArray[0].constraints[0].pointA.y-rectBase)
-// addRectComposite((-300), 5,(window.innerWidth)*(0.75*0.45)+200,compositeArray[0].constraints[0].pointA.y-rectBase)
-// createConstraintFake(compositeArray[0].bodies[0], compositeArray[2].bodies[0])
-// createConstraintFake(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
 compositeArray[1].isMotor = true;
 compositeArray[1].alternate = true;
 compositeArray[1].motorSpeed = 0.021
-// var originalWidth1 = compositeArray[2].width
-// var originalWidth2 = compositeArray[3].width
-// newWidth1 = originalWidth1
-// newWidth2 = originalWidth2
 module.motorSpeed = compositeArray[1].motorSpeed*1000
 pivotHeight(0)
 ///////////// Change to Crank//////////

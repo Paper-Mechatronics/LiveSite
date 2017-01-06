@@ -14,8 +14,6 @@ var boundsScaleTarget = 1,
         y: 1
 };
 
-// console.log(mouseConstraint)
-// mouseConstraint.mouse.wheelDelta = 1;
 
 if (rackPinionModule == true){
   scale = scale -0.2
@@ -23,7 +21,6 @@ if (rackPinionModule == true){
 
 ///////////////// Animation /////////////////////////////////////
 Events.on(engine, 'beforeUpdate', function(event) {
-  // console.log("working")
   var world = engine.world,
       // mouse = mouseConstraint.mouse,
       translate;

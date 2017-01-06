@@ -40,7 +40,7 @@ else{
             <select id = "changeMotion" class = "rendering" onchange = "changeMotion()">
                 <option value="upDown" selected>Up Down</option>
                 <option value="openClose">Open Close</option>
-            </select> 
+            </select>
         </div>
         <div class = "controls hideThis">
             <div id = "preview">
@@ -100,15 +100,18 @@ else{
             <div id = "a-slider" class = "slider-div">
                 <label>Motor Speed: <span id = "motorSpeedValue"></span> (<span id = "motorAngleValue"></span>&deg;)</label>
                 <br>
-                <input type="range" id="motorSpeed" value="40" min="0" max="50" oninput = "speedInput(this.value)" onchange = "changeMotorSpeed(this.value)">
+								<button class = "object btn btn-primary simulation glyphicon glyphicon-pause" type="button" onclick="pause()"><!-- <span class="glyphicon glyphicon-pause" aria-hidden="true"></span> --></button>
+                <input class = "simulation" type="range" id="motorSpeed" value="40" min="0" max="50" oninput = "speedInput(this.value)" onchange = "changeMotorSpeed(this.value)">
+                <br>
             </div>
             <br>
+						<br>
             <!--<div>
             <p>Simulation:</p>
             <br>
                 <button class = "object btn btn-primary" type="button" id="alternate" onclick="startRunner()">Start</button>
                 <button class = "object btn btn-primary" type="button" id="continuous" onclick="stopRunner()">Stop</button>
-            
+
             </div>-->
         </div>
         <div class = "controls">
@@ -157,25 +160,25 @@ else{
             <input id = "flipYCheck" type="checkbox" value="flipY"> <p id = "flipYTitle"> Flip Y</p><br>
             <br>
             <br>
-            <button type="button" id="cancel" onclick="overlay3()">Cancel</button> 
+            <button type="button" id="cancel" onclick="overlay3()">Cancel</button>
             <button type="button" id="createRect" onclick="mirror()">Mirror</button>
          </div>
     </div>
     <!--<button type="button" id="rotate" onclick="overlay3()">Set Angle</button>-->
     <!--<div  id = "codeBlock">
         <pre>
-        #include <Servo.h> 
+        #include <Servo.h>
 
         Servo myservo;
 
-        void setup() 
-        { 
+        void setup()
+        {
           myservo.attach(9);
           myservo.write(90);  // set servo to mid-point
-        } 
+        }
 
-        void loop() {} 
-        </pre> 
+        void loop() {}
+        </pre>
     <div>-->
 
 

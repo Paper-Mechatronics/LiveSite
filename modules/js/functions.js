@@ -49,7 +49,8 @@ var openCloseModule = false,
     crankModule = false,
     rotateModule = false,
     planetaryModule = false,
-    spurModule = false
+    spurModule = false,
+    walkingModule = false
 // Collision Groups
 var collisionCategory = 0x0001,
     otherCategory = 0x0002
@@ -423,14 +424,6 @@ function addFlapRectComposite(centerX, centerY, beamWidth,levelHeight,levelOffse
     compositeArray[compositeArray.length-1].bodies[0].parts[j].render.strokeStyle = "#000000";
   }
   World.add(engine.world,[compositeArray[totalComposites-1]] );
-
-  // console.log(pointX+ " " + pointY)
-  // console.log(centerX + " " + centerY)
-  
-
-
-  // compositeArray[compositeArray.length-1].constraints[0].pointA.x = centerX + xOff
-  // compositeArray[compositeArray.length-1].constraints[0].pointB.x = centerX + xOff
 }
 // Add circles for crank
 function addCircleComposite(centerX, centerY, radius){
@@ -491,7 +484,8 @@ function addRotateRect(width, height, centerX, centerY){
         shape: "rect",
         width: width,
         height: height,
-        lock: false
+        lock: false,
+        stiffness: 1
       })
   )
   constraintArray.push(
@@ -648,9 +642,6 @@ function createConstraintFakeRP(constraintStart, constraintDestination){
     }))
     totalJointComposites++;
     World.add(engine.world, jointComposites[totalJointComposites-1]);
-    // console.log(jointComposites[totalJointComposites-1].constraints[0].length)
-    // console.log("added")
-    // console.log(jointComposites[0])
     for(var i = 0; i<compositeArray.length;i++){
       if(constraintStart == compositeArray[i].bodies[0]){
         compositeArray[i].hasConstraint = true;
@@ -660,7 +651,6 @@ function createConstraintFakeRP(constraintStart, constraintDestination){
       }
     }
     for(var i = 0; i<jointComposites.length;i++){
-      // console.log(jointComposites[i].constraints[0].bodyA);
     }
   }
   
@@ -1106,14 +1096,6 @@ function createConstraint3(constraintStart, constraintDestination){
         destOffset2 = 0;
       }
       else if(compositeArray[i].shape == "flapRect"){
-        // Body.set(compositeArray[i].bodies[0],0)
-        // console.log(compositeArray[i].bodies[0].vertices)
-        // var xOffset = compositeArray[i].bodies[0].vertices[4].x - compositeArray[i].bodies[0].position.x
-        // var yOffset = compositeArray[i].bodies[0].vertices[4].y - compositeArray[i].bodies[0].position.y +3.5
-        // console.log(compositeArray[i].bodies[0].vertices[4].y)
-        // console.log(compositeArray[i].bodies[0].position.y)
-        // destOffset = xOffset;
-        // destOffset2 = yOffset
         Body.setAngle(compositeArray[i].bodies[0], 0)
         var xOffset = compositeArray[i].bodies[0].position.x - compositeArray[i].bodies[0].vertices[4].x
         var yOffset = compositeArray[i].bodies[0].position.y - compositeArray[i].bodies[0].vertices[4].y-3.5
@@ -1141,209 +1123,14 @@ function createConstraint3(constraintStart, constraintDestination){
         compositeArray[i].hasConstraint = true;
       }
     }
-    for(var i = 0; i<jointComposites.length;i++){
-      // console.log(jointComposites[i].constraints[0].bodyA);
-    }
   }
   
 }
 ////////////////////////////////////////////////////////////////
 
 
-
-
-
-
-
-
-
-// function createConstraintInner(constraintStart, constraintDestination){
-//   var startOffset;
-//   var startOffset2;
-//   var destOffset;
-//   var destOffset2;
-//   var startShape;
-//   for(var i = 0; i<compositeArray.length;i++){
-//     if(constraintStart == compositeArray[i].bodies[0]){
-//       if(compositeArray[i].shape == "gear"){
-//         // if gear, set offset to 80% of that gears radius
-//         startOffset = compositeArray[i].radius *0.8;
-//         startOffset2 = 0
-//         startShape = "gear"
-//         // console.log("working")
-//       }
-//       else if(compositeArray[i].shape == "rect"){
-//         // if rectangle, set offset to half width of rectangle so it connects at end of rectangle
-//         startOffset = compositeArray[i].width*-0.5;;
-//         startOffset2 = 0
-//         startShape = "rect"
-//       }
-//       else if(compositeArray[i].shape == "linGear"){
-//         // if rectangle, set offset to half width of rectangle so it connects at end of rectangle
-//         startOffset = 0;
-//         startOffset2 = 0
-//         startShape = "linGear"
-//       }
-//       else if(compositeArray[i].shape == "circle"){
-//         // if rectangle, set offset to half width of rectangle so it connects at end of rectangle
-//         startOffset = 0;
-//         startOffset2 = 0
-//         startShape = "circle"
-//       }
-//       else if(compositeArray[i].shape == "poly"){
-//         startOffset = compositeArray[i].width*-0.5;
-//         startOffset2 = 0;
-//         startShape = "poly"
-//       }
-//     }
-//     // set constraint offset for end body based on what type of body it is
-//     if(constraintDestination == compositeArray[i].bodies[1]){
-//       if(compositeArray[i].shape == "gear"){
-//         destOffset = compositeArray[i].radius *0.8;
-//         destOffset2 = 0;
-//         destShape = "gear"
-//       }
-//       else if(compositeArray[i].shape == "rect"){
-//         destOffset = compositeArray[i].width*-0.5;
-//         destOffset2 = 0;
-//         destShape = "rect"
-//       }
-//       else if(compositeArray[i].shape == "linGear"){
-//         destOffset = 0;
-//         destOffset2 = 0;
-//         destShape = "linGear"
-//       }
-//       else if(compositeArray[i].shape == "circle"){
-//         if(startShape == "linGear"){
-//           startOffset2 = -200
-//         }
-//         destOffset = 0;
-//         destOffset2 = 0;
-//         destShape = "circle"
-//       }
-//       else if(compositeArray[i].shape == "poly"){
-//         destOffset = compositeArray[i].width*-0.5;
-//         destOffset2 = 0;
-//         destShape = "poly"
-//       }
-//     }
-//   }
-//   
-//   // console.log(startOffset)
-//   // console.log(destOffset)
-//   if(startOffset != null && destOffset !=null){
-//     var constraintLength;
-//     if(cLength){
-//       constraintLength = cLength;
-//     }
-//     else{
-//       constraintLength = 250;
-//     }
-//     jointComposites.push(Composite.create({
-//         constraints: [Constraint.create({pointA: { x: startOffset*Math.cos(constraintStart.angle), y: startOffset*Math.sin(constraintStart.angle) + startOffset2*Math.cos(constraintStart.angle) },
-//           bodyA: constraintStart ,
-//           bodyB: constraintDestination ,
-//           pointB: { x: destOffset*Math.cos(constraintDestination.angle) + destOffset2*Math.sin(constraintDestination.angle), y: destOffset*Math.sin(constraintDestination.angle) + destOffset2*Math.cos(constraintDestination.angle)}, 
-//           stiffness: 0.001
-//         })]
-//     }))
-//     totalJointComposites++;
-//     World.add(engine.world, jointComposites[totalJointComposites-1]);
-//     // console.log("added")
-//     // console.log(jointComposites[0])
-//     for(var i = 0; i<compositeArray.length;i++){
-//       if(constraintStart == compositeArray[i].bodies[0]){
-//         compositeArray[i].hasConstraint = true;
-//       }
-//       if(constraintDestination == compositeArray[i].bodies[0]){
-//         compositeArray[i].hasConstraint = true;
-//       }
-//     }
-//     for(var i = 0; i<jointComposites.length;i++){
-//       // console.log(jointComposites[i].constraints[0].bodyA);
-//     }
-//   }
-  
-// }
-// function createConstraintFlap(constraintStart, constraintDestination, length, originalWidth){
-//   var startOffset;
-//   var startOffset2;
-//   var destOffset;
-//   var destOffset2;
-//   for(var i = 0; i<compositeArray.length;i++){
-//     if(constraintStart == compositeArray[i].bodies[0]){
-//       if(compositeArray[i].shape == "gear"){
-//         if(originalWidth>0){
-//           startOffset = compositeArray[i].radius *0.8;
-//         }
-//         else{
-//           startOffset = compositeArray[i].radius *-0.8;
-//         }
-//       }
-//       else if(compositeArray[i].shape == "rect"){
-//         startOffset = compositeArray[i].width*-0.5;
-//         startOffset2 = 0;
-//       }
-//       else if(compositeArray[i].shape == "poly"){
-//         startOffset = compositeArray[i].width*-0.5;
-//         startOffset2 = 0;
-//       }
-//     }
-//     if(constraintDestination == compositeArray[i].bodies[0]){
-//       if(compositeArray[i].shape == "gear"){
-//         destOffset = compositeArray[i].radius *0.8;
-//       }
-//       else if(compositeArray[i].shape == "rect"){
-//         destOffset = compositeArray[i].width*-0.5;
-//         destOffset2 = 0;
-//       }
-//       else if(compositeArray[i].shape == "poly"){
-//         if(originalWidth<0){
-//           destOffset = destOffset = (originalWidth*0.5) - length - 100
-//         }
-//         else{
-//           destOffset = destOffset = (originalWidth*0.5) - length + 100
-//         }
-//         destOffset2 = 0;
-//       }
-//     }
-//   }
-//   var cLength = length;
-//   if(startOffset && destOffset){
-//     var constraintLength;
-//     if(cLength){
-//       constraintLength = cLength;
-//     }
-//     else{
-//       constraintLength = 250;
-//     }
-//     jointComposites.push(Composite.create({
-//         constraints: [Constraint.create({pointA: { x: startOffset*Math.cos(constraintStart.angle), y: startOffset*Math.sin(constraintStart.angle)  },
-//           bodyA: constraintStart ,
-//           bodyB: constraintDestination ,
-//           pointB: { x: destOffset*Math.cos(constraintDestination.angle) + destOffset2*Math.sin(constraintDestination.angle), y: destOffset*Math.sin(constraintDestination.angle) + destOffset2*Math.cos(constraintDestination.angle)}, 
-//           stiffness: 0.001
-//         })]
-//     }))
-//     totalJointComposites++;
-//     World.add(engine.world, jointComposites[totalJointComposites-1]);
-//     for(var i = 0; i<compositeArray.length;i++){
-//       if(constraintStart == compositeArray[i].bodies[0]){
-//         compositeArray[i].hasConstraint = true;
-//       }
-//       if(constraintDestination == compositeArray[i].bodies[0]){
-//         compositeArray[i].hasConstraint = true;
-//       }
-//     }
-//     for(var i = 0; i<jointComposites.length;i++){
-//       // console.log(jointComposites[i].constraints[0].bodyA);
-//     }
-//   }
-  
-// }
-
 //////////////////////// WALKING MODULE ////////////////////////////////////
-function createTriConstraintFakeCorners(constraintStart, constraintDestination){
+function createTriConstraintFakeCorners(constraintStart, constraintDestination,length,stiffness){
   var startOffset;
   var startOffset2;
   var destOffset;
@@ -1396,8 +1183,8 @@ function createTriConstraintFakeCorners(constraintStart, constraintDestination){
           bodyA: constraintStart ,
           bodyB: constraintDestination ,
           pointB: { x: destOffset*Math.cos(constraintDestination.angle) + destOffset2*Math.sin(constraintDestination.angle), y: destOffset*Math.sin(constraintDestination.angle) + destOffset2*Math.cos(constraintDestination.angle)}, 
-          length: 200,
-          stiffness: 0.001
+          length: length,
+          stiffness: stiffness
           
         })]
     }))
@@ -1464,7 +1251,7 @@ function createTriConstraintEdges(constraintStart, constraintDestination){
           bodyA: constraintStart ,
           bodyB: constraintDestination ,
           pointB: { x: endOffsetX*Math.cos(constraintDestination.angle) + endOffsetY*Math.sin(constraintDestination.angle), y: endOffsetX*Math.sin(constraintDestination.angle) + endOffsetY*Math.cos(constraintDestination.angle)}, 
-          stiffness: 0.05
+          stiffness: 1
           
         })]
     }))
@@ -1490,11 +1277,7 @@ function createTriConstraintEdges(constraintStart, constraintDestination){
         compositeArray[i].hasConstraint = true;
       }
     }
-    for(var i = 0; i<jointComposites.length;i++){
-      // console.log(jointComposites[i].constraints[0].bodyA);
-    }
   }
-  
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Create Pivot Balls 
@@ -1777,7 +1560,6 @@ function changeBody4(index){
         stiffness: 1
       })
     )
-    //compositeArray[index].radius = radius;
     compositeArray[index].shape = "linGear"
     for(var j=0; j<compositeArray[index].bodies[0].parts.length;j++){
       compositeArray[index].bodies[0].parts[j].render.strokeStyle = "#000000";
@@ -1797,12 +1579,10 @@ function changeBody5(index, height){
     var tmpConstraintYPoint = compositeArray[index].constraints[0].pointA.y;
     Composite.remove(compositeArray[index], compositeArray[index].constraints[0]);
     linGearVerts = [];
-    // drawRect(height);
     if(upDownModule){
       Composite.add(compositeArray[index], Bodies.circle(tmpConstraintXPoint, tmpConstraintYPoint, 15))
     }
     else{
-      // Composite.add(compositeArray[index], Bodies.fromVertices(tmpConstraintXPoint, tmpConstraintYPoint, [linGearVerts]))
       Composite.add(compositeArray[index], Bodies.circle(tmpConstraintXPoint, tmpConstraintYPoint, 15))
     }
     Composite.add(compositeArray[index], Constraint.create({pointA: { x: tmpConstraintXPoint, y: tmpConstraintYPoint },
@@ -1810,7 +1590,6 @@ function changeBody5(index, height){
         stiffness: 1
       })
     )
-    //compositeArray[index].radius = radius;
     compositeArray[index].shape = "linRect"
     compositeArray[index].height = height
     for(var j=0; j<compositeArray[index].bodies[0].parts.length;j++){
@@ -1877,9 +1656,6 @@ function changeShell(){
     )
     compositeArray[1].radius = radius;
     compositeArray[1].shape = "shell"
-    for(var j=0; j<compositeArray[1].bodies[0].parts.length;j++){
-      // compositeArray[1].bodies[0].parts[j].render.strokeStyle = "#000000";
-    }
   }
   compositeArray[1].motorDir = -1;
   compositeArray[1].alternate = false;
@@ -2528,6 +2304,11 @@ Events.on(engine, 'beforeUpdate', function(event) {
           compositeArray[3].bodies[0].collisionFilter.mask = otherCategory
         }
       }
+      if(walkingModule){
+        compositeArray[1].bodies[0].collisionFilter.mask = otherCategory
+        compositeArray[2].bodies[0].collisionFilter.mask = otherCategory
+        // compositeArray[3].bodies[0].collisionFilter.mask = otherCategory
+      }
       if(compositeArray[i].bodies[1]){
         compositeArray[i].bodies[1].collisionFilter.mask = otherCategory
         if(compositeArray[i].bodies[2]){
@@ -2661,7 +2442,9 @@ Events.on(engine, 'beforeUpdate', function(event) {
         }
       }
       // make all the constraints in the composites invisible
-      compositeArray[i].constraints[0].render.visible = false;
+      if(compositeArray[i].constraints[0]){
+        compositeArray[i].constraints[0].render.visible = false;
+      }
       
       // if lock is true then set the angle to whatever the rotation parameter for that body is
       if(compositeArray[i].lock == true){
@@ -2739,7 +2522,7 @@ Events.on(engine, 'beforeUpdate', function(event) {
           }
         }
       }
-      if(compositeArray[i].radius != 0){
+      if(compositeArray[i].radius != 0 && !walkingModule){
         for(var j=0; j<compositeArray[i].bodies[0].parts.length;j++){
           // give parts black stroke
           if(compositeArray[i].shape == "gear"){
@@ -2748,11 +2531,6 @@ Events.on(engine, 'beforeUpdate', function(event) {
           // give rects gray fill color
           if(compositeArray[i].shape == "rect" || compositeArray[i].shape == "poly" || compositeArray[i].shape == "flapRect"){
             compositeArray[i].bodies[0].parts[j].render.fillStyle = "#cccccc";
-          }
-          if(compositeArray[i].shape == "flapRect"){
-            if(compositeArray[i].bodies[0].parts[j].render.strokeStyle != "#000000"){
-              // compositeArray[i].bodies[0].parts[j].render.strokeStyle = "#000000";
-            }
           }
           // if object size is small give it specific fill color and image sprite if applicable
           if(compositeArray[i].radius == 48 || compositeArray[i].radius == 100){
@@ -2775,11 +2553,6 @@ Events.on(engine, 'beforeUpdate', function(event) {
               }
               if(compositeArray[k].shape == "circleCrank"){
                 compositeArray[k].bodies[0].render.sprite.texture = "./img/crank200px.png"
-                if(upDownModule || openCloseModule){ 
-                  // resize sprite png so that the black dot fits the constraint location
-                  // compositeArray[k].bodies[0].render.sprite.xScale = 100/48
-                  // compositeArray[k].bodies[0].render.sprite.yScale = 100/48
-                }
               }
             }            
           }
@@ -2804,10 +2577,6 @@ Events.on(engine, 'beforeUpdate', function(event) {
               }
               if(compositeArray[k].shape == "circleCrank"){
                 compositeArray[k].bodies[0].render.sprite.texture = "./img/crank232px.png"
-                if(upDownModule || openCloseModule){
-                  // compositeArray[k].bodies[0].render.sprite.xScale = 116/64
-                  // compositeArray[k].bodies[0].render.sprite.yScale = 116/64
-                }
               }
             }
           }
@@ -2832,11 +2601,6 @@ Events.on(engine, 'beforeUpdate', function(event) {
               }
               if(compositeArray[k].shape == "circleCrank"){
                 compositeArray[k].bodies[0].render.sprite.texture = "./img/crank264px.png"
-                if(upDownModule || openCloseModule){
-                  // compositeArray[k].bodies[0].render.sprite.xScale = 132/80
-                  // compositeArray[k].bodies[0].render.sprite.yScale = 132/80
-                }
-
               }
               if(compositeArray[k].shape == "gear"){
                 compositeArray[k].bodies[0].parts[0].render.sprite.texture = "./img/crank264px.png"
@@ -2886,7 +2650,6 @@ Events.on(engine, 'beforeUpdate', function(event) {
 // same as above
 // consider same as 'beforeUpdate' function
 Events.on(engine, 'afterUpdate', function(event) {
-  // console.log(compositeArray[2].width)
   for(var i = 0; i<compositeArray.length;i++){
     if(compositeArray[i].lock == true){
       if(compositeArray[i].shape == "gear"){

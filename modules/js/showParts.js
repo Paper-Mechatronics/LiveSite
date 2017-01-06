@@ -1,4 +1,5 @@
 function showParts(){
+  // define initial variables
   numLargeGear = 0
   numMediumGear = 0
   numSmallGear = 0
@@ -13,7 +14,17 @@ function showParts(){
   var crankLength = 0
   var mirror = 0
   var camType
+  var flappingModule = 0;
+  var motor = 0
+  var spurFlap = 0
+  var spurRotate = 0
+  var rotateGear = 0;
+  var spur1Radius = 0
+  var spur2Radius = 0
+  var spur3Radius = 0
+  // loop through all composites and classify the objects that exist
   for(var i = 0; i<compositeArray.length; i++){
+    // if shape is continuous then draw continuous gear unless it is in rotate, spur, or planetary module
     if(compositeArray[i].shape == "gear"){
       if(compositeArray[i].alternate == false){
         continuous = 1;
@@ -21,16 +32,20 @@ function showParts(){
           continuous = 0;
         }
       }
+      // if radius is 80 add value to numLargeGear
       if(compositeArray[i].radius == 80){
         numLargeGear ++
       }
+      // if 64 add value to numMediumGear
       else if(compositeArray[i].radius == 64){
         numMediumGear++
       }
+      // if 48 add value to numSmallGear
       else if(compositeArray[i].radius == 48){
         numSmallGear++
       }
     }
+    // if cam draw specific cam shape
     if(compositeArray[i].shape == "cam" || compositeArray[i].shape == "shell"){
       if(compositeArray[i].shape == "shell"){
         camType = 1
@@ -48,7 +63,7 @@ function showParts(){
         numSmallCam++
       }
     }
-    console.log(compositeArray[i].radius)
+    // if crank module then add value to large medium or small crank
     if(compositeArray[i].shape == "circleCrank"){
       crankLength = 350 + parseInt(module.pivot2Point)
       if(compositeArray[i].radius == 132){ 
@@ -61,6 +76,7 @@ function showParts(){
         numSmallCrank++
       }
     }
+    // track if there is mirroring or not
     if(compositeArray[i].shape == "linGear"){
       if(mirrored == true){
         mirror = 1
@@ -68,8 +84,7 @@ function showParts(){
       numLinearGear++
     }
   }
-  var flappingModule = 0;
-  var motor = 0
+  // if flapping module track which side the motor is on
   if(flapModule){
     flappingModule = 1;
     if(compositeArray[0].isMotor){
@@ -79,12 +94,7 @@ function showParts(){
       motor = 1
     }
   }
-  var spurFlap = 0
-  var spurRotate = 0
-  var rotateGear = 0;
-  var spur1Radius = 0
-  var spur2Radius = 0
-  var spur3Radius = 0
+  // if spur or rotate module track properties of specific gears
   if(spurModule || rotateModule){
     if(compositeArray[2]){
       if(compositeArray[2].shape == "gear"){
@@ -99,6 +109,7 @@ function showParts(){
       }
     }
   }
+  // convert variable values to string
   var largeGears = numLargeGear.toString(); 
   var mediumGears = numMediumGear.toString(); 
   var smallGears = numSmallGear.toString(); 
@@ -117,10 +128,10 @@ function showParts(){
   var beamLength = newWidth1
   var horizontalSpace = module.horizontalSpace*2
   var constraintLength = parseInt(module.connectorLength) + parseInt(300+module.beamWidth) + parseInt(4*module.horizontalSpace)
-  // console.log(beamLength)
   if(!compositeArray[2] || !compositeArray[3] || rotateModule){
     constraintLength = 0;
   }
+  // store variables in local browser storage so that they can be accessed when the page changes
   localStorage.setItem("largeGears", largeGears);
   localStorage.setItem("mediumGears", mediumGears);
   localStorage.setItem("smallGears", smallGears);
@@ -160,12 +171,12 @@ function showParts(){
   localStorage.setItem("spur1Radius", spur1Radius);
   localStorage.setItem("spur2Radius", spur2Radius);
   localStorage.setItem("spur3Radius", spur3Radius);
-
   localStorage.setItem("spurBeamLength", module.spurBeamLength + 150);
   if(planetaryModule){
     localStorage.setItem("planetaryModule", 1);
     localStorage.setItem("planetaryBraceLength", planetaryBrace);
   }
   // window.location.href="./jsPDF/parts.html"
+  // navigate the window to the parts.html page and open it in a new tab
   window.open("./jsPDF/parts.html", '_blank');
 }

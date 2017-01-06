@@ -42,13 +42,13 @@
         <a id = "three-href" href = "flapping.php"><div class="box"><div><p id = "three">Flapping</p></div><img id = "three-img" src="img/flapping2.gif"></div></a>
         <span class="stretch"></span>
         <br>
-        <a id = "four-href" href = "rotate.php"><div class="box"><div><p id = "four">Rotate</p></div><img id = "four-img" src="img/rotate3.gif"></div></a>
-        <a id = "five-href" href = "#"><div class="box"><div><p id = "five">Walking</p></div><img id = "five-img" src="img/front_motion_walk.png"></div></a>
-        <a id = "six-href" style = "visibility:hidden;" href = "#"><div class="box"><div><p id = "six">Jansen Mechanism</p></div><img id = "seven-img" src="img/front_motion_walk.png"></div></a>
+        <a id = "four-href" href = "rotate.php"><div class="box"><div><p id = "four">Rotating</p></div><img id = "four-img" src="img/rotate3.gif"></div></a>
+        <a id = "five-href" href = "walking.php"><div class="box"><div><p id = "five">Walking</p></div><img id = "five-img" src="img/front_motion_walk.png"></div></a>
+        <a id = "six-href" style = "visibility:hidden;" href = "walking.php"><div class="box"><div><p id = "six">Jansen Mechanism</p></div><img id = "seven-img" src="img/front_motion_walk.png"></div></a>
         <span class="stretch"></span>
         <br>
         <a id = "custom-button" href = "#"><div class="rectangle"><div><p id = "five">Create Your Own Machine!</p></div></div></a>
-        
+
     </div>
     <script type="text/javascript" src = "js/create.js"></script>
   </body>

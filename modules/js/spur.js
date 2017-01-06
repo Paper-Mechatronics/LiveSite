@@ -1,10 +1,14 @@
+// module/submodule indicator
 spurModule = true;
 var flapMode = true;
 var rotateMode = false;
+var c = 300
+var c2 = -c
 var originalWidth1;
 var originalWidth2
 module.horizontalSpace = 0
 module.connectorLength = 300
+// change the gear body for spur/rotating motion
 function changeBodyRotate(index){
   for(var i=0; i<1;i++){
     if(compositeArray[index].bodies[1]){
@@ -41,6 +45,7 @@ function changeBodyRotate(index){
     }
   }
 }
+// change gear body for flapping motion
 function changeBodyFlap(index){
   for(var i=0; i<1;i++){
     if(compositeArray[index].bodies[1]){
@@ -74,16 +79,24 @@ function changeBodyFlap(index){
   }
   
 }
+///////////////////////////GEAR SIZES////////////////////////////////////////
+/////ROTATING SPUR MOTION///////////////////
 function smallGear1(){
+  // reset angle
   Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
+  // change radius
   radius = 48;
+  // store radius
   compositeArray[0].radius = radius
+  // change num of steps
   steps = (0.25 * radius)*2;
   toothWidthDegree = 4;
   toothWidth = (toothWidthDegree/conversionFactor);
+  // draw and add new gear
   changeBodyRotate(0);  
 }
+// see smallGear1()
 function mediumGear1(){
   Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
@@ -94,6 +107,7 @@ function mediumGear1(){
   toothWidth = (toothWidthDegree/conversionFactor);
   changeBodyRotate(0);
 }
+// see smallGear1()
 function largeGear1(){
   Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
@@ -104,6 +118,7 @@ function largeGear1(){
   toothWidth = (toothWidthDegree/conversionFactor);
   changeBodyRotate(0);
 }
+// see smallGear1()
 function smallGear2(){
   Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
@@ -116,6 +131,7 @@ function smallGear2(){
   removeComposite(compositeArray[3].bodies[0])
   addRotateRect(module.spurBeamLength+150,10,compositeArray[2].constraints[0].pointA.x,compositeArray[2].constraints[0].pointA.y)
 }
+// see smallGear1()
 function mediumGear2(){
   Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
@@ -128,6 +144,7 @@ function mediumGear2(){
   removeComposite(compositeArray[3].bodies[0])
   addRotateRect(module.spurBeamLength+150,10,compositeArray[2].constraints[0].pointA.x,compositeArray[2].constraints[0].pointA.y)
 }
+// see smallGear1()
 function largeGear2(){
   Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
@@ -140,6 +157,7 @@ function largeGear2(){
   removeComposite(compositeArray[3].bodies[0])
   addRotateRect(module.spurBeamLength+150,10,compositeArray[2].constraints[0].pointA.x,compositeArray[2].constraints[0].pointA.y)
 }
+// see smallGear1()
 function smallGear3(){
   Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
@@ -152,6 +170,7 @@ function smallGear3(){
   removeComposite(compositeArray[3].bodies[0])
   addRotateRect(module.spurBeamLength+150,10,compositeArray[2].constraints[0].pointA.x,compositeArray[2].constraints[0].pointA.y)
 }
+// see smallGear1()
 function mediumGear3(){
   Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
@@ -164,6 +183,7 @@ function mediumGear3(){
   removeComposite(compositeArray[3].bodies[0])
   addRotateRect(module.spurBeamLength+150,10,compositeArray[2].constraints[0].pointA.x,compositeArray[2].constraints[0].pointA.y)
 }
+// see smallGear1()
 function largeGear3(){
   Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
@@ -176,6 +196,9 @@ function largeGear3(){
   removeComposite(compositeArray[3].bodies[0])
   addRotateRect(module.spurBeamLength+150,10,compositeArray[2].constraints[0].pointA.x,compositeArray[2].constraints[0].pointA.y)
 }
+////////////////////////////////////////////////////
+///////Flapping Spur Motion/////////////////////////
+// see smallGear1()
 function smallGearL(){
   deleteConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
   Body.setAngle(compositeArray[0].bodies[0], 0)
@@ -187,9 +210,8 @@ function smallGearL(){
   toothWidth = (toothWidthDegree/conversionFactor);
   changeBodyFlap(0);
   createConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
-  
-  
 }
+// see smallGear1()
 function mediumGearL(){
   deleteConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
   Body.setAngle(compositeArray[0].bodies[0], 0)
@@ -203,6 +225,7 @@ function mediumGearL(){
   createConstraintFake2(compositeArray[0].bodies[0], compositeArray[3].bodies[0], beamWidthChange, originalWidth2)
   createConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
 }
+// see smallGear1()
 function largeGearL(){
   deleteConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
   Body.setAngle(compositeArray[0].bodies[0], 0)
@@ -216,6 +239,7 @@ function largeGearL(){
   createConstraintFake2(compositeArray[0].bodies[0], compositeArray[3].bodies[0], beamWidthChange, originalWidth2)
   createConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
 }
+// see smallGear1()
 function smallGearR(){
   deleteConstraint(compositeArray[1].bodies[0], compositeArray[2].bodies[0])
   Body.setAngle(compositeArray[0].bodies[0], 0)
@@ -228,6 +252,7 @@ function smallGearR(){
   changeBodyFlap(1);
   createConstraint3(compositeArray[1].bodies[0], compositeArray[2].bodies[0])  
 }
+// see smallGear1()
 function mediumGearR(){
   deleteConstraint(compositeArray[1].bodies[0], compositeArray[2].bodies[0])
   Body.setAngle(compositeArray[0].bodies[0], 0)
@@ -240,6 +265,7 @@ function mediumGearR(){
   changeBodyFlap(1);
   createConstraint3(compositeArray[1].bodies[0], compositeArray[2].bodies[0])  
 }
+// see smallGear1()
 function largeGearR(){
   deleteConstraint(compositeArray[1].bodies[0], compositeArray[2].bodies[0])
   Body.setAngle(compositeArray[0].bodies[0], 0)
@@ -252,6 +278,8 @@ function largeGearR(){
   changeBodyFlap(1);
   createConstraint3(compositeArray[1].bodies[0], compositeArray[2].bodies[0])
 }
+///////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 function motorL(){
   Body.setAngle(compositeArray[0].bodies[0], 0)
   Body.setAngle(compositeArray[1].bodies[0], 0)
@@ -264,60 +292,32 @@ function motorR(){
   compositeArray[0].isMotor = false;
   compositeArray[1].isMotor = true;
 }
-var c = 300
-var prevSpaceValue = 50;
-var changeSpaceWidth = 0;
-var spaceValue = 50
-function beamSpacing(value){
-  if(compositeArray[2] && compositeArray[3]){
-    Body.setAngle(compositeArray[0].bodies[0], 0)
-    Body.setAngle(compositeArray[1].bodies[0], 0)
-    changeSpaceWidth = value - prevSpaceValue
-    compositeArray[2].constraints[0].pointA.x = compositeArray[2].constraints[0].pointA.x + changeSpaceWidth
-    compositeArray[3].constraints[0].pointA.x = compositeArray[3].constraints[0].pointA.x + (changeSpaceWidth*-1)
-    prevSpaceValue = value
-    beamSpace = parseInt(value);
-  }
-  console.log("BeamSpace Value = " + value)
-  console.log(compositeArray[2].bodies[0].angle)
-  console.log(compositeArray[3].bodies[0].angle)
-  
-}
-var prevPivotValue = 80;
-var initialPivotValue = 100;
-var pivotValue = 80;
-var changePivotHeight;
-
-function constraintPosition(value){
-  deleteConstraint(compositeArray[2].bodies[0], compositeArray[1].bodies[0])
-  deleteConstraint(compositeArray[3].bodies[0], compositeArray[0].bodies[0])
-  compositeArray[2].width = originalWidth1 - value
-  compositeArray[3].width = originalWidth2 - (-value)
-  createConstraintFlap(compositeArray[0].bodies[0], compositeArray[3].bodies[0], value, originalWidth2)
-  createConstraintFlap(compositeArray[1].bodies[0], compositeArray[2].bodies[0], -value, originalWidth1)
-  console.log("constraintPosition Value = " + value)
-  
-}
-
+// change module when dropdown changes
 function changeMotion(){
   var string = document.getElementById("changeMotion").value;
   if(string == "flapping"){
+    // set new module indicators
     rotateMode = false;
     flapMode = true;
+    // remove all composites in sim
     removeComposite(compositeArray[0].bodies[0])
     removeComposite(compositeArray[0].bodies[0])
     removeComposite(compositeArray[0].bodies[0])
     removeComposite(compositeArray[0].bodies[0])
     var width = 300;
     rectBase = 300
+    // add new gears and beams
     addGearComposite((window.innerWidth)*(0.75*0.5)-(radius+(toothHeight*0.6)), (window.innerHeight)*(0.65));
     addGearComposite((window.innerWidth)*(0.75*0.5)+(radius+(toothHeight*0.6)), (window.innerHeight)*(0.65));
     addFlapRectComposite((window.innerWidth)*(0.75*0.5)+((width/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87-36.751+150,7,150,50,300)
     addFlapRectComposite((window.innerWidth)*(0.75*0.5)-((width/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87-36.751+150,7,150,-50,-300)
+    // store original beam width values
     originalWidth1 = compositeArray[2].width
     originalWidth2 = compositeArray[3].width
+    // create linkage constraints
     createConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
     createConstraint3(compositeArray[1].bodies[0], compositeArray[2].bodies[0])
+    // set object motor properties
     compositeArray[1].isMotor = true;
     compositeArray[1].motorSpeed = 0.051;
     compositeArray[0].motorSpeed = 0.051;
@@ -326,16 +326,20 @@ function changeMotion(){
     flapBeamSpaceUpdate()
   }
   else if(string == "rotate"){
+    // set module indicators
     flapMode = false;
     rotateMode = true;
+    // remove all composites from sim
     removeComposite(compositeArray[0].bodies[0])
     removeComposite(compositeArray[0].bodies[0])
     removeComposite(compositeArray[0].bodies[0])
     removeComposite(compositeArray[0].bodies[0])
+    // add new gears and beam
     addGearComposite((window.innerWidth)*(0.75*0.45)-(radius+(toothHeight*0.6)), (window.innerHeight)*(0.65));
     addGearComposite((window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*0.6)), (window.innerHeight)*(0.65));
     addGearComposite((window.innerWidth)*(0.75*0.45)+((radius+(toothHeight*0.6))*3), (window.innerHeight)*(0.65));
     addRotateRect(150,10,compositeArray[2].constraints[0].pointA.x,compositeArray[2].constraints[0].pointA.y)
+    // set object motor properties
     compositeArray[0].isMotor = true;
     compositeArray[1].motorSpeed = 0.051;
     compositeArray[0].motorSpeed = 0.051;
@@ -344,8 +348,9 @@ function changeMotion(){
   }
 }
 
-var c2 = -c
+
 Events.on(engine, 'afterUpdate', function(event) {
+  // calculate rotation of flap beams 
   if(flapMode){
     var gear2CenterY = compositeArray[1].bodies[0].position.y
     var gear2CenterX = compositeArray[1].bodies[0].position.x
@@ -379,10 +384,6 @@ Events.on(engine, 'afterUpdate', function(event) {
     var d = Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
     flapConnectorR = Math.sqrt((x3-x4)*(x3-x4) + (y3-y4)*(y3-y4));
     flapConnectorL = d
-    // console.log(flapConnectorR)
-    // console.log(flapConnectorL)
-    // console.log(c)
-    // console.log(c2)
     var b = Math.sqrt((gear1ConstraintX-rect1ConstraintX)*(gear1ConstraintX-rect1ConstraintX) + (gear1ConstraintY-rect1ConstraintY)*(gear1ConstraintY-rect1ConstraintY) );
     var b2 = (Math.sqrt( (gear2ConstraintX-rect2ConstraintX)*(gear2ConstraintX-rect2ConstraintX) + (gear2ConstraintY-rect2ConstraintY)*(gear2ConstraintY-rect2ConstraintY) ))
     var a = 300 + module.flapBeamWidthL
@@ -407,14 +408,18 @@ Events.on(engine, 'afterUpdate', function(event) {
 ////////////////////// RUN /////////////////////////////
 var width = 300;
 rectBase = 300
+// add composites when code first runs
 addGearComposite((window.innerWidth)*(0.75*0.5)-(radius+(toothHeight*0.6)), (window.innerHeight)*(0.65));
 addGearComposite((window.innerWidth)*(0.75*0.5)+(radius+(toothHeight*0.6)), (window.innerHeight)*(0.65));
 addFlapRectComposite((window.innerWidth)*(0.75*0.5)+((width/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87-36.751+150,7,150,50,300)
 addFlapRectComposite((window.innerWidth)*(0.75*0.5)-((width/2)+60),compositeArray[0].constraints[0].pointA.y-rectBase-87-36.751+150,7,150,-50,-300)
+// store original beam widths
 originalWidth1 = compositeArray[2].width
 originalWidth2 = compositeArray[3].width
+// create linkage constraints
 createConstraint(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
 createConstraint3(compositeArray[1].bodies[0], compositeArray[2].bodies[0])
+// set object motor properties
 compositeArray[1].isMotor = true;
 compositeArray[1].motorSpeed = 0.051;
 compositeArray[0].motorSpeed = 0.051;
@@ -426,8 +431,3 @@ flapBeamSpaceUpdate()
 Render.run(render);
 // Runner.run(engine);
 Runner.start(runner, engine)
-console.log(compositeArray[2].bodies[0])
-
-// addGearComposite((window.innerWidth)*(0.75*0.45)-(radius+(toothHeight*0.6)), (window.innerHeight)*(0.65));
-// addGearComposite((window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*0.6)), (window.innerHeight)*(0.65));
-// addGearComposite((window.innerWidth)*(0.75*0.45)+((radius+(toothHeight*0.6))*3), (window.innerHeight)*(0.65));

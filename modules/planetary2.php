@@ -39,12 +39,12 @@ else{
             <p>Planetary Gear +</p>
             <select class = "rendering">
                 <option value="link_gear">Rotate</option>
-            </select> 
+            </select>
         </div>
-        
+
         <div class = "controls-dark">
             <div>
-                <p>Motor Gear Size:</p>
+                <p>Rotating (Planet) Gear Size:</p>
                 <br>
                 <button class = "gear-size object btn btn-primary" type="button" id="setSmallGear1P" onclick="smallGear1()">1</button>
                 <button class = "gear-size object btn btn-primary" type="button" id="setMedGear1P" onclick="mediumGear1()">2</button>
@@ -52,7 +52,7 @@ else{
             </div>
             <br>
             <div>
-                <p>Static Gear Size:</p>
+                <p>Static (Sun) Gear Size:</p>
                 <br>
                 <button class = "gear-size object btn btn-primary" type="button" id="setSmallGear2P" onclick="smallGear2()">1</button>
                 <button class = "gear-size object btn btn-primary" type="button" id="setMedGear2P" onclick="mediumGear2()">2</button>
@@ -80,7 +80,7 @@ else{
             <br>
                 <button class = "object btn btn-primary" type="button" id="alternate" onclick="startRunner()">Start</button>
                 <button class = "object btn btn-primary" type="button" id="continuous" onclick="stopRunner()">Stop</button>
-            
+
             </div>-->
         </div>
         <div class = "footer">
@@ -111,18 +111,18 @@ else{
     <!--<button type="button" id="rotate" onclick="overlay3()">Set Angle</button>-->
     <!--<div  id = "codeBlock">
         <pre>
-        #include <Servo.h> 
+        #include <Servo.h>
 
         Servo myservo;
 
-        void setup() 
-        { 
+        void setup()
+        {
           myservo.attach(9);
           myservo.write(90);  // set servo to mid-point
-        } 
+        }
 
-        void loop() {} 
-        </pre> 
+        void loop() {}
+        </pre>
     <div>-->
 
 

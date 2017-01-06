@@ -1,3 +1,4 @@
+// module indicator and base variables
 rackPinionModule = true;
 var c = 369
 var rectBase = 600
@@ -7,6 +8,7 @@ var newWidth1
 var newWidth2
 module.verticalSpace = 0
 // generate small gear
+///////////////////////////GEAR SIZE///////////////////////////////////
 function smallGear(){
   angleFactor = 0.21
   deleteConstraint(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
@@ -155,63 +157,73 @@ function largeGear(){
   }
   
 }
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+// change simulation when dropdown changes
 function changeMotion(){
   var string = document.getElementById("changeMotion").value;
   if(string == "upDown"){
-    // removeUIConstraints(compositeArray[0])
-    // removeUIConstraints(compositeArray[0])
+    // reset and remove all constraints
     reset()
-    // createUIConstraints(compositeArray[0], 50, 100,6)
-    // removeUIConstraints(compositeArray[0])
     removeUIConstraints(compositeArray[0])
-    // createUiconstraintsSingle(compositeArray[0], prevSpaceValue, prevPivotValue,6)
     deleteConstraint(compositeArray[3].bodies[0], compositeArray[0].bodies[0])
     deleteConstraint(compositeArray[2].bodies[0], compositeArray[0].bodies[0])
     for(var i = compositeArray.length-1; i>1; i--){
       removeComposite(compositeArray[i].bodies[0])
     }
+    // set all variables back to original values
     shared = false;
     paired = false;
     mirrored = false;
     openCloseMod = false;
+    // reset angle
     Body.setAngle(compositeArray[1].bodies[0], 0)
+    // set constraint positions
     compositeArray[1].constraints[0].pointA.y = (window.innerHeight)*(0.5)
     compositeArray[0].constraints[0].pointA.y = (window.innerHeight)*(0.5)
     compositeArray[1].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*1.8))
     compositeArray[0].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)
+    // set positions
     Body.setPosition(compositeArray[1].bodies[0], {x:(window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*1.8)), y:(window.innerHeight)*(0.5)})
     Body.setPosition(compositeArray[0].bodies[0], {x:compositeArray[0].bodies[0].position.x, y:(window.innerHeight)*(0.5)+130})
     compositeArray[0].constraints[0].stiffness = 0.001
   }
   else if(string == "openClose"){
+    // reset everything
     reset()
-    // removeUIconstraintsSingle(compositeArray[0])
+    // create constraints between ui components
     createUIConstraints(compositeArray[0], prevSpaceValue, prevPivotValue,6)
     for(var i = compositeArray.length-1; i>1; i--){
       removeComposite(compositeArray[i].bodies[0])
     }
+    // reset variables
     shared = false;
     paired = false;
     mirrored = false;
     openCloseMod = true;
+    // reset angle
     Body.setAngle(compositeArray[1].bodies[0], 0)
+    // set constraint positions 
     compositeArray[1].constraints[0].pointA.y = (window.innerHeight)*(0.5)
     compositeArray[0].constraints[0].pointA.y = (window.innerHeight)*(0.5)
+    // set body positions
     Body.setPosition(compositeArray[1].bodies[0], {x:(window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*1.8)), y:(window.innerHeight)*(0.5)})
     Body.setPosition(compositeArray[0].bodies[0], {x:compositeArray[0].bodies[0].position.x, y:(window.innerHeight)*(0.5)+130})
     compositeArray[0].constraints[0].stiffness = 0.001
+    // add new open close beams
     addRectComposite((300), 5,(window.innerWidth)*(0.75*0.45)-200,compositeArray[0].constraints[0].pointA.y-rectBase)
     addRectComposite((-300), 5,(window.innerWidth)*(0.75*0.45)+200,compositeArray[0].constraints[0].pointA.y-rectBase)
+    // store original beam widths
     originalWidth1 = compositeArray[2].width
     originalWidth2 = compositeArray[3].width
     newWidth1 = originalWidth1
     newWidth2 = originalWidth2
+    // create linkage constraints from beams
     createConstraintFake(compositeArray[0].bodies[0], compositeArray[2].bodies[0])
     createConstraintFake(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
   }
   
 }
+// display new window when you try to mirror
 function mirrorModal(){
   flipLabel = document.getElementById("flipYLabel");
   flipCheck = document.getElementById("flipYCheck");
@@ -230,96 +242,129 @@ function mirrorModal(){
     }
   }
 }
+// function to mirror the current simulation
+// paired = new gear and lingear set
+// shared = share same gear but new lingear
 function mirror(){
   mirrored = true;
   if (openCloseMod != true){
+    // check modal to see if paired is checked 
     if(document.getElementById('paired').checked) {
       paired = true;
+      // set new constraints positions
       compositeArray[0].constraints[0].pointA.x = compositeArray[0].constraints[0].pointA.x-(radius + toothHeight/2)
       compositeArray[1].constraints[0].pointA.x = compositeArray[1].constraints[0].pointA.x-(radius + toothHeight/2)
+      // set new body positions and angles
       Body.setPosition(compositeArray[0].bodies[0], {x:compositeArray[0].constraints[0].pointA.x, y:compositeArray[0].constraints[0].pointA.y+130})
       Body.setAngle(compositeArray[1].bodies[0], 0)
       Body.setPosition(compositeArray[1].bodies[0], {x:compositeArray[1].constraints[0].pointA.x, y:compositeArray[1].constraints[0].pointA.y})
+      // add new gear composite
       addGearComposite((window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*1.8))+(radius + toothHeight/2) ,compositeArray[0].constraints[0].pointA.y)
+      // set if real motor or fake motor
       compositeArray[compositeArray.length-1].realMotor = false;
+      // set angle of new gear
       Body.setAngle(compositeArray[compositeArray.length-1].bodies[0], Math.PI)
+      // set motor properties of new gear
       compositeArray[compositeArray.length-1].alternate = true;
       compositeArray[compositeArray.length-1].isMotor = true;
+      // add new lingear composite
       addLinGearComposite(compositeArray[1].bodies[0].position.x+(radius*3)+(toothHeight*2)+15,(window.innerHeight)*(0.5))
+      // set position and rotation of new lingear
       Body.setPosition(compositeArray[compositeArray.length-1].bodies[0], {x:compositeArray[compositeArray.length-1].constraints[0].pointA.x, y:(window.innerHeight)*(0.5)+130})
       compositeArray[compositeArray.length-1].rotation = Math.PI
-      // createUiconstraintsSingle(compositeArray[compositeArray.length-1], prevSpaceValue, prevPivotValue,6)
 
     }else if(document.getElementById('shared').checked) {
+      // if shared checked
       shared = true;
+      // reset angle
       Body.setAngle(compositeArray[1].bodies[0], 0)
+      // set new constraint position
       compositeArray[0].constraints[0].pointA.y = compositeArray[1].constraints[0].pointA.y
+      // set new body position
       Body.setPosition(compositeArray[0].bodies[0], {x:compositeArray[0].bodies[0].position.x, y:compositeArray[1].constraints[0].pointA.y+130})
+      // add new lingear
       addLinGearComposite((window.innerWidth)*(0.75*0.45)+(radius*2)+(toothHeight*2)+25,compositeArray[1].constraints[0].pointA.y)
+      // set lingear positoin
       Body.setPosition(compositeArray[compositeArray.length-1].bodies[0], {x:compositeArray[compositeArray.length-1].bodies[0].position.x, y:compositeArray[1].constraints[0].pointA.y-130})
+      // set lin gear rotation
       compositeArray[compositeArray.length-1].rotation = Math.PI
+      // create new ui objects
       createUIConstraintsMirrorSingle(compositeArray[compositeArray.length-1], prevSpaceValue, prevPivotValue, 6)
     }
   }
   else{
+    // if paired is checked and open close module
     if(document.getElementById('paired').checked) {
       paired = true;
+      // set new constraint positions
       compositeArray[0].constraints[0].pointA.x = compositeArray[0].constraints[0].pointA.x-(radius + toothHeight/2)
       compositeArray[1].constraints[0].pointA.x = compositeArray[1].constraints[0].pointA.x-(radius + toothHeight/2)
-      // if(compositeArray[2] && compositeArray[3]){
-      //   compositeArray[2].constraints[0].pointA.x = compositeArray[2].constraints[0].pointA.x-(radius + toothHeight/2)
-      //   compositeArray[3].constraints[0].pointA.x = compositeArray[3].constraints[0].pointA.x-(radius + toothHeight/2)
-      // }
+      // set new body positions and angles
       Body.setPosition(compositeArray[0].bodies[0], {x:compositeArray[0].constraints[0].pointA.x, y:compositeArray[0].constraints[0].pointA.y+130})
       Body.setAngle(compositeArray[1].bodies[0], 0)
       Body.setPosition(compositeArray[1].bodies[0], {x:compositeArray[1].constraints[0].pointA.x, y:compositeArray[1].constraints[0].pointA.y})
+      // add new gear composite
       addGearComposite((window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*1.8))+(radius + toothHeight/2) ,compositeArray[0].constraints[0].pointA.y)
+      // set gear as not real motor
       compositeArray[compositeArray.length-1].realMotor = false;
+      // set gear angle
       Body.setAngle(compositeArray[compositeArray.length-1].bodies[0], Math.PI)
+      // set motor properties
       compositeArray[compositeArray.length-1].alternate = true;
       compositeArray[compositeArray.length-1].isMotor = true;
+      // add new lin gear
       addLinGearComposite(compositeArray[1].bodies[0].position.x+(radius*3)+(toothHeight*2)+15,compositeArray[0].constraints[0].pointA.y)
+      // set position of new lingear
       Body.setPosition(compositeArray[compositeArray.length-1].bodies[0], {x:compositeArray[compositeArray.length-1].constraints[0].pointA.x, y:compositeArray[0].constraints[0].pointA.x})
+      // set rotation of lingear
       compositeArray[compositeArray.length-1].rotation = Math.PI
+      // if flip checked
       if(document.getElementById('flipYCheck').checked){
         flipY = true;
+        // add new open close beams
         addRectComposite(300, 5,compositeArray[compositeArray.length-1].constraints[0].pointA.x-200,compositeArray[1].constraints[0].pointA.y+600)
         addRectComposite(-300, 5,compositeArray[compositeArray.length-2].constraints[0].pointA.x+200,compositeArray[1].constraints[0].pointA.y+600)
+        // create new linkage constraints between open close beams
         createConstraintFakeRP(compositeArray[compositeArray.length-3].bodies[0], compositeArray[compositeArray.length-1].bodies[0])
         createConstraintFakeRP(compositeArray[compositeArray.length-3].bodies[0], compositeArray[compositeArray.length-2].bodies[0])
+        // add ui constraints
         createUIConstraints(compositeArray[compositeArray.length-3], prevSpaceValue, prevPivotValue,6)
-      }
-      else{
-        // createUIConstraints(compositeArray[compositeArray.length-1], prevSpaceValue, prevPivotValue,6)
       }
 
 
 
     }else if(document.getElementById('shared').checked) {
+      // if shared and open close
       shared = true;
+      // reset angle
       Body.setAngle(compositeArray[1].bodies[0], 0)
       Body.setPosition(compositeArray[0].bodies[0], {x:compositeArray[0].bodies[0].position.x, y:(window.innerHeight)*(0.5)+130})
+      // add new lingear composite
       addLinGearComposite((window.innerWidth)*(0.75*0.45)+(radius*2)+(toothHeight*2)+25,compositeArray[1].constraints[0].pointA.y)
       Body.setPosition(compositeArray[compositeArray.length-1].bodies[0], {x:compositeArray[compositeArray.length-1].bodies[0].position.x, y:(window.innerHeight)*(0.5)-130})
+      // set rotation of lingear
       compositeArray[compositeArray.length-1].rotation = Math.PI
-      //Body.setAngle(compositeArray[compositeArray.length-1].bodies[0], Math.PI)
+      // if flip is checked from modal
       if(document.getElementById('flipYCheck').checked){
         flipY = true;
+        // add new open close rect beams
         addRectComposite(300, 5,compositeArray[compositeArray.length-1].constraints[0].pointA.x-200,compositeArray[1].constraints[0].pointA.y+600)
         addRectComposite(-300, 5,compositeArray[compositeArray.length-2].constraints[0].pointA.x+200,compositeArray[1].constraints[0].pointA.y+600)
+        // create new rect linkage constraints
         createConstraintFakeRP(compositeArray[compositeArray.length-3].bodies[0], compositeArray[compositeArray.length-1].bodies[0])
         createConstraintFakeRP(compositeArray[compositeArray.length-3].bodies[0], compositeArray[compositeArray.length-2].bodies[0])
+        // create ui constraints
         createUIConstraints(compositeArray[compositeArray.length-3], prevSpaceValue, prevPivotValue,6)
-      }
-      else{
-        // createUIConstraints(compositeArray[compositeArray.length-1], prevSpaceValue, prevPivotValue,6)
       }
     }
   }
+  // close modal
   overlay3();
   
 }
+// reset all objects in simulation
 function reset(){
+  // reset variables
   prevSpaceValue = 50
   module.horizontalSpace = 50
   prevPivotValue = 0
@@ -330,20 +375,24 @@ function reset(){
   flipY = false;
   modified = false;
   alternatingGear()
-  // largeGear()
   
   if(openCloseMod == true){
     beamSpacing(50)
+    // remove ui parts
     removeUIConstraints(compositeArray[0])
+    // delete all constraints
     deleteConstraint(compositeArray[compositeArray.length-1].bodies[0], compositeArray[compositeArray.length-3].bodies[0])
     deleteConstraint(compositeArray[compositeArray.length-2].bodies[0], compositeArray[compositeArray.length-3].bodies[0])
     deleteConstraint(compositeArray[3].bodies[0], compositeArray[0].bodies[0])
     deleteConstraint(compositeArray[2].bodies[0], compositeArray[0].bodies[0])
     deleteConstraint(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
+    // remove composites
     for(var i = compositeArray.length-1; i>1; i--){
       removeComposite(compositeArray[i].bodies[0])
     }
+    // reset angles
     Body.setAngle(compositeArray[1].bodies[0], 0)
+    // reset positions
     compositeArray[1].constraints[0].pointA.y = (window.innerHeight)*(0.5)
     compositeArray[0].constraints[0].pointA.y = (window.innerHeight)*(0.5)
     compositeArray[1].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*1.8))
@@ -351,26 +400,31 @@ function reset(){
     Body.setPosition(compositeArray[1].bodies[0], {x:(window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*1.8)), y:(window.innerHeight)*(0.5)})
     Body.setPosition(compositeArray[0].bodies[0], {x:compositeArray[0].bodies[0].position.x, y:(window.innerHeight)*(0.5)+130})
     compositeArray[0].constraints[0].stiffness = 0.001
+    // add new open close beams
     addRectComposite(300, 5,(window.innerWidth)*(0.75*0.45)-200,compositeArray[1].constraints[0].pointA.y-600)
     addRectComposite(-300, 5,(window.innerWidth)*(0.75*0.45)+200,compositeArray[1].constraints[0].pointA.y-600)
+    // create new linkage constraints
     createConstraintFake(compositeArray[0].bodies[0], compositeArray[2].bodies[0])
     createConstraintFake(compositeArray[0].bodies[0], compositeArray[3].bodies[0])
+    // add ui objects
     createUIConstraints(compositeArray[0], 50, 100,6)
   }
   else{
-    // removeUIconstraintsSingle(compositeArray[0])
+    // remove composites
     for(var i = compositeArray.length-1; i>1; i--){
       removeComposite(compositeArray[i].bodies[0])
     }
+    // reset angles
     Body.setAngle(compositeArray[1].bodies[0], 0)
+    // reset constraint positions
     compositeArray[1].constraints[0].pointA.y = (window.innerHeight)*(0.5)
     compositeArray[0].constraints[0].pointA.y = (window.innerHeight)*(0.5)
     compositeArray[1].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*1.8))
     compositeArray[0].constraints[0].pointA.x = (window.innerWidth)*(0.75*0.45)
+    // set new positions
     Body.setPosition(compositeArray[1].bodies[0], {x:(window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*1.8)), y:(window.innerHeight)*(0.5)})
     Body.setPosition(compositeArray[0].bodies[0], {x:compositeArray[0].bodies[0].position.x, y:(window.innerHeight)*(0.5)+130})
     compositeArray[0].constraints[0].stiffness = 0.001
-    // createUiconstraintsSingle(compositeArray[0], 50, 100,6)
   }
 }
 function resetModule(){
@@ -383,11 +437,6 @@ function continuous(){
     Body.setPosition(compositeArray[0].bodies[0], {x:compositeArray[0].constraints[0].pointA.x, y:compositeArray[0].constraints[0].pointA.y+130})
     compositeArray[0].constraints[0].stiffness = 0.001
     compositeArray[1].motorDir = 1;
-    // if(compositeArray[2]){
-    //   compositeArray[2].constraints[0].stiffness = 0.001
-    // }
-    // document.getElementById("mirror").disabled = true;
-    // engine.world.gravity.y = 0.3;
 }
 function alternatingGear(){
   document.getElementById("mirror").disabled = false;
@@ -397,11 +446,10 @@ function alternatingGear(){
     compositeArray[1].alternate = true;
     compositeArray[0].constraints[0].stiffness = 0.00001
     compositeArray[1].motorDir = 1;
-  // engine.world.gravity.y = 0.3;
 }
 //////////////////////// ADD TO WORLD //////////////////////
 
-
+// horizontal spacing
 var prevSpaceValue = 50;
 var changeSpaceWidth = 0;
 var spaceValue = 50
@@ -460,6 +508,7 @@ function beamSpacing(value){
   }
   
 }
+// vertical spacing
 var prevPivotValue = 100;
 var initialPivotValue = 100;
 var pivotValue = 100;
@@ -468,13 +517,6 @@ function pivotHeight(value){
   if(openCloseMod){
     if(compositeArray[2] && compositeArray[3]){
       changePivotHeight = value - prevPivotValue
-      // if(openCloseModule){
-      //   if(crankMod){
-      //     deleteConstraint(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
-      //     compositeArray[0].constraints[0].pointA.y = compositeArray[0].constraints[0].pointA.y - changePivotHeight
-      //     createConstraint2(compositeArray[1].bodies[0], compositeArray[0].bodies[0])
-      //   }
-      // }
       if(flipY){
         jointComposites[jointComposites.length-1].constraints[0].pointA.y = jointComposites[jointComposites.length-1].constraints[0].pointA.y + changePivotHeight
         jointComposites[jointComposites.length-2].constraints[0].pointA.y = jointComposites[jointComposites.length-2].constraints[0].pointA.y + changePivotHeight
@@ -487,18 +529,14 @@ function pivotHeight(value){
       }
       prevPivotValue = value
       pivotValue = value
-      // rotationPoint = value/150
       console.log("Pivot Value = " + value)
 
     }
   }
   else{
     changePivotHeight = value - prevPivotValue
-    // jointComposites[totalJointComposites-1].constraints[0].pointA.y = jointComposites[totalJointComposites-1].constraints[0].pointA.y - changePivotHeight
-    // jointComposites[totalJointComposites-2].constraints[0].pointA.y = jointComposites[totalJointComposites-2].constraints[0].pointA.y - changePivotHeight
     prevPivotValue = value
     pivotValue = value
-    // rotationPoint = value/150
     console.log("Pivot Value = " + value)
   }
   compositeArray[0].constraints[2].render.lineWidth = 2
@@ -516,7 +554,7 @@ function pivotHeight(value){
   
 }
 
-
+// constraint position along beam
 function constraintPosition(value){
   if (openCloseMod){
     deleteConstraint(compositeArray[2].bodies[0], compositeArray[0].bodies[0])
@@ -551,25 +589,10 @@ function constraintPosition(value){
 ///////////////// Animation /////////////////////////////////////
 
 Events.on(engine, 'beforeUpdate', function(event) {
-
-    if(openCloseMod == true){
-      // compositeArray[2].constraints[0].pointA.x = compositeArray[0].constraints[0].pointA.x -25
-      // compositeArray[3].constraints[0].pointA.x = compositeArray[0].constraints[0].pointA.x +25
-      if(flipY == true ){
-        if(paired ==true){
-          // compositeArray[compositeArray.length-2].constraints[0].pointA.x = compositeArray[5].constraints[0].pointA.x -25
-          // compositeArray[compositeArray.length-1].constraints[0].pointA.x = compositeArray[5].constraints[0].pointA.x +25
-        }
-        if(shared ==true){
-          // compositeArray[compositeArray.length-2].constraints[0].pointA.x = compositeArray[4].constraints[0].pointA.x -25
-          // compositeArray[compositeArray.length-1].constraints[0].pointA.x = compositeArray[4].constraints[0].pointA.x +25
-        }
-      }
-    }
 })
 // called every frame after physics is applied
 // same as above
-
+// calculate angle to rotate open close beams
 Events.on(engine, 'afterUpdate', function(event) {
   if(openCloseMod == true){
     var bottom = compositeArray[0].constraints[0].pointA.y - 600
@@ -578,10 +601,8 @@ Events.on(engine, 'afterUpdate', function(event) {
     var rectWidth = compositeArray[2].width
     var b = top  - bottom
     var a = compositeArray[2].width
-    // var c = Math.sqrt((rectWidth*rectWidth)+(pivotSpace*pivotSpace))
     var angleC = Math.acos(((a*a)+(b*b)-(c*c))/(2*a*b))
     var degrees = angleC * (180/Math.PI)
-    //console.log(((a*a)+(b*b)-(c*c))/(2*a*b))
     if(angleC){
       Body.setAngle(compositeArray[2].bodies[0], angleC - 1.5708 );
       Body.setAngle(compositeArray[3].bodies[0], -(angleC - 1.5708));
@@ -590,22 +611,15 @@ Events.on(engine, 'afterUpdate', function(event) {
         var top2 = compositeArray[compositeArray.length-3].bodies[0].position.y + 200 + pivotValue
         var b2 = bottom2 - top2
         var a2 = compositeArray[compositeArray.length-1].width
-        // var c = Math.sqrt((rectWidth*rectWidth)+(pivotSpace*pivotSpace))
         var angleC2 = Math.acos(((a2*a2)+(b2*b2)-(c*c))/(2*a2*b2))
-        // if(compositeArray[compositeArray.length-1].width != originalWidth1){
-        //     angleC2 = angleC
-        //   }
         if(paired){
           Body.setAngle(compositeArray[compositeArray.length -2].bodies[0], angleC2 - 1.5708);
           Body.setAngle(compositeArray[compositeArray.length -1].bodies[0], -(angleC2 - 1.5708));
-          // console.log(compositeArray[2].bodies[0].angle)
-          // console.log(compositeArray[compositeArray.length-1].bodies[0].angle)
         }
         else if(shared){
           Body.setAngle(compositeArray[compositeArray.length -2].bodies[0], angleC2 - 1.5708 );
           Body.setAngle(compositeArray[compositeArray.length -1].bodies[0], -(angleC2 - 1.5708));
         }
-        // console.log(angleC)
       }
     }
     if(flipY){
@@ -614,8 +628,6 @@ Events.on(engine, 'afterUpdate', function(event) {
     }
     Body.setVelocity(compositeArray[2].bodies[0], {x:0, y:0})
     Body.setVelocity(compositeArray[3].bodies[0], {x:0, y:0})
-    // Body.setAngle(compositeArray[2].bodies[0], compositeArray[1].bodies[0].angle*angleFactor);
-    // Body.setAngle(compositeArray[3].bodies[0], compositeArray[1].bodies[0].angle*-angleFactor);
     compositeArray[2].constraints[0].pointA.x = compositeArray[0].constraints[0].pointA.x - beamSpace
     compositeArray[3].constraints[0].pointA.x = compositeArray[0].constraints[0].pointA.x - (beamSpace*-1)
     if(paired || shared){
@@ -639,20 +651,8 @@ Events.on(engine, 'afterUpdate', function(event) {
         Body.setPosition(compositeArray[i].bodies[0], {x:compositeArray[i].constraints[0].pointA.x, y:compositeArray[i].constraints[0].pointA.y-difference})
       }
     }
-    if(flipY == true){
-      // Body.setAngle(compositeArray[compositeArray.length-1].bodies[0], compositeArray[1].bodies[0].angle*angleFactor);
-      // Body.setAngle(compositeArray[compositeArray.length-2].bodies[0], compositeArray[1].bodies[0].angle*-angleFactor);
-      
-    }
-  }
-  if(paired == true){
-    if(flipY == true){
-      // Body.setAngle(compositeArray[compositeArray.length-1].bodies[0], -compositeArray[4].bodies[0].angle*-angleFactor);
-      // Body.setAngle(compositeArray[compositeArray.length-2].bodies[0], -compositeArray[4].bodies[0].angle*angleFactor);
-    }
   }
   if(compositeArray[1].alternate == false){
-    // console.log(compositeArray[1].bodies[0].angle)
     if(compositeArray[1].bodies[0].angle >= (2*Math.PI) ){
       Body.setAngle(compositeArray[1].bodies[0], 0)
     }
@@ -662,7 +662,6 @@ Events.on(engine, 'afterUpdate', function(event) {
         Body.setVelocity(compositeArray[0].bodies[0], {x:0,y:0})
       }
       else{
-        //Body.setPosition(compositeArray[0].bodies[0], {x:compositeArray[0].bodies[0].position.x, y: compositeArray[0].bodies[0].position.y+4})
         Body.setVelocity(compositeArray[0].bodies[0], {x:0,y:3})
       } 
     }
@@ -671,10 +670,8 @@ Events.on(engine, 'afterUpdate', function(event) {
 
 ////////////////////// RUN /////////////////////////////
 
-// run the engine
+// add initial objects to simulation when code first runs
 addLinGearComposite((window.innerWidth)*(0.75*0.45),(window.innerHeight)*(0.5))
-// removeUIConstraints(compositeArray[0])
-// createUiconstraintsSingle(compositeArray[0], 50, 0,6)
 addGearComposite((window.innerWidth)*(0.75*0.45)+(radius+(toothHeight*1.8)) ,(window.innerHeight)*(0.5))
 Body.setPosition(compositeArray[0].bodies[0], {x:compositeArray[0].bodies[0].position.x, y:(window.innerHeight)*(0.5)+130})
 compositeArray[1].isMotor = true;

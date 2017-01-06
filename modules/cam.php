@@ -41,7 +41,7 @@ else{
             <select id = "changeMotion" class = "rendering" onchange = "changeMotion()">
                 <option value="upDown">Up-Down</option>
                 <option value="openClose">Open-Close</option>
-            </select> 
+            </select>
         </div>
         <div class = "controls">
             <div id = "preview">
@@ -98,7 +98,7 @@ else{
                 <br>
                 <button class = "cam-type object btn btn-primary" type="button" id="" onclick="changeEgg()">Egg</button>
                 <button class = "cam-type object btn btn-primary" type="button" id="" onclick="changeShell()">Shell</button>
-                
+
             </div>
             <br>
             <!-- <div>
@@ -119,7 +119,7 @@ else{
             <br>
                 <button class = "object btn btn-primary" type="button" id="alternate" onclick="startRunner()">Start</button>
                 <button class = "object btn btn-primary" type="button" id="continuous" onclick="stopRunner()">Stop</button>
-            
+
             </div>-->
         </div>
         <div class = "footer">
@@ -150,18 +150,18 @@ else{
     <!--<button type="button" id="rotate" onclick="overlay3()">Set Angle</button>-->
     <!--<div  id = "codeBlock">
         <pre>
-        #include <Servo.h> 
+        #include <Servo.h>
 
         Servo myservo;
 
-        void setup() 
-        { 
+        void setup()
+        {
           myservo.attach(9);
           myservo.write(90);  // set servo to mid-point
-        } 
+        }
 
-        void loop() {} 
-        </pre> 
+        void loop() {}
+        </pre>
     <div>-->
 
 

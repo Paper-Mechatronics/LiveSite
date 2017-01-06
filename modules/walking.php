@@ -35,52 +35,51 @@ else{
     <script src="js/scaling.js" type="text/javascript"></script>
     <div class = "container">
         <div class = "module-name">
-            <p>Crank +</p>
+            <p>Walking +</p>
             <select id = "changeMotion" class = "rendering" onchange = "changeMotion()">
-                <option value="upDown">Up-Down</option>
-                <option value="openClose">Open-Close</option>
+                <option value="upDown">Spin</option>
             </select> 
         </div>
         <div class = "controls">
             <div id = "preview">
             </div>
-            <div id = "a-slider" class = "slider-div">
-                <label>(A) Horizontal Spacing: <span id = "horizontalSpaceValue"></span></label>
+            <!-- <div id = "a-slider" class = "slider-div">
+                <label>Horizontal Spacing: <span id = "horizontalSpaceValue"></span></label>
                 <input type="range" id="horizontalSpace" value="40" min="0" max="100" oninput = "horizontalInput(this.value)" onchange = "beamSpacing(this.value)">
             </div>
             <br>
             <div id = "a-slider" class = "slider-div">
-                <label>(B) Vertical Spacing: <span id = "verticalSpaceValue"></span></label>
+                <label>Vertical Spacing: <span id = "verticalSpaceValue"></span></label>
                 <br>
                 <input type="range" id="verticalSpace" value="0" min="0" max="100" oninput = "verticalInput(this.value)" onchange = "pivotHeight(this.value)">
             </div>
             <br>
             <div id = "a-slider" class = "slider-div">
-                <label>(C) Connector Length: <span id = "connectorLengthValue"></span></label>
+                <label>Connector Length: <span id = "connectorLengthValue"></span></label>
                 <br>
                 <input type="range" id="connectorLength" value="320" min="250" max="450" oninput = "connectorInput(this.value)" onchange = "constraintLength(this.value)">
             </div>
             <br>
             <div id = "a-slider" class = "slider-div">
-                <label> (D) Pivot Point: <span id = "pivotPointValue"></span></label>
+                <label>Pivot Point: <span id = "pivotPointValue"></span></label>
                 <br>
                 <input type="range" id="pivotPoint" value="0" min="0" max="150" oninput = "pivotInput(this.value)" onchange = "constraintPosition(this.value)">
             </div>
             <br>
             <div id = "a-slider" class = "slider-div">
-                <label>(E) Beam Length: <span id = "beamWidthValue"></span></label>
+                <label>Beam Length: <span id = "beamWidthValue"></span></label>
                 <br>
                 <input type="range" id="beamWidth" value="0" min="0" max="150" oninput = "beamWidthInput(this.value)" onchange = "beamWidth(this.value)">
             </div>
-            <br>
+            <br> -->
         </div>
         <div class = "controls-dark">
             <div>
                 <p>Gear Size:</p>
                 <br>
-                <button class = "gear-size object btn btn-primary" type="button" id="setSmallGear" onclick="smallGear()">1</button>
-                <button class = "gear-size object btn btn-primary" type="button" id="setMedGear" onclick="mediumGear()">2</button>
-                <button class = "gear-size object btn btn-primary" type="button" id="setLargeGear" onclick="largeGear()">3</button>
+                <button class = "gear-size object btn btn-primary" type="button" id="setSmallGear" onclick="">1</button>
+                <button class = "gear-size object btn btn-primary" type="button" id="setMedGear" onclick="">2</button>
+                <button class = "gear-size object btn btn-primary" type="button" id="setLargeGear" onclick="">3</button>
             </div>
             <br>
             <div>

@@ -39,8 +39,8 @@ else{
             <p>Spur Gear +</p>
             <select id = "changeMotion" class = "rendering" onchange = "changeMotion()">
                 <option value="flapping">Flapping</option>
-                <option value="rotate">Rotate</option>
-            </select> 
+                <option value="rotate">Rotating</option>
+            </select>
         </div>
         <div class = "controls">
             <div id = "vertical-slider" class = "slider-div rotate">
@@ -213,7 +213,7 @@ else{
             <br>
                 <button class = "object btn btn-primary" type="button" id="alternate" onclick="startRunner()">Start</button>
                 <button class = "object btn btn-primary" type="button" id="continuous" onclick="stopRunner()">Stop</button>
-            
+
             </div>-->
         </div>
         <div class = "footer">
@@ -244,18 +244,18 @@ else{
     <!--<button type="button" id="rotate" onclick="overlay3()">Set Angle</button>-->
     <!--<div  id = "codeBlock">
         <pre>
-        #include <Servo.h> 
+        #include <Servo.h>
 
         Servo myservo;
 
-        void setup() 
-        { 
+        void setup()
+        {
           myservo.attach(9);
           myservo.write(90);  // set servo to mid-point
-        } 
+        }
 
-        void loop() {} 
-        </pre> 
+        void loop() {}
+        </pre>
     <div>-->
 
 
