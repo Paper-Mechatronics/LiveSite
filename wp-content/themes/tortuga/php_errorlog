@@ -1,3 +1,5 @@
 [29-Aug-2016 02:13:26 CST6CDT] PHP Fatal error:  Call to undefined function get_header() in /home/papermec/public_html/wp-content/themes/tortuga/index.php on line 14
 [30-Sep-2016 02:27:53 CST6CDT] PHP Fatal error:  Call to undefined function get_header() in /home/papermec/public_html/wp-content/themes/tortuga/index.php on line 14
 [01-Nov-2016 01:49:55 CST6CDT] PHP Fatal error:  Call to undefined function get_header() in /home/papermec/public_html/wp-content/themes/tortuga/index.php on line 14
+[02-Dec-2016 02:42:15 CST6CDT] PHP Fatal error:  Call to undefined function get_header() in /home/papermec/public_html/wp-content/themes/tortuga/index.php on line 14
+[03-Jan-2017 01:28:43 CST6CDT] PHP Fatal error:  Call to undefined function get_header() in /home/papermec/public_html/wp-content/themes/tortuga/index.php on line 14
