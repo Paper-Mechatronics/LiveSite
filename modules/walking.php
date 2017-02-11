@@ -16,7 +16,7 @@ else{
     <meta charset="UTF-8">
     <title>Walking</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <link rel="shortcut icon" type="image/png" href="wp-content/uploads/2016/06/cropped-noun_221895_cc-32x32.png"/>
+    <link rel="shortcut icon" type="image/png" href="img/logo_webTab.png"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
@@ -33,39 +33,59 @@ else{
     <script src="js/updateUI.js" type="text/javascript"></script>
     <script src="js/showParts.js" type="text/javascript"></script>
     <script src="js/scaling.js" type="text/javascript"></script>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="http://www.papermech.net/">
+            <img id = "logo" alt="Brand" src="img/logo_blue-03.png">
+          </a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        </div><!-- /.navbar-collapse -->
+      </div>
+    </nav>
     <div class = "container">
         <div class = "module-name">
             <p>Walking +</p>
             <select id = "changeMotion" class = "rendering" onchange = "changeMotion()">
-                <option value="upDown">Spin</option>
+                <option value="upDown">Rotate</option>
             </select> 
         </div>
         <div class = "controls">
             <div id = "preview">
             </div>
-            <!-- <div id = "a-slider" class = "slider-div">
-                <label>Horizontal Spacing: <span id = "horizontalSpaceValue"></span></label>
-                <input type="range" id="horizontalSpace" value="40" min="0" max="100" oninput = "horizontalInput(this.value)" onchange = "beamSpacing(this.value)">
+            <div id = "a-slider" class = "slider-div">
+                <label>Linkage 1 (TL): <span id = "walking1Value"></span></label>
+                <input type="range" id="walking1" value="111" min="80" max="120" oninput = "walking1Input(this.value)" onchange = "walking1(this.value)">
+            </div>
+            <br>
+            
+            <div id = "a-slider" class = "slider-div">
+                <label>Linkage 2 (TL): <span id = "walking2Value"></span></label>
+                <br>
+                <input type="range" id="walking2" value="63" min="40" max="100" oninput = "walking2Input(this.value)" onchange = "walking2(this.value)">
             </div>
             <br>
             <div id = "a-slider" class = "slider-div">
-                <label>Vertical Spacing: <span id = "verticalSpaceValue"></span></label>
+                <label>Linkage 3 (TL): <span id = "walking2Value"></span></label>
                 <br>
-                <input type="range" id="verticalSpace" value="0" min="0" max="100" oninput = "verticalInput(this.value)" onchange = "pivotHeight(this.value)">
+                <input type="range" id="walking2" value="100" min="100" max="200" oninput = "walking3Input(this.value)" onchange = "">
+            </div>
+            <br>
+            <!-- 
+            <div id = "a-slider" class = "slider-div">
+                <label>Linkage 3 (TL): <span id = "connectorLengthValue"></span></label>
+                <br>
+                <input type="range" id="connectorLength" value="320" min="250" max="450" oninput = "walking3Input(this.value)" onchange = "constraintLength(this.value)">
             </div>
             <br>
             <div id = "a-slider" class = "slider-div">
-                <label>Connector Length: <span id = "connectorLengthValue"></span></label>
+                <label>Linkage 4 (TL): <span id = "pivotPointValue"></span></label>
                 <br>
-                <input type="range" id="connectorLength" value="320" min="250" max="450" oninput = "connectorInput(this.value)" onchange = "constraintLength(this.value)">
+                <input type="range" id="pivotPoint" value="0" min="0" max="150" oninput = "walking4Input(this.value)" onchange = "constraintPosition(this.value)">
             </div>
             <br>
-            <div id = "a-slider" class = "slider-div">
-                <label>Pivot Point: <span id = "pivotPointValue"></span></label>
-                <br>
-                <input type="range" id="pivotPoint" value="0" min="0" max="150" oninput = "pivotInput(this.value)" onchange = "constraintPosition(this.value)">
-            </div>
-            <br>
+            
             <div id = "a-slider" class = "slider-div">
                 <label>Beam Length: <span id = "beamWidthValue"></span></label>
                 <br>
@@ -113,9 +133,9 @@ else{
             </a>
             <a href = "http://www.papermech.net/create.php">
                 <div class = "footer-btn-div">
-                    <button class = "footer-btn object btn btn-primary" type="button" ><img class = "btn-icon" src="img/home.png"></button>
+                    <button class = "footer-btn object btn btn-primary" type="button" ><img class = "btn-icon" src="img/back.png"></button>
                     <br>
-                    <p>Home</p>
+                    <p>Back</p>
                 </div>
             </a>
             <span class="stretch"></span>

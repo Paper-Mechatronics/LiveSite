@@ -35,6 +35,17 @@ else{
     <script src="js/scaling.js" type="text/javascript"></script>
     <script src="js/showParts.js" type="text/javascript"></script>
     <script src="js/homeType.js" type="text/javascript"></script>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="http://www.papermech.net/">
+            <img id = "logo" alt="Brand" src="img/logo_blue-03.png">
+          </a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        </div><!-- /.navbar-collapse -->
+      </div>
+    </nav>
     <div class = "container">
         <div class = "module-name">
             <p>Cam +</p>

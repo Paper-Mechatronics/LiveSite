@@ -22,6 +22,13 @@ function showParts(){
   var spur1Radius = 0
   var spur2Radius = 0
   var spur3Radius = 0
+  var walkBottom = (((compositeArray[0].width*3) + Math.sqrt((compositeArray[0].width*compositeArray[0].width) + (compositeArray[0].height*compositeArray[0].height)))*1.251)*1.251
+  var walkMiddle = (((compositeArray[0].width*3) + (walkingVert*2))*1.251)*1.251
+  var walkTop = ((((compositeArray[0].width*3) + Math.sqrt((compositeArray[0].width*compositeArray[0].width) + (compositeArray[0].height*compositeArray[0].height)) + walkingVert)*1.251) + 100)*1.251
+  var walkLinkage = (((linkageLength * 2) + (100*3))*1.251)*1.251
+  var triSide = compositeArray[0].width*1.251*1.251
+  var triSpace = walkingVert*1.251*1.251
+  var walkLink = linkageLength*1.251*1.251
   // loop through all composites and classify the objects that exist
   for(var i = 0; i<compositeArray.length; i++){
     // if shape is continuous then draw continuous gear unless it is in rotate, spur, or planetary module
@@ -109,6 +116,9 @@ function showParts(){
       }
     }
   }
+  if(walkingModule){
+
+  }
   // convert variable values to string
   var largeGears = numLargeGear.toString(); 
   var mediumGears = numMediumGear.toString(); 
@@ -149,6 +159,18 @@ function showParts(){
   localStorage.setItem("continuous", continuous);
   localStorage.setItem("crankLength", crankLength);
   localStorage.setItem("mirror", mirror);
+  if(shared){
+    localStorage.setItem("shared", 1);
+  }
+  else{
+    localStorage.setItem("shared", 0);
+  }
+  if(paired){
+    localStorage.setItem("paired", 1);
+  }
+  else{
+    localStorage.setItem("paired", 0);
+  }
   localStorage.setItem("flappingModule", flappingModule);
   localStorage.setItem("gear1Spacing", gear1Spacing);
   localStorage.setItem("gear2Spacing", gear2Spacing);
@@ -174,11 +196,27 @@ function showParts(){
   localStorage.setItem("spurBeamLength", module.spurBeamLength + 150);
   if(planetaryModule || rotateModule){
     if(planetaryMod){
-      console.log(planetaryBrace)
       localStorage.setItem("planetaryModule", 1);
       localStorage.setItem("planetaryBraceLength", planetaryBrace);
       localStorage.setItem("planetaryGearRadius", compositeArray[0].radius)
     }
+  }
+  else{
+    localStorage.setItem("planetaryModule", 0);
+  }
+  if(walkingModule){
+    localStorage.setItem("walkingModule", 1);
+    localStorage.setItem("walkTop", walkTop);
+    localStorage.setItem("walkMiddle", walkMiddle);
+    localStorage.setItem("walkBottom", walkBottom);
+    localStorage.setItem("walkLinkage", walkLinkage);
+    localStorage.setItem("triWidth", compositeArray[0].width*1.251*1.251);
+    localStorage.setItem("triHeight", compositeArray[0].height*1.251*1.251);
+    localStorage.setItem("triSpace", triSpace);
+    localStorage.setItem("walkLink", walkLink);
+  }
+  else{
+    localStorage.setItem("walkingModule", 0);
   }
   // window.location.href="./jsPDF/parts.html"
   // navigate the window to the parts.html page and open it in a new tab

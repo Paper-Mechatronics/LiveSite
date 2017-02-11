@@ -600,12 +600,13 @@ function showGear(num){
 
 var doc = new jsPDF("landscape");
 function showAll(){  
-    ///////////////////////////////////////GEAR GENERATION PAGE/////////////////////////////////////////////////////////////
+  ///////////////////////////////////////GEAR GENERATION PAGE/////////////////////////////////////////////////////////////
+
   if(numOfLargeGears || numOfMediumGears || numOfSmallGears){
-    doc.addImage(matBoardKey, 'PNG', 225, 175, 70.945, 35);
+    doc.addImage(matBoardKey, 'PNG', 225, 167, 70.945, 45.86);
   }
   else{
-    doc.addImage(cardBoardKey, 'PNG', 225, 175, 70.945, 35);
+    doc.addImage(cardBoardKey, 'PNG', 225, 167, 70.945, 45.86);
   }
   // if gears exist in the simulator then draw them with the show gear function
   if(numOfLargeGears){
@@ -715,6 +716,15 @@ function showAll(){
     doc.circle(centerXCircle+((88*multFactor)*0.8),centerYCircle,3*scale)
     crankParts()
     roundedRect(crankLength,96.8)
+  }
+  if(walkingModule){
+    doc.rect(5,5,140,50)
+    doc.rect(5,5, 40, 20)
+    doc.rect(5,60,140,50)
+    doc.rect(5,60,40,20)
+    doc.rect(5,115,140,50)
+    doc.circle(180, 30, 20)
+    doc.circle(180, 80, 20)
   }
   ///////////////////////////////////////////////////////////////////////////////
 }

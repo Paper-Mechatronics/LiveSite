@@ -600,8 +600,9 @@ function showGear(num){
 
 var doc = new jsPDF("landscape");
 function showAll(){
+///////////////////////////////////LINKAGES//////////////////////////////////////////
   // if normal linkage and not flapping module create certain cuts and fold locations
-  if(constraintLength && !flappingModule && !spurModule){
+  if(constraintLength && !flappingModule && !spurModule && !walkingModule){
     // hide buttons
     buttonDisplay()
     // add instructions image to bottom of page
@@ -660,7 +661,7 @@ function showAll(){
     }
   }
   // if flapping module then change linkages so they have different fold points
-  if(flappingModule || spurFlap){
+  if(flappingModule || spurFlap && !walkingModule){
     // add instuction images to bottom of page
     doc.addImage(imgData2, 'PNG', 15, 160, 70.3125, 45);
     doc.addImage(flapImageData, 'PNG', 85, 160, 137.755, 50);
@@ -703,30 +704,96 @@ function showAll(){
       }
     }
   }
-  // if cam draw surrounding piece of paper to go around cam 
-  if(numOfCams){
-    if(camType == 0){
-      if(spurFlap || flappingModule || constraintLength){
-        doc.rect(15*frameScale, 85, 283,15)
+  if(walkingModule){
+    // if()
+    doc.addImage(imgData2, 'PNG', 15, 176, 70.3125*0.75, 45*0.75);
+    doc.rect(5,5, walkTop,linkageHeight*multFactor)
+    doc.rect(5,5 + (linkageHeightPlus*multFactor), walkMiddle,linkageHeight*multFactor)
+    doc.rect(5,5 + ((linkageHeightPlus*multFactor)*2), walkBottom,linkageHeight*multFactor)
+    doc.rect(5,5 + ((linkageHeightPlus*multFactor)*3), walkLinkage,linkageHeight*multFactor)
+    doc.rect(5,5 + ((linkageHeightPlus*multFactor)*4), walkLinkage,linkageHeight*multFactor)
+    for(var i = 0; i<5;i++){
+      var segments = 8
+      for(var dashed = 0;dashed<segments;dashed++){
+        if(i==0){
+          doc.line(5+triHeight +triWidth+Math.sqrt((triWidth*triWidth) + (triHeight*triHeight)) + triHeight,(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5+triHeight +triWidth+Math.sqrt((triWidth*triWidth) + (triHeight*triHeight)) + triWidth,(5+((((linkageHeight/segments)*(dashed+1)-5))+(linkageHeightPlus*i))*multFactor))
+          doc.line(5+triHeight +triWidth+Math.sqrt((triWidth*triWidth) + (triHeight*triHeight)) + triHeight + (30*1.251),(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5+triHeight +triWidth+Math.sqrt((triWidth*triWidth) + (triHeight*triHeight)) + triHeight + (30*1.251),(5+((((linkageHeight/segments)*(dashed+1)-5))+(linkageHeightPlus*i))*multFactor))
+        }
+        if(i==3){
+          doc.line(5+ triHeight + walkLink + (10*1.251*1.251)+ ((10*1.251*1.251)/2),(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5 + triHeight +  walkLink + (10*1.251*1.251)+ ((10*1.251*1.251)/2),(5+((((linkageHeight/segments)*(dashed+1)-5))+(linkageHeightPlus*i))*multFactor))
+
+        }
+        if(i==4){
+          doc.line(5+ triHeight + walkLink + (10*1.251*1.251)+ ((10*1.251*1.251)/2),(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5 + triHeight +  walkLink + (10*1.251*1.251)+ ((10*1.251*1.251)/2),(5+((((linkageHeight/segments)*(dashed+1)-5))+(linkageHeightPlus*i))*multFactor))
+          doc.line(5+ triHeight,(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5 + triHeight,(5+((((linkageHeight/segments)*(dashed+1)-5))+(linkageHeightPlus*i))*multFactor))
+          doc.line(5+ triHeight + walkLink + (10*1.251*1.251) + (10*1.251*1.251) + (10*1.251*1.251) + walkLink,(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5 + triHeight +  walkLink + (10*1.251*1.251) + (10*1.251*1.251) + (10*1.251*1.251) + walkLink,(5+((((linkageHeight/segments)*(dashed+1)-5))+(linkageHeightPlus*i))*multFactor))
+
+        }
       }
-      else{
-        doc.rect(15*frameScale, 15*frameScale, 283,15)
+      segments = 15
+      for(var dashed = 0;dashed<segments;dashed++){
+        if(i == 0){
+          doc.line(5+triHeight,(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5+triWidth,(5+((((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*multFactor))
+          doc.line(5+triHeight + triWidth,(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5+triHeight +triWidth,(5+((((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*multFactor))
+          doc.line(5+triHeight +triWidth+Math.sqrt((triWidth*triWidth) + (triHeight*triHeight)),(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5+triHeight +triWidth+Math.sqrt((triWidth*triWidth) + (triHeight*triHeight)),(5+((((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*multFactor))
+          doc.line(5+triHeight +triWidth+Math.sqrt((triWidth*triWidth) + (triHeight*triHeight)) + triHeight + (10*1.251),(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5+triHeight +triWidth+Math.sqrt((triWidth*triWidth) + (triHeight*triHeight)) + triHeight + (10*1.251),(5+((((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*multFactor))
+          doc.line(5+triHeight +triWidth+Math.sqrt((triWidth*triWidth) + (triHeight*triHeight)) + triHeight + (20*1.251),(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5+triHeight +triWidth+Math.sqrt((triWidth*triWidth) + (triHeight*triHeight)) + triHeight + (20*1.251),(5+((((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*multFactor))
+        }
+        if(i == 1){
+          doc.line(5+triWidth,(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5 + triWidth,(5+((((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*multFactor))
+          doc.line(5+triWidth + triSpace,(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5 + triWidth + triSpace,(5+((((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*multFactor))
+          doc.line(5+triWidth + triSpace + triWidth,(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5 + triWidth + triSpace + triWidth,(5+((((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*multFactor))
+          doc.line(5+triWidth + triSpace + triWidth + triSpace,(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5 + triWidth + triSpace + triWidth + triSpace,(5+((((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*multFactor))
+        }
+        if(i == 2){
+          doc.line(5+triWidth,(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5 + triWidth,(5+((((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*multFactor))
+          doc.line(5+triWidth + triHeight,(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5 + triWidth + triWidth,(5+((((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*multFactor))
+          doc.line(5+triWidth + triHeight+Math.sqrt((triWidth*triWidth) + (triHeight*triHeight)) ,(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5 + triWidth + triWidth+Math.sqrt((triWidth*triWidth) + (triHeight*triHeight)) ,(5+((((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*multFactor))
+
+        }
+        if(i == 3){
+          doc.line(5+ triHeight,(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5 + triHeight,(5+((((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*multFactor))
+          doc.line(5+ triHeight + walkLink,(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5 + triHeight +  walkLink,(5+((((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*multFactor))
+          doc.line(5+ triHeight + walkLink + (10*1.251*1.251),(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5 + triHeight +  walkLink + (10*1.251*1.251),(5+((((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*multFactor))
+          doc.line(5+ triHeight + walkLink + (10*1.251*1.251) + (10*1.251*1.251),(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5 + triHeight +  walkLink + (10*1.251*1.251) + (10*1.251*1.251),(5+((((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*multFactor))
+          doc.line(5+ triHeight + walkLink + (10*1.251*1.251) + (10*1.251*1.251) + (10*1.251*1.251),(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5 + triHeight +  walkLink + (10*1.251*1.251) + (10*1.251*1.251) + (10*1.251*1.251),(5+((((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*multFactor))
+          doc.line(5+ triHeight + walkLink + (10*1.251*1.251) + (10*1.251*1.251) + (10*1.251*1.251) + walkLink,(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5 + triHeight +  walkLink + (10*1.251*1.251) + (10*1.251*1.251) + (10*1.251*1.251) + walkLink,(5+((((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*multFactor))
+        }
+        if(i == 4){
+          doc.line(5+ triHeight + walkLink,(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5 + triHeight +  walkLink,(5+((((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*multFactor))
+          doc.line(5+ triHeight + walkLink + (10*1.251*1.251),(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5 + triHeight +  walkLink + (10*1.251*1.251),(5+((((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*multFactor))
+          doc.line(5+ triHeight + walkLink + (10*1.251*1.251) + (10*1.251*1.251),(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5 + triHeight +  walkLink + (10*1.251*1.251) + (10*1.251*1.251),(5+((((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*multFactor))
+          doc.line(5+ triHeight + walkLink + (10*1.251*1.251) + (10*1.251*1.251) + (10*1.251*1.251),(5+(((linkageHeight/segments)*(dashed))+(linkageHeightPlus*i))*multFactor),5 + triHeight +  walkLink + (10*1.251*1.251) + (10*1.251*1.251) + (10*1.251*1.251),(5+((((linkageHeight/segments)*(dashed+1)-3))+(linkageHeightPlus*i))*multFactor))
+        }
       }
     }
+  }
+  // if cam draw surrounding piece of paper to go around cam 
+  if(numOfCams){
+    var stripLength
+    if(numOfLargeCam){
+      stripLength = 285
+    }
+    else if(numOfMediumCam){
+      stripLength = 235
+    }
+    else if(numOfSmallCam){
+      stripLength = 195
+    }
+    if(spurFlap || flappingModule || constraintLength){
+      doc.rect(15*frameScale, 85, stripLength,15)
+      doc.text(15*frameScale, 85-2, 'Length = ' + stripLength + "mm");
+    }
     else{
-      if(spurFlap || flappingModule || constraintLength){
-        doc.rect(15*frameScale, 85, 262,15)
-      }
-      else{
-        doc.rect(15*frameScale, 15*frameScale, 262,15)
-      }
-      
+      doc.rect(15*frameScale, 15*frameScale, stripLength,15)
+      doc.text(15*frameScale, 15*frameScale-1, 'Length = ' + stripLength + "mm");
     }
   }
   // add image for paper material recomendation
   if((spurFlap || flappingModule || constraintLength || numOfCams)&& !spurRotate){
-    doc.addImage(paperKey, 'PNG', 225, 175, 70.945, 35);
+    doc.addImage(paperKey, 'PNG', 225, 167, 70.945, 45.86);
   }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
 showAll()

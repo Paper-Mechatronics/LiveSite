@@ -7,6 +7,26 @@ body {
 html, body{
   height:100%;
 }
+.navbar-default{
+    background-color: #fff !important;
+    background-image: none;
+    height: 57px;
+    }
+.navbar-brand{
+    position: absolute;
+    margin-top: 0;
+
+}
+#logo{
+    margin: 0;
+    position: absolute;
+    margin-top: -10px;
+    height: 45px;
+    float: right;
+}
+.navbar{
+    margin-bottom: 0;
+}
 canvas {
     position: fixed;
 	display: inline-block;
