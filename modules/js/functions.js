@@ -120,6 +120,8 @@ var flapConnectorL = 0
 var flapConnectorR = 0
 var symetrical = true;
 var leftWingUI = true;
+var planetaryBrace = 0
+var planetaryMod = 0
 
 
 
@@ -284,6 +286,18 @@ var totalJointComposites = 0;
 
 // add gear to world
 function addGearComposite(centerX, centerY){
+  // change tooth width based off radius
+  if(radius == 80){
+    toothWidthDegree = 2
+  }
+  else if(radius == 64){
+    toothWidthDegree = 3
+  }
+  else if(radius == 48){
+    toothWidthDegree = 4
+  }
+  toothWidth = (toothWidthDegree/conversionFactor);
+  drawGear()
   // increase number of composites by 1
   totalComposites++;
   // increase number of constraints by 1
@@ -2509,7 +2523,7 @@ Events.on(engine, 'beforeUpdate', function(event) {
     // loop through all composites in the world and style them accordingly
     for(var i = 0; i<compositeArray.length; i++){
       if(compositeArray[i].shape == "shell"){
-        console.log(compositeArray[i].radius)
+        // console.log(compositeArray[i].radius)
         for(var j=0; j<compositeArray[i].bodies[0].parts.length;j++){
           if(compositeArray[i].radius == 80){
             compositeArray[i].bodies[0].parts[j].render.strokeStyle = "#bc98f9";
@@ -2630,7 +2644,7 @@ Events.on(engine, 'beforeUpdate', function(event) {
     if(rackPinionModule){
       buttonDisable()
     }
-    if(openCloseModule || upDownModule){
+    if(openCloseModule || upDownModule || camModule){
       shellCam()
     }
     if(rotateModule){

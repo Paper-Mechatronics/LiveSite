@@ -19,8 +19,8 @@ function changeMods(){
                 document.getElementById('five-img').src = "img/planetary2.gif";
                 document.getElementById("six-href").style.visibility = "";
                 // document.getElementById('six-img').src = "img/front_mech_rackpinion.png";
-                document.getElementById('six-img').src = "img/front_mech_jansen.png";
-                document.getElementById('six-href').href = "walking.php";
+                document.getElementById('six-img').src = "img/walking.gif";
+                document.getElementById('six-href').href = "";
             }
             else{
                 document.getElementById('one').innerHTML = "Open-Close";
@@ -36,8 +36,8 @@ function changeMods(){
                 document.getElementById('four-href').href = "rotate.php";
                 document.getElementById('four-img').src = "img/rotate3.gif";
                 document.getElementById('five').innerHTML = "Walking";
-                document.getElementById('five-href').href = "walking.php";
-                document.getElementById('five-img').src = "img/front_motion_walk.png";
+                document.getElementById('five-href').href = "#";
+                document.getElementById('five-img').src = "img/walking.gif";
                 document.getElementById("six-href").style.visibility = "hidden";
                 // document.getElementById('six-img').src = "img/front_motion_flap.png";
             }

@@ -207,6 +207,8 @@ Events.on(engine, 'afterUpdate', function(event) {
     // prevent any type of unnecessary movement
     Body.setVelocity(compositeArray[3].bodies[0], {x:0, y:0})
     Body.setVelocity(compositeArray[2].bodies[0], {x:0, y:0})
+
+    console.log(compositeArray[3].bodies[0])
   })
 ////////////////////// RUN /////////////////////////////
 var width = 300;

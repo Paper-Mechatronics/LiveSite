@@ -97,7 +97,7 @@ else{
             <br>
         </div>
         <div class = "footer">
-            <a href = "http://www.papermech.net/open-close.php">
+            <a href = "http://www.papermech.net/modules/walking.php">
                 <div class = "footer-btn-div">
                     <button class = "footer-btn object btn btn-primary" type="button" ><img class = "btn-icon" src="img/reset.png"></button>
                     <br>

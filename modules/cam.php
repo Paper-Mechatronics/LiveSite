@@ -96,8 +96,8 @@ else{
             <div>
                 <p>Cam Type:</p>
                 <br>
-                <button class = "cam-type object btn btn-primary" type="button" id="" onclick="changeEgg()">Egg</button>
-                <button class = "cam-type object btn btn-primary" type="button" id="" onclick="changeShell()">Shell</button>
+                <button class = "cam-type object btn btn-primary" type="button" id="eggShape" onclick="changeEgg()">Egg</button>
+                <button class = "cam-type object btn btn-primary" type="button" id="shellShape" onclick="changeShell()">Shell</button>
 
             </div>
             <br>
@@ -123,7 +123,7 @@ else{
             </div>-->
         </div>
         <div class = "footer">
-            <a href = "http://www.papermech.net/cam.php">
+            <a href = "http://www.papermech.net/modules/cam.php">
                 <div class = "footer-btn-div">
                     <button class = "footer-btn object btn btn-primary" type="button" ><img class = "btn-icon" src="img/reset.png"></button>
                     <br>

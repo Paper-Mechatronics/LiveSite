@@ -25,6 +25,7 @@ else{
     <script src="js/decomp.js" type="text/javascript"></script>
     <script src="matterJS/build/matter.js" type="text/javascript"></script>
     <script src="matterJS/build/Examples.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="css/module.css">
     <link rel="stylesheet" type="text/css" href="css/rackandpinion.css">
   </head>
   <body>
@@ -121,7 +122,7 @@ else{
             </div>
         </div>
         <div class = "footer">
-            <a href = "http://www.papermech.net/rackandpinion.php">
+            <a href = "http://www.papermech.net/modules/rackandpinion.php">
                 <div class = "footer-btn-div">
                     <button class = "footer-btn object btn btn-primary" type="button" ><img class = "btn-icon" src="img/reset.png"></button>
                     <br>

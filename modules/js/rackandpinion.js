@@ -288,8 +288,6 @@ function mirror(){
       Body.setPosition(compositeArray[compositeArray.length-1].bodies[0], {x:compositeArray[compositeArray.length-1].bodies[0].position.x, y:compositeArray[1].constraints[0].pointA.y-130})
       // set lin gear rotation
       compositeArray[compositeArray.length-1].rotation = Math.PI
-      // create new ui objects
-      createUIConstraintsMirrorSingle(compositeArray[compositeArray.length-1], prevSpaceValue, prevPivotValue, 6)
     }
   }
   else{

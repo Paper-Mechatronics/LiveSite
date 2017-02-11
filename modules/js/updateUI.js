@@ -217,7 +217,7 @@ function updatePlanetaryUI(){
     $('#setLargeGear1P').css("color", "#fff")
     $('#setMedGear1P').css("color", "#000") 
     $('#setSmallGear1P').css("color", "#000") 
-    console.log(compositeArray[1].radius)
+    // console.log(compositeArray[1].radius)
   }
   else if(compositeArray[1].radius == 64){
     $('#setMedGear1P').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
@@ -316,11 +316,27 @@ function buttonDisable(){
 function shellCam(){
   if(compositeArray[1].shape == "shell" || compositeArray[1].shape == "cam"){
     $('.cam-type').show()
-    document.getElementById("alternate").disabled = true;
+    if(document.getElementById("alternate")){
+       document.getElementById("alternate").disabled = true;
+    }
+    if(compositeArray[1].shape == "shell"){
+      $('#shellShape').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+      $('#eggShape').css("background-image", "none") 
+      $('#eggShape').css("color", "#000")
+      $('#shellShape').css("color", "#fff")
+    }
+    else{
+      $('#eggShape').css("background-image", "linear-gradient(to bottom,#337ab7 0,#265a88 100%)") 
+      $('#shellShape').css("background-image", "none") 
+      $('#shellShape').css("color", "#000")
+      $('#eggShape').css("color", "#fff")
+    }
   }
   else{
     $('.cam-type').hide()
-    document.getElementById("alternate").disabled = false;
+    if(document.getElementById("alternate")){
+       document.getElementById("alternate").disabled = false;
+    }
   }
 }
 function rotateSliders(){

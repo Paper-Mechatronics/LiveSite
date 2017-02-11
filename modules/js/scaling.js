@@ -26,7 +26,12 @@ Events.on(engine, 'beforeUpdate', function(event) {
       translate;
 
   // mouse wheel controls zoom
-  var scaleFactor = 1-scale+0.1;
+  if(rackPinionModule){
+    var scaleFactor = 1-scale+0.5;
+  }
+  else{
+    var scaleFactor = 1-scale+0.1;
+  }
   if (scaleFactor > 0.1) {
       if ((scaleFactor < 0 && boundsScale.x >= 0.6) || (scaleFactor > 0 && boundsScale.x <= 1)) {
           boundsScaleTarget += scaleFactor;

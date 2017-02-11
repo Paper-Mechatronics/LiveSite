@@ -61,7 +61,7 @@ canvas {
     margin-top: 0px;
 }
 
-#overlay, #overlay2, #overlay3 {
+#overlay, #overlay2{
      visibility: hidden;
      position: absolute;
      left: 0px;
@@ -71,7 +71,7 @@ canvas {
      text-align:center;
      z-index: 1000;
 }
-#overlay div, #overlay2 div, #overlay3 div {
+#overlay div, #overlay2 div{
      width:300px;
      margin: 100px auto;
      background-color: #fff;

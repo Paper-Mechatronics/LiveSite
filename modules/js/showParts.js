@@ -172,9 +172,13 @@ function showParts(){
   localStorage.setItem("spur2Radius", spur2Radius);
   localStorage.setItem("spur3Radius", spur3Radius);
   localStorage.setItem("spurBeamLength", module.spurBeamLength + 150);
-  if(planetaryModule){
-    localStorage.setItem("planetaryModule", 1);
-    localStorage.setItem("planetaryBraceLength", planetaryBrace);
+  if(planetaryModule || rotateModule){
+    if(planetaryMod){
+      console.log(planetaryBrace)
+      localStorage.setItem("planetaryModule", 1);
+      localStorage.setItem("planetaryBraceLength", planetaryBrace);
+      localStorage.setItem("planetaryGearRadius", compositeArray[0].radius)
+    }
   }
   // window.location.href="./jsPDF/parts.html"
   // navigate the window to the parts.html page and open it in a new tab

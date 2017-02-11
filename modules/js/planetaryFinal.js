@@ -1,6 +1,6 @@
 // module indicator
 planetaryModule = true;
-var planetaryBrace = 0
+planetaryMod = 1;
 // planetary change body function
 function changeBodyPlanetary(index){
   for(var i=0; i<1;i++){

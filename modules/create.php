@@ -23,7 +23,7 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a href="http://www.papermech.net/learn/">How To</a></li>
+        <li><a href="http://www.papermech.net/how-to/">How To</a></li>
         <li><a href="http://www.papermech.net/about/">About</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -43,8 +43,8 @@
         <span class="stretch"></span>
         <br>
         <a id = "four-href" href = "rotate.php"><div class="box"><div><p id = "four">Rotating</p></div><img id = "four-img" src="img/rotate3.gif"></div></a>
-        <a id = "five-href" href = "walking.php"><div class="box"><div><p id = "five">Walking</p></div><img id = "five-img" src="img/front_motion_walk.png"></div></a>
-        <a id = "six-href" style = "visibility:hidden;" href = "walking.php"><div class="box"><div><p id = "six">Jansen Mechanism</p></div><img id = "seven-img" src="img/front_motion_walk.png"></div></a>
+        <a id = "five-href" href = "#"><div class="box"><div><p id = "five">Walking</p></div><img id = "five-img" src="img/walking.gif"></div></a>
+        <a id = "six-href" style = "visibility:hidden;" href = "#"><div class="box"><div><p id = "six">Jansen Mechanism</p></div><img id = "seven-img" src="img/walking.gif"></div></a>
         <span class="stretch"></span>
         <br>
         <a id = "custom-button" href = "#"><div class="rectangle"><div><p id = "five">Create Your Own Machine!</p></div></div></a>
