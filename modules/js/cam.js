@@ -5,10 +5,9 @@ camModule = true;
 const rectBase = 600;
 //initial variable values
 let pivotValue = 0;
-const c = 432;
+let c = 432; //Connector Length for open-close
 let originalWidth1;
 let originalWidth2;
-const camMod = true;
 
 ////////////CHANGE GEAR SIZES///////////////////////////////////
 //smallRadius = 48
@@ -122,6 +121,7 @@ function changeMotion() {
 // initial values for beam parameters
 let prevSpaceValue = 50;
 let changeSpaceWidth = 0;
+var spaceValue = 50;
 var beamSpace = 50;
 // horizontal spacing function
 function beamSpacing(value) {
@@ -150,7 +150,7 @@ function beamSpacing(value) {
 }
 // initial pivot values
 let prevPivotValue = 100;
-var initialPivotValue = 100;
+const initialPivotValue = 100;
 pivotValue = 100;
 let changePivotHeight;
 //change vertical height
@@ -212,14 +212,15 @@ Events.on(engine, "afterUpdate", function (event) {
   if (openCloseMod) {
     const bottom = compositeArray[0].constraints[0].pointA.y - rectBase;
     const top = compositeArray[0].bodies[0].position.y - 200 - pivotValue;
+    const pivotSpace =
+      compositeArray[0].constraints[0].pointA.y - 200 - pivotValue - bottom;
+    const rectWidth = compositeArray[2].width;
     const b = top - bottom;
     const a = compositeArray[2].width;
     const angleC = Math.acos((a * a + b * b - c * c) / (2 * a * b));
     // update beam rotation angle
-    if (angleC) {
-      Body.setAngle(compositeArray[2].bodies[0], angleC - 1.5708);
-      Body.setAngle(compositeArray[3].bodies[0], -(angleC - 1.5708));
-    }
+    Body.setAngle(compositeArray[2].bodies[0], angleC - 1.5708);
+    Body.setAngle(compositeArray[3].bodies[0], -(angleC - 1.5708));
     // prevent any movement on x and y axis
     Body.setVelocity(compositeArray[2].bodies[0], { x: 0, y: 0 });
     Body.setVelocity(compositeArray[3].bodies[0], { x: 0, y: 0 });
